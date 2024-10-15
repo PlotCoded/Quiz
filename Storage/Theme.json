@@ -1,0 +1,155 @@
+{
+    "CTk": {
+      "fg_color": "#c3c3c3"
+    },
+    "CTkToplevel": {
+      "fg_color": "#c3c3c3"
+    },
+    "CTkFrame": {
+      "corner_radius": 10,
+      "border_width": 2,
+      "fg_color": "#c3c3c3",
+      "top_fg_color": "black",
+      "border_color": "black"
+    },
+    "CTkButton": {
+      "corner_radius": 5,
+      "border_width": 3,
+      "fg_color": "#01a9f3",
+      "hover_color": "#098bed",
+      "border_color": "black",
+      "text_color": "black",
+      "text_color_disabled": "black"
+    },
+    "CTkLabel": {
+      "corner_radius": 0,
+      "fg_color": "transparent",
+      "text_color": "black"
+    },
+    "CTkEntry": {
+      "corner_radius": 15,
+      "border_width": 3,
+      "fg_color": "white",
+      "border_color": "black",
+      "text_color": "black",
+      "placeholder_text_color": "black"
+    },
+    "CTkCheckBox": {
+      "corner_radius": 6,
+      "border_width": 3,
+      "fg_color": "#01a9f3",
+      "border_color": "black",
+      "hover_color": "#098bed",
+      "checkmark_color": "white",
+      "text_color": "black",
+      "text_color_disabled": "black"
+    },
+    "CTkSwitch": {
+      "corner_radius": 1000,
+      "border_width": 3,
+      "button_length": 0,
+      "fg_color": "#01a9f3",
+      "progress_color": "#098bed",
+      "button_color": "#098bed",
+      "button_hover_color": "#098bed",
+      "text_color": "black",
+      "text_color_disabled": "black"
+    },
+    "CTkRadioButton": {
+      "corner_radius": 5,
+      "border_width_checked": 6,
+      "border_width_unchecked": 3,
+      "fg_color": "#01a9f3",
+      "border_color": "black",
+      "hover_color": "#098bed",
+      "text_color": "black",
+      "text_color_disabled": "black"
+    },
+    "CTkProgressBar": {
+      "corner_radius": 1000,
+      "border_width": 0,
+      "fg_color": "#01a9f3",
+      "progress_color": "#01a9f3",
+      "border_color": "black"
+    },
+    "CTkSlider": {
+      "corner_radius": 10,
+      "button_corner_radius": 10,
+      "border_width": 6,
+      "button_length": 0,
+      "fg_color": "#01a9f3",
+      "progress_color": "#0054a4",
+      "button_color": "#01a9f3",
+      "button_hover_color": "#098bed"
+    },
+    "CTkOptionMenu": {
+      "corner_radius": 6,
+      "fg_color": "#01a9f3",
+      "button_color": "#01a9f3",
+      "button_hover_color": "#098bed",
+      "text_color": "black",
+      "text_color_disabled": "black"
+    },
+    "CTkComboBox": {
+      "corner_radius": 6,
+      "border_width": 2,
+      "fg_color": "#01a9f3",
+      "border_color": "black",
+      "button_color": "#01a9f3",
+      "button_hover_color": "#098bed",
+      "text_color": "black",
+      "text_color_disabled": "black"
+    },
+    "CTkScrollbar": {
+      "corner_radius": 1000,
+      "border_spacing": 5,
+      "fg_color": "transparent",
+      "button_color": "black",
+      "button_hover_color": "black"
+    },
+    "CTkSegmentedButton": {
+      "corner_radius": 10,
+      "border_width": 2,
+      "fg_color": "#54a1eb",
+      "selected_color": "#098bed",
+      "selected_hover_color": "#098bed",
+      "unselected_color": "#01a9f3",
+      "unselected_hover_color": "#01a9f3",
+      "text_color": "black",
+      "text_color_disabled": "black"
+    },
+    "CTkTextbox": {
+      "corner_radius": 6,
+      "border_width": 0,
+      "fg_color": "#e3e3e3",
+      "border_color": "black",
+      "text_color": "black",
+      "scrollbar_button_color": "#d3d3d3",
+      "scrollbar_button_hover_color": "#d3d3d3"
+    },
+    "CTkScrollableFrame": {
+      "label_fg_color": "#01a9f3"
+    },
+    "DropdownMenu": {
+      "fg_color": "#01a9f3",
+      "hover_color": "#3a7ebf",
+      "text_color": "black"
+    },
+    "CTkFont": {
+      "macOS": {
+        "family": "Comic Sans MS",
+        "size": 24,
+        "weight": "normal"
+      },
+      "Windows": {
+        "family": "Comic Sans MS",
+        "size": 24,
+        "weight": "normal"
+      },
+      "Linux": {
+        "family": "Comic Sans MS",
+        "size": 24,
+        "weight": "normal"
+      }
+    }
+  }
