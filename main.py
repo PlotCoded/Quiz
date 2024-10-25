@@ -15,7 +15,7 @@ class App(ctk.CTk):
         super().__init__()
 
         #Adding a title
-        self.title("ExamApp")
+        self.title("Quiz")
 
         #Getting maximum the size of the screen
         self.width = self.winfo_screenwidth() #Getting the user screen width
