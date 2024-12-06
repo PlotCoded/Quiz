@@ -1,0 +1,63 @@
+{
+    "Maths": [
+        {
+            "details": {
+                "name": "Maths",
+                "marks": 50,
+                "time": "00:02:30"
+            }
+        },
+        {
+            "option_type": {
+                "Question 1": "Options",
+                "Question 2": "Options",
+                "Question 3": "Options",
+                "Question 4": "Options"
+            }
+        },
+        {
+            "questions": {
+                "Question 1": "What is log 2(base 2)?",
+                "Question 2": "What is log 2(base 4)?",
+                "Question 3": "What is pi?",
+                "Question 4": "What is the value of b when a = 0 and b = a + 1?"
+            }
+        },
+        {
+            "options": {
+                "Question 1": [
+                    -1,
+                    1,
+                    0,
+                    2
+                ],
+                "Question 2": [
+                    0,
+                    2,
+                    1,
+                    1.5
+                ],
+                "Question 3": [
+                    1.15,
+                    1,
+                    3.1415,
+                    3.5
+                ],
+                "Question 4": [
+                    0,
+                    1,
+                    2,
+                    3
+                ]
+            }
+        },
+        {
+            "answers": {
+                "Question 1": 1,
+                "Question 2": 2,
+                "Question 3": 3.1451,
+                "Question 4": 1
+            }
+        }
+    ]
+}

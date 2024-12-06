@@ -87,7 +87,7 @@ class Header:
         #Note: This is an entry acting as a label because labels don't have a border        
         self.marks = 0
         self.score_var = tk.IntVar(value = f"Marks: {self.marks}")
-        self.score_label= ctk.CTkEntry(self.scroll_frame, textvariable=self.score_var, width=250,height=65, corner_radius=100,border_width=3, justify="center",state="disabled")
+        self.score_label= ctk.CTkEntry(self.scroll_frame, textvariable=self.score_var, width=250, height=65, corner_radius=100,border_width=3, justify="center",state="disabled")
         self.score_label.pack(expand=True, side="left")
 
 class Menu:
@@ -118,7 +118,7 @@ class Menu:
         #These are the editor button. These are kept in the editor frame
         self.search_button = ctk.CTkButton(self.editor_frame,text="",anchor="center",width=30,height=30,border_width=0,image=self.search_image, corner_radius=0,hover_color="#01a9f3", command=self.app.search.window)
         self.add_button = ctk.CTkButton(self.editor_frame,text="",anchor="center",width=30,height=30,border_width=0,image=self.add_image, corner_radius=0,hover_color="#01a9f3",command=self.app.add.detailsPage)
-        self.edit_button = ctk.CTkButton(self.editor_frame,text="",anchor="center",width=30,height=30,border_width=0,image=self.edit_image, corner_radius=0,hover_color="#01a9f3",command=self.app.edit.window)
+        self.edit_button = ctk.CTkButton(self.editor_frame,text="",anchor="center",width=30,height=30,border_width=0,image=self.edit_image, corner_radius=0,hover_color="#01a9f3",command=self.app.edit.mainWindow)
         self.delete_button = ctk.CTkButton(self.editor_frame,text="",anchor="center",width=30,height=30,border_width=0,image=self.delete_image, corner_radius=0,hover_color="#01a9f3",command=self.app.delete.window)
 
         #Displaying the editor buttons(search,add,edit,delete)
