@@ -1,5 +1,8 @@
 import customtkinter as ctk
 import tkinter as tk
+from PIL import Image
+
+from EditorFiles import ExFunc
 
 class Edit:
 	def __init__(self, app):
@@ -83,7 +86,7 @@ class Edit:
 		self.options_window_next_button = ctk.CTkButton(self.window, text="Next", border_width=0, command=optionsWindowNextFunction)
 		
 		#Forgeting the main window's widgets
-		self.forget_main_window_widgets()
+		self.forget_main_window_widgets() 
 
 		displayOptionsWindowWidgets()
 
@@ -115,8 +118,7 @@ class Edit:
 			self.displayOptionsWindowWidgets()
 
 		def saveTopicDetailsFunction():
-			if nameValidator():
-				self.window.destroy()
+			cancelTopicDetailsFunction()
 
 		#Forgeting the main window's widgets
 		self.forgetOptionsWindowWidgets()
@@ -140,28 +142,191 @@ class Edit:
 		displayTopicDetailsWidgets()
 
 	def changeAQuestion(self):
+		def displayScrollWidgets():
+			# Guide on what to do
+			self.question_guide.pack()
+			self.scroll_frame.pack()
+			self.scroll_cancel_button.pack(side="left", padx=20, pady=20)
+			self.scroll_continue_button.pack(side="right", padx=20, pady=20)
+
+		def forgetScrollWidget():
+			self.question_guide.pack_forget()
+			self.scroll_frame.pack_forget()
+			self.scroll_cancel_button.pack_forget()
+			self.scroll_continue_button.pack_forget()
+
+		def scrollCancelFunction():
+			forgetScrollWidget()
+			self.displayOptionsWindowWidgets()
+
+		def scrollContinueFunction():
+			forgetScrollWidget()
+			displayChangeAQuestionWidgets()
+
 		def displayChangeAQuestionWidgets():
 			self.question_number_label.pack()
+			self.frameA.pack(pady=30)
+			self.time.pack(padx=10, side="left")
+			self.marks.pack(padx=10, side="left")
+			self.answer_format_menu.pack(pady=20, padx=20)
+			self.cancel_details_page_button.pack(side="left", padx=20, pady=20, expand=True)
+			self.continue_details_page_button.pack(side="right", padx=20, pady=20, expand=True)
 
+		def actualQuestionFormatFunction():
+			ExFunc.forgetActualQuestionPageWidgets()
+			ExFunc.displayActualQuestionPageWidgets()
+			
 		def forgetChangeAQuestionWidgets():
-			pass
+			self.question_number_label.pack_forget()
+			self.frameA.pack_forget()
+			self.answer_format_menu.pack_forget()
+			self.cancel_details_page_button.pack_forget()
+			self.continue_details_page_button.pack_forget()
+
+		def questionsCommand():
+			forgetScrollWidget()
+			displayChangeAQuestionWidgets()
+
+		def hintFunction():
+			ExFunc.createHintFunction(self)
 
 		def cancelChangeAQuestionFunction():
-			pass
+			forgetChangeAQuestionWidgets()
+			displayScrollWidgets()
 
-		def nextChangeAQuestionFunction():
-			pass
+		def continueChangeAQuestionFunction():
+			ExFunc.Validator(None, self.time, self.marks)
+
+			forgetChangeAQuestionWidgets()
+			ExFunc.displayActualQuestionWidgetsPage(self.frame1, self.format_menu, self.hint_button, self.solution_and_feedback_button, self.format_var, self.question_image_label, self.question, self.answer_format_menu_variable, self.option_frame1, self.option_frame2, self.option_A_button, self.option_A_entry, self.option_B_button, self.option_B_entry, self.option_C_button, self.option_C_entry, self.option_D_button, self.option_D_entry, self.without_options_textbox, self.cancel_actual_question_page_button, self.done_button, False, None)
+
+		# Wigets here is for the scroll frame only
+
+		# Guide on what to do
+		self.question_guide = ctk.CTkLabel(self.window, text="Please click on a question to change")
+
+		# Scroll Frame
+		self.scroll_frame = ctk.CTkScrollableFrame(self.window, corner_radius=0, border_width=0, fg_color="#c3c3c3",orientation="vertical", width=750, height=500)
+
+		#Adding questions
+		for _  in range(5):
+			variable = tk.IntVar(value=1)
+			ctk.CTkRadioButton(self.scroll_frame, text=f"Question {_+1}", variable=variable, value=_+1, command=questionsCommand).pack(pady=50,expand=False)
+
+		#Scroll cancel button
+		self.scroll_cancel_button = ctk.CTkButton(self.window, text="Cancel", border_width=0, command=scrollCancelFunction)
+		
+		#Scroll continue button
+		self.scroll_continue_button = ctk.CTkButton(self.window, text="Continue", border_width=0, command=scrollContinueFunction)
+
+		#Wigets from here is for the question individually
 
 		#Variable to keep track of the question
-        self.question_number = 1
+		self.question_number = 1
 
-        #Creating title label
-        self.question_number_label = ctk.CTkLabel(self.frameB, text=f"Question {self.question_number}'s time setting and marks:")
+		#Creating title label
+		self.question_number_label = ctk.CTkLabel(self.window, text=f"Question {self.question_number}'s time setting and marks:")
 
-       	displayChangeAQuestionWidgets()
+		#Contains the time and marks entry widgets
+		self.frameA = ctk.CTkFrame(self.window, border_width=0, fg_color="#c3c3c3")
 
-	def addNewQuestion(self):
-		pass
+		self.time_var = tk.StringVar(value="00:00:10")
+		self.time = ctk.CTkEntry(self.frameA, textvariable=self.time_var, border_width=0, corner_radius=10, width=200, justify="center",placeholder_text_color="#c3c3c3", placeholder_text="00:00:00")
 
-	def deleteQuestion(self):
-		pass
+		#Allowing the user to enter the total marks for their an individual question
+		self.marks_var = tk.IntVar(value=1)
+		self.marks = ctk.CTkEntry(self.frameA, textvariable=self.marks_var, border_width=0, corner_radius=10, width=200, justify="center", placeholder_text="0", placeholder_text_color="#c3c3c3")
+
+		#Option Menu
+		self.answer_format = ["Options","Without Options"]
+		self.answer_format_menu_variable = tk.StringVar(value=self.answer_format[0])
+		self.answer_format_menu = ctk.CTkOptionMenu(self.window, values=self.answer_format, variable=self.answer_format_menu_variable)
+
+		#Cancel Button
+		self.cancel_details_page_button = ctk.CTkButton(self.window, text="Cancel", border_width=0, command=cancelChangeAQuestionFunction)
+
+		#Continue Button
+		self.continue_details_page_button = ctk.CTkButton(self.window, text="Continue", border_width=0, command=continueChangeAQuestionFunction)
+
+		#This frame is used as a container for the "format menu" and the "hint button"
+		self.frame1 = ctk.CTkFrame(self.window, border_width=0, fg_color="#c3c3c3")
+
+		#Question Format Menu
+		self.question_formats = ["Text","Image","Video"]
+		self.format_var = tk.StringVar(value=self.question_formats[0])
+		self.format_menu = ctk.CTkOptionMenu(self.frame1, values=self.question_formats, variable=self.format_var, command=actualQuestionFormatFunction)
+		
+		self.hint = "" #Making an attribute to store the hint
+
+		self.solution_and_feedback = "" #Making an attribute to store the solution and feedback 
+		self.solution_image_filename = "Pictures/AddImage.jpg" #Making an attribute to store the solution image 
+
+		#Hint image for the button
+		self.hint_img = ctk.CTkImage(light_image=Image.open("Pictures/Hint.png"), size=(30,30))
+
+		#Hint button: When clicked, it allows the user to add or changes an assigned hint 
+		self.hint_button = ctk.CTkButton(self.frame1, text="Add Hint", image=self.hint_img, command=hintFunction)
+
+		#Solution button: When clicked, it allows the user to add the solution and feedback to that question
+		self.solution_and_feedback_button = ctk.CTkButton(self.frame1, text="Add Solutions", command=ExFunc.solutionFunction)
+
+		#Question textbox: This is where the user inserts their question
+		self.question = ctk.CTkTextbox(self.window, width=600, text_color="#098bed", wrap="word")
+
+		#The is a guide in the "question" textbox at the beginning of every making a new topic
+		if self.question_number == 1:
+		    self.question.insert("0.0", "Please add your question")
+		self.question.focus_set()
+
+		#Question Image: This label stores the question(in image form) inserted by the user
+		self.image_filename = "Pictures/AddImage.jpg"
+		self.question_image = ctk.CTkImage(light_image=Image.open(self.image_filename), size=(400,200))
+		self.question_image_label = ctk.CTkLabel(self.window, image=self.question_image, text="", width=400, height=200)
+		self.question_image_label.bind("<Button-1>", ExFunc.questionImageFunction)
+
+		#Option frames
+		self.option_frame1 = ctk.CTkFrame(self.window, border_width=0, fg_color="#c3c3c3",height=50)
+
+		self.option_frame2 = ctk.CTkFrame(self.window, border_width=0, fg_color="#c3c3c3",height=50)
+
+		#Options variable
+		self.options_variable = tk.StringVar()
+
+		#Options button(radio button) and their entries
+		self.option_A_button = ctk.CTkRadioButton(self.option_frame1,variable=self.options_variable, value="A", text="", command=lambda: ExFunc.selectedOption(self.option_A_entry, self.option_B_entry, self.option_C_entry, self.option_D_entry, self.options_variable))
+
+		self.option_A_entry = ctk.CTkEntry(self.option_frame1, border_width=2, width=275, placeholder_text="Option A", placeholder_text_color="#b3b3b3")
+
+		self.option_B_button = ctk.CTkRadioButton(self.option_frame1,variable=self.options_variable, value="B", text="", command=lambda: ExFunc.selectedOption(self.option_A_entry, self.option_B_entry, self.option_C_entry, self.option_D_entry, self.options_variable))
+
+		self.option_B_entry = ctk.CTkEntry(self.option_frame1, border_width=2, width=275, placeholder_text="Option B", placeholder_text_color="#b3b3b3")
+
+		self.option_C_button = ctk.CTkRadioButton(self.option_frame2,variable=self.options_variable, value="C", text="", command=lambda: ExFunc.selectedOption(self.option_A_entry, self.option_B_entry, self.option_C_entry, self.option_D_entry, self.options_variable))
+
+		self.option_C_entry = ctk.CTkEntry(self.option_frame2, border_width=2, width=275, placeholder_text="Option C", placeholder_text_color="#b3b3b3")
+
+		self.option_D_button = ctk.CTkRadioButton(self.option_frame2,variable=self.options_variable, value="D", text="", command=lambda: ExFunc.selectedOption(self.option_A_entry, self.option_B_entry, self.option_C_entry, self.option_D_entry, self.options_variable))
+
+		self.option_D_entry = ctk.CTkEntry(self.option_frame2, border_width=2, width=275, placeholder_text="Option D", placeholder_text_color="#b3b3b3")
+
+		#Without Options Textbox
+		self.without_options_textbox = ctk.CTkTextbox(self.window, width=600, height=50, text_color="#00FF00")
+
+		#Guide in the "without options textbox" for every beginning of every topic
+		if self.question_number == 1:
+		    self.without_options_textbox.insert("0.0", "Please add your answer")
+
+		#Cancel Button
+		self.cancel_actual_question_page_button = ctk.CTkButton(self.window, text="Cancel", border_width=0, command=cancelActualQuestionPageFunction)
+
+		#Done Button
+		self.done_button = ctk.CTkButton(self.window, text="Done", border_width=0, command=doneFunction)
+		
+		self.forgetOptionsWindowWidgets()
+		displayScrollWidgets()
+
+		def addNewQuestion(self):
+			pass
+
+		def deleteQuestion(self):
+			pass
