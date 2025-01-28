@@ -137,64 +137,8 @@ class Add:
                     self.solution_image_filename = "Pictures/AddImage.jpg"
 
             def solutionFormatFunction(event):
-                forgetSolutionWidgets()
-                displaySolutionWidgets()
-
-            def forgetSolutionWidgets():
-                #Getting rid of widgets
-                self.solution_frame.pack_forget()
-                self.solution_format_menu.pack_forget()
-                self.solution_title.pack_forget()
-                self.solution_textbox.pack_forget()
-                self.solution_question_image_label.pack_forget()
-                self.solution_ok_button.pack_forget()
-                self.solution_restart_button.pack_forget()
-                self.solution_cancel_button.pack_forget()
-
-            def displaySolutionWidgets():
-                #Displaying the widgets
-                self.solution_frame.pack(pady=20)
-                self.solution_format_menu.pack(side="left", padx=20)
-                self.solution_title.pack(side="left", padx=20)
-
-                #If the solution format is to be in text form
-                if self.solution_format_var.get() == "Text":
-                    self.solution_textbox.pack(pady=10)
-
-                #Else if the solution format is to be in image form
-                elif self.solution_format_var.get() == "Image":
-                    self.solution_question_image_label.pack(pady=10)
-
-                #Else if the solution format is to be in video form
-                elif self.solution_format_var.get() == "Video":
-                    pass
-
-                self.solution_ok_button.pack(side="left", padx=30)
-                self.solution_restart_button.pack(side="left", padx=30)
-                self.solution_cancel_button.pack(side="left", padx=30)
-
-            def solutionOkFunction():
-                if (self.solution_textbox.get('0.0', tk.END) == "" or self.solution_textbox.get('0.0', tk.END).isspace()) and self.solution_image_filename == "Pictures/AddImage.jpg":
-                    tk.messagebox.showinfo(title="Invalid Solution and Feedback", message="You have no real characters in your solution and feedback")
-                else:
-                    #Deleting any previous solution and feedback and storing the current solution and feedback
-                    self.solution_and_feedback = self.solution_textbox.get('0.0', tk.END)
-
-                    self.solution_and_feedback_button.configure(text="Solutions Added")
-                    self.solution_and_feedback_window.destroy()
-
-            def restartSolution():
-                solution_restart = tk.messagebox.askyesno(title="Restart Solution and Feedback", message="Are you sure you want to delete your solution and feedback?")
-                if solution_restart:
-                    #Deleting/Restarting the solution and feedback and feedback
-                    self.solution_and_feedback = ""
-                    self.solution_image_filename = "Pictures/AddImage.jpg"
-
-                    self.solution_and_feedback_button.configure(text="Add Solutions")
-                    self.solution_and_feedback_window.destroy() 
-
-            def solutionCancelFunction():
-                self.solution_and_feedback_window.destroy()
+                ExFunc.forgetSolutionWidgets(self)
+                ExFunc.displaySolutionWidgets(self)
 
             #Displaying the window and its features
             self.solution_and_feedback_window = ctk.CTkToplevel(self.window)
@@ -216,14 +160,14 @@ class Add:
             #Add image widget for images only
             self.solution_question_image = ctk.CTkImage(light_image=Image.open(self.solution_image_filename), size=(400,200))
             self.solution_question_image_label = ctk.CTkLabel(self.solution_and_feedback_window, image=self.solution_question_image, text="", width=400, height=200)
-            self.solution_question_image_label.bind("<Button-1>", solutionQuestionImageFunction)
+            self.solution_question_image_label.bind("<Button-1>", lambda event: ExFunc.solutionQuestionImageFunction(self))
 
-            self.solution_ok_button = ctk.CTkButton(self.solution_and_feedback_window, text="Ok", border_width=0, command=solutionOkFunction)
-            self.solution_restart_button = ctk.CTkButton(self.solution_and_feedback_window, text="Restart Solution", border_width=0, command=restartSolution)
-            self.solution_cancel_button = ctk.CTkButton(self.solution_and_feedback_window, text="Cancel",border_width=0, command=solutionCancelFunction)
+            self.solution_ok_button = ctk.CTkButton(self.solution_and_feedback_window, text="Ok", border_width=0, command=lambda: ExFunc.solutionOkFunction(self))
+            self.solution_restart_button = ctk.CTkButton(self.solution_and_feedback_window, text="Restart Solution", border_width=0, command=lambda: ExFunc.restartSolution(self))
+            self.solution_cancel_button = ctk.CTkButton(self.solution_and_feedback_window, text="Cancel",border_width=0, command=lambda: ExFunc.solutionCancelFunction(self))
 
             #Displaying wigets
-            displaySolutionWidgets()
+            ExFunc.displaySolutionWidgets(self)
 
         def forgetActualQuestionPageWidgets():
             #Forgetting the widgets
@@ -238,9 +182,9 @@ class Add:
             self.done_button.pack_forget()
 
         def actualQuestionFormatFunction(event):
-            ExFunc.forgetActualQuestionPageWidgets(self.frame1, self.question, self.question_image_label, self.without_options_textbox, self.option_frame1, self.option_frame2, self.continue_actual_question_page_button, self.cancel_actual_question_page_button, self.done_button)
+            ExFunc.forgetActualQuestionPageWidgets(self)
 
-            ExFunc.displayActualQuestionPageWidgets(self.frame1, self.format_menu, self.hint_button, self.solution_and_feedback_button, self.format_var, self.question_image_label, self.question, self.answer_format_menu_variable, self.option_frame1, self.option_frame2, self.option_A_button, self.option_A_entry, self.option_B_button, self.option_B_entry, self.option_C_button, self.option_C_entry, self.option_D_button, self.option_D_entry, self.without_options_textbox, self.cancel_actual_question_page_button, self.done_button, False, None)
+            ExFunc.displayActualQuestionPageWidgets(self, True)
 
         def questionImageFunction(event):
             self.image_filename = ctk.filedialog.askopenfilename()
@@ -273,7 +217,6 @@ class Add:
             if self.question_number > 1:
                 self.question_number-=1
             self.question_number_label.configure(text=f"Question {self.question_number}'s time setting and marks:")
-
 
             #Redisplaying the details page widgets
             displayDetailsPageWidgets()
@@ -312,7 +255,7 @@ class Add:
         self.image_filename = "Pictures/AddImage.jpg"
         self.question_image = ctk.CTkImage(light_image=Image.open(self.image_filename), size=(400,200))
         self.question_image_label = ctk.CTkLabel(self.window, image=self.question_image, text="", width=400, height=200)
-        self.question_image_label.bind("<Button-1>", questionImageFunction)
+        self.question_image_label.bind("<Button-1>", lambda event: ExFunc.questionImageFunction(self))
 
         #Option frames
         self.option_frame1 = ctk.CTkFrame(self.window, border_width=0, fg_color="#c3c3c3",height=50)
@@ -355,4 +298,4 @@ class Add:
         #Done Button
         self.done_button = ctk.CTkButton(self.window, text="Done", border_width=0, command=doneFunction)
 
-        ExFunc.displayActualQuestionPageWidgets(self.frame1, self.format_menu, self.hint_button, self.solution_and_feedback_button, self.format_var, self.question_image_label, self.question, self.answer_format_menu_variable, self.option_frame1, self.option_frame2, self.option_A_button, self.option_A_entry, self.option_B_button, self.option_B_entry, self.option_C_button, self.option_C_entry, self.option_D_button, self.option_D_entry, self.without_options_textbox, self.cancel_actual_question_page_button, self.done_button, True, self.continue_actual_question_page_button)
+        ExFunc.displayActualQuestionPageWidgets(self, True)

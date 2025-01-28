@@ -2,8 +2,12 @@
 
 import re
 import tkinter as tk
+import customtkinter as ctk
+from PIL import Image
 
 def Validator(topic_entry_widget, time_entry_widget, marks_entry_widget):
+    return True #This return statement stays True is all the validation meet the requirements
+
     #Validating the topic names input
     if topic_entry_widget != None:
         if topic_entry_widget.get().isidentifier() == False:
@@ -104,63 +108,61 @@ def actualQuestionValidation(option_A_entry, option_B_entry, option_C_entry, opt
     else:
         return True
 
-def displayActualQuestionPageWidgets(frame1, format_menu, hint_button, solution_and_feedback_button, format_var, question_image_label, question, answer_format_menu_variable, option_frame1, option_frame2, option_A_button, option_A_entry, option_B_button, option_B_entry, option_C_button, option_C_entry, option_D_button, option_D_entry, without_options_textbox, cancel_actual_question_page_button, done_button, continue_present, continue_actual_question_page_button = None):
+def displayActualQuestionPageWidgets(self, continue_present):
     #Displaying the widgets
-    frame1.pack(pady=20)
-    format_menu.pack(side="left", padx=40)
-    hint_button.pack(side="left", padx=40)
-    solution_and_feedback_button.pack(side="left", padx=40)
+    self.frame1.pack(pady=20)
+    self.format_menu.pack(side="left", padx=40)
+    self.hint_button.pack(side="left", padx=40)
+    self.solution_and_feedback_button.pack(side="left", padx=40)
 
     #If the questin format is to be in text form
-    if format_var.get() == "Text":
-        question.pack(pady=10)
-        question_image_label.pack_forget()
+    if self.format_var.get() == "Text":
+        self.question.pack(pady=10)
+        self.question_image_label.pack_forget()
 
     #Else if the question format is to be in image form
-    elif format_var.get() == "Image":
-        question_image_label.pack(pady=10)
-        question.pack_forget()
+    elif self.format_var.get() == "Image":
+        self.question_image_label.pack(pady=10)
+        self.question.pack_forget()
 
     #Else if the questin format is to be in video form
-    elif format_var.get() == "Video":
+    elif self.format_var.get() == "Video":
         pass
 
     #Telling what answer format type to display: "Options" or "Without Options"
-    if answer_format_menu_variable.get() == "Options":
-        option_frame1.pack(fill="x", pady=3)
-        option_frame2.pack(fill="x",pady=3)
-        option_A_button.place(relx=0.05, rely=0.1)
-        option_A_entry.place(relx=0.09,rely=0.1)
-        option_B_button.place(relx=0.5,rely=0.1,)
-        option_B_entry.place(relx=0.54,rely=0.1)
-        option_C_button.place(relx=0.05,rely=0.1)
-        option_C_entry.place(relx=0.09,rely=0.1)
-        option_D_button.place(relx=0.5,rely=0.1)
-        option_D_entry.place(relx=0.54,rely=0.1)
+    if self.answer_format_menu_variable.get() == "Options":
+        self.option_frame1.pack(fill="x", pady=3)
+        self.option_frame2.pack(fill="x",pady=3)
+        self.option_A_button.place(relx=0.05, rely=0.1)
+        self.option_A_entry.place(relx=0.09,rely=0.1)
+        self.option_B_button.place(relx=0.5,rely=0.1,)
+        self.option_B_entry.place(relx=0.54,rely=0.1)
+        self.option_C_button.place(relx=0.05,rely=0.1)
+        self.option_C_entry.place(relx=0.09,rely=0.1)
+        self.option_D_button.place(relx=0.5,rely=0.1)
+        self.option_D_entry.place(relx=0.54,rely=0.1)
 
-    elif answer_format_menu_variable.get() == "Without Options":
-        without_options_textbox.pack()
+    elif self.answer_format_menu_variable.get() == "Without Options":
+        self.without_options_textbox.pack()
 
     if continue_present == True:
-        continue_actual_question_page_button.pack(side="left", padx=20, pady=20, expand=True)
-    cancel_actual_question_page_button.pack(side="left", padx=20, pady=20, expand=True)
-    done_button.pack(side="left", padx=20, pady=20, expand=True)
+        self.continue_actual_question_page_button.pack(side="left", padx=20, pady=20, expand=True)
+    self.cancel_actual_question_page_button.pack(side="left", padx=20, pady=20, expand=True)
+    self.done_button.pack(side="left", padx=20, pady=20, expand=True)
 
-def forgetActualQuestionPageWidgets(frame1, question, question_image_label, without_options_textbox, option_frame1, option_frame2, continue_actual_question_page_button, cancel_actual_question_page_button, done_button):
+def forgetActualQuestionPageWidgets(self):
     #Forgetting the widgets
-    frame1.pack_forget()
-    question.pack_forget()
-    question_image_label.pack_forget()
-    without_options_textbox.pack_forget()
-    option_frame1.pack_forget()
-    option_frame2.pack_forget()
-    continue_actual_question_page_button.pack_forget()
-    cancel_actual_question_page_button.pack_forget()
-    done_button.pack_forget()
+    self.frame1.pack_forget()
+    self.question.pack_forget()
+    self.question_image_label.pack_forget()
+    self.without_options_textbox.pack_forget()
+    self.option_frame1.pack_forget()
+    self.option_frame2.pack_forget()
+    self.continue_actual_question_page_button.pack_forget()
+    self.cancel_actual_question_page_button.pack_forget()
+    self.done_button.pack_forget()
 
 def createHintWidgets(self):
-    import customtkinter as ctk
-
     #Displaying the window and its features
     self.hint_window = ctk.CTkToplevel(self.window)
     self.hint_window.transient(self.window)
@@ -204,3 +206,93 @@ def restartHint(self):
 
 def hintCancelFunction(self):
     self.hint_window.destroy()
+
+def solutionQuestionImageFunction(self):
+    self.solution_image_filename = ctk.filedialog.askopenfilename()
+
+    #Handling potential errors. Eg, when the user chooses a non-image file, i.e exe, mp4, py
+    try:
+        #Displaying the image on the question image label
+        self.solution_question_image.configure(light_image=Image.open(self.solution_image_filename))
+    except:
+        if self.solution_image_filename != "":
+            #Error message when the user chooses a non-image file
+            tk.messagebox.showerror(title="Invalid File", message="Please insert a valid image")
+
+        #Making the image file to be its default "Pictures/AddImage.jpg"
+        self.solution_image_filename = "Pictures/AddImage.jpg"
+
+def questionImageFunction(self):
+    print("Opening file window")
+    self.image_filename = ctk.filedialog.askopenfilename()
+
+    print(self.image_filename)
+    #Handling potential errors. Eg, when the user chooses a non-image file, i.e exe, mp4, py
+    try:
+        #Displaying the image on the question image label
+        self.question_image.configure(light_image=Image.open(self.image_filename))
+        print("No error occured")
+    except Exception as message:
+        print(message)
+        if self.image_filename != "":
+            #Error message when the user chooses a non-image file
+            tk.messagebox.showerror(title="Invalid File", message="Please insert a valid image")
+        
+        #Making the image file to be its default "Pictures/AddImage.jpg"
+        self.image_filename = "Pictures/AddImage.jpg"
+
+def displaySolutionWidgets(self):
+    #Displaying the widgets
+    self.solution_frame.pack(pady=20)
+    self.solution_format_menu.pack(side="left", padx=20)
+    self.solution_title.pack(side="left", padx=20)
+
+    #If the solution format is to be in text form
+    if self.solution_format_var.get() == "Text":
+        self.solution_textbox.pack(pady=10)
+
+    #Else if the solution format is to be in image form
+    elif self.solution_format_var.get() == "Image":
+        self.solution_question_image_label.pack(pady=10)
+
+    #Else if the solution format is to be in video form
+    elif self.solution_format_var.get() == "Video":
+        pass
+
+    self.solution_ok_button.pack(side="left", padx=30)
+    self.solution_restart_button.pack(side="left", padx=30)
+    self.solution_cancel_button.pack(side="left", padx=30)
+
+def solutionOkFunction(self):
+    if (self.solution_textbox.get('0.0', tk.END) == "" or self.solution_textbox.get('0.0', tk.END).isspace()) and self.solution_image_filename == "Pictures/AddImage.jpg":
+        tk.messagebox.showinfo(title="Invalid Solution and Feedback", message="You have no real characters in your solution and feedback")
+    else:
+        #Deleting any previous solution and feedback and storing the current solution and feedback
+        self.solution_and_feedback = self.solution_textbox.get('0.0', tk.END)
+
+        self.solution_and_feedback_button.configure(text="Solutions Added")
+        self.solution_and_feedback_window.destroy()
+
+def restartSolution(self):
+    solution_restart = tk.messagebox.askyesno(title="Restart Solution and Feedback", message="Are you sure you want to delete your solution and feedback?")
+    if solution_restart:
+        #Deleting/Restarting the solution and feedback and feedback
+        self.solution_and_feedback = ""
+        self.solution_image_filename = "Pictures/AddImage.jpg"
+
+        self.solution_and_feedback_button.configure(text="Add Solutions")
+        self.solution_and_feedback_window.destroy() 
+
+def forgetSolutionWidgets(self):
+    #Getting rid of widgets
+    self.solution_frame.pack_forget()
+    self.solution_format_menu.pack_forget()
+    self.solution_title.pack_forget()
+    self.solution_textbox.pack_forget()
+    self.solution_question_image_label.pack_forget()
+    self.solution_ok_button.pack_forget()
+    self.solution_restart_button.pack_forget()
+    self.solution_cancel_button.pack_forget()
+
+def solutionCancelFunction(self):
+    self.solution_and_feedback_window.destroy()
