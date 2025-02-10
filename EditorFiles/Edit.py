@@ -229,19 +229,28 @@ class Edit:
 			ExFunc.forgetSolutionWidgets(self)
 			ExFunc.displaySolutionWidgets(self)
 
-		def addNewQuestion():
+		def addNewQuestionFunction():
 			#Editing the question number label to give more info
 			# Note: At this point, people might get a bit confused with the UI design because of the way it moved from an editing question to a new question
 			self.question_number_label.configure(text=f"This is now the new question {self.question_number+1}.")
 
 			forgetChangeAQuestionWidgets()
+
+			# Maybe add a timer here to reduce the confusion at this point
 			displayChangeAQuestionWidgets()
 
 			#Removing the widgets that aren't necessary
 			self.add_button.pack_forget()
 			self.delete_button.pack_forget()
+			
+		def infoFunction():
+                        # This function is implemented to the info button
+                        window = ctk.CTkTopLevel()
 
-		def deleteQuestion():
+                        # This text contains all the help information needed for the user
+                        text = ""
+
+		def deleteQuestionFunction():
 			pass
 
 		def cancelChangeAQuestionFunction():
@@ -286,11 +295,13 @@ class Edit:
 		#Contains the add and delete buttons
 		self.add_delete_frame = ctk.CTkFrame(self.window, border_width=0, fg_color="#c3c3c3")
 
-		self.add_button = ctk.CTkButton(self.add_delete_frame, text="Add a New Question", border_width=0, command=addNewQuestion)
+		self.add_button = ctk.CTkButton(self.add_delete_frame, text="Add a New Question", border_width=0, command=addNewQuestionFunction)
 
-		self.delete_button = ctk.CTkButton(self.add_delete_frame, text="Delete this Question", border_width=0, command=deleteQuestion)
+		self.delete_button = ctk.CTkButton(self.add_delete_frame, text="Delete this Question", border_width=0, command=deleteQuestionFunction)
 
-		self.info = ctk.CTkButton(self.window, text="", border_width=0, command=None)
+                # Info button: Contains the help information about what the "add question page" does
+		self.info = ctk.CTkButton(self.window, text="", border_width=0, command=infoFunction)
+
 		#Contains the time and marks entry widgets
 		self.frameA = ctk.CTkFrame(self.window, border_width=0, fg_color="#c3c3c3")
 
