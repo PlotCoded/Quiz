@@ -74,7 +74,7 @@ class Edit:
 		self.guide = ctk.CTkLabel(self.window, text="Do you wish to: ")
 
 		#Creating a list of editing chioces
-		self.editing_choices = ["Change Topic Details", "Change a Question","Add a New Question","Delete a Question"]
+		self.editing_choices = ["Change Topic Details", "Change a Question","Delete a Question"]
 
 		#Creating an options menu which contain the user's choice of editing, eg, change Topic Details, change Questions, etc
 		self.editing_options = ctk.CTkOptionMenu(self.window, values=self.editing_choices)
@@ -90,6 +90,7 @@ class Edit:
 
 		displayOptionsWindowWidgets()
 
+	#This function is to edit the topic's meta data
 	def changeTopicDetails(self):
 		def displayTopicDetailsWidgets():
 			self.indicator.pack()
@@ -141,6 +142,7 @@ class Edit:
 		
 		displayTopicDetailsWidgets()
 
+	#To edit the actual questions
 	def changeAQuestion(self):
 		def displayScrollWidgets():
 			# Guide on what to do
@@ -166,6 +168,9 @@ class Edit:
 		def displayChangeAQuestionWidgets():
 			self.question_number_label.pack()
 			self.frameA.pack(pady=30)
+			self.add_delete_frame.pack()
+			self.add_button.pack(side="left", padx=30)
+			self.delete_button.pack(side="right", padx=30)
 			self.time.pack(padx=10, side="left")
 			self.marks.pack(padx=10, side="left")
 			self.answer_format_menu.pack(pady=20, padx=20)
@@ -179,6 +184,7 @@ class Edit:
 		def forgetChangeAQuestionWidgets():
 			self.question_number_label.pack_forget()
 			self.frameA.pack_forget()
+			self.add_delete_frame.pack_forget()
 			self.answer_format_menu.pack_forget()
 			self.cancel_details_page_button.pack_forget()
 			self.continue_details_page_button.pack_forget()
@@ -223,6 +229,20 @@ class Edit:
 			ExFunc.forgetSolutionWidgets(self)
 			ExFunc.displaySolutionWidgets(self)
 
+		def addNewQuestion():
+			#Editing the question number label to give more info
+			self.question_number_label.configure(text=f"This is now the new question {self.question_number+1}.")
+
+			forgetChangeAQuestionWidgets()
+			displayChangeAQuestionWidgets()
+
+			#Removing the widgets that aren't necessary
+			self.add_button.pack_forget()
+			self.delete_button.pack_forget()
+
+		def deleteQuestion():
+			pass
+
 		def cancelChangeAQuestionFunction():
 			forgetChangeAQuestionWidgets()
 			displayScrollWidgets()
@@ -262,6 +282,14 @@ class Edit:
 		#Creating title label
 		self.question_number_label = ctk.CTkLabel(self.window, text=f"Question {self.question_number}'s time setting and marks:")
 
+		#Contains the add and delete buttons
+		self.add_delete_frame = ctk.CTkFrame(self.window, border_width=0, fg_color="#c3c3c3")
+
+		self.add_button = ctk.CTkButton(self.add_delete_frame, text="Add a New Question", border_width=0, command=addNewQuestion)
+
+		self.delete_button = ctk.CTkButton(self.add_delete_frame, text="Delete this Question", border_width=0, command=deleteQuestion)
+
+		self.info = ctk.CTkButton(self.window, text="", border_width=0, command=None)
 		#Contains the time and marks entry widgets
 		self.frameA = ctk.CTkFrame(self.window, border_width=0, fg_color="#c3c3c3")
 
