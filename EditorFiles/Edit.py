@@ -231,6 +231,7 @@ class Edit:
 
 		def addNewQuestion():
 			#Editing the question number label to give more info
+			# Note: At this point, people might get a bit confused with the UI design because of the way it moved from an editing question to a new question
 			self.question_number_label.configure(text=f"This is now the new question {self.question_number+1}.")
 
 			forgetChangeAQuestionWidgets()
