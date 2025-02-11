@@ -1,6 +1,7 @@
 import customtkinter as ctk
 import tkinter as tk
 from PIL import Image
+import time
 
 from EditorFiles import ExFunc
 
@@ -148,8 +149,8 @@ class Edit:
 			# Guide on what to do
 			self.question_guide.pack()
 			self.scroll_frame.pack()
-			self.scroll_cancel_button.pack(side="left", padx=20, pady=20)
-			self.scroll_continue_button.pack(side="right", padx=20, pady=20)
+			self.scroll_cancel_button.pack(side="left", padx=110, pady=20)
+			self.scroll_continue_button.pack(side="right", padx=110, pady=20)
 
 		def forgetScrollWidget():
 			self.question_guide.pack_forget()
@@ -233,21 +234,27 @@ class Edit:
 			#Editing the question number label to give more info
 			self.question_number_label.configure(text=f"This is now the new question {self.question_number+1}.")
 
-			forgetChangeAQuestionWidgets()
+			forgetChangeAQuestionWidgets() # Forgetting the Options Page
+
+			def displayAddQuestion():
+				displayChangeAQuestionWidgets()
+
+				#Removing the widgets that aren't necessary
+				self.add_button.pack_forget()
+				self.delete_button.pack_forget()
+
+				# Preventing the "continue_actual_question_page_button" from appearing on the next page
+				self.continue_present = False
 
 			# Maybe add a timer here to reduce the confusion at this point
-			displayChangeAQuestionWidgets()
+			self.app.after(100, displayAddQuestion)
 
-			#Removing the widgets that aren't necessary
-			self.add_button.pack_forget()
-			self.delete_button.pack_forget()
-			
 		def infoFunction():
-                        # This function is implemented to the info button
-                        window = ctk.CTkTopLevel()
+			# This function is implemented to the info button
+			window = ctk.CTkTopLevel()
 
-                        # This text contains all the help information needed for the user
-                        text = ""
+			# This text contains all the help information needed for the user
+			text = ""
 
 		def deleteQuestionFunction():
 			pass
@@ -262,7 +269,7 @@ class Edit:
 			if ExFunc.Validator(None, self.time, self.marks): #If the validation does meet its needs then it allows the actual question widgets to be displayed,else not displayed
 				print("Dones't work")
 				forgetChangeAQuestionWidgets()
-				ExFunc.displayActualQuestionPageWidgets(self, True)
+				ExFunc.displayActualQuestionPageWidgets(self, self.continue_present)
 
 		# Wigets here is for the scroll frame only Validator
 
@@ -278,10 +285,10 @@ class Edit:
 			ctk.CTkRadioButton(self.scroll_frame, text=f"Question {_+1}", variable=variable, value=_+1, command=questionsCommand).pack(pady=50,expand=False)
 
 		#Scroll cancel button
-		self.scroll_cancel_button = ctk.CTkButton(self.window, text="Cancel", border_width=0, command=scrollCancelFunction)
+		self.scroll_cancel_button = ctk.CTkButton(self.scroll_frame, text="Cancel", border_width=0, command=scrollCancelFunction)
 		
 		#Scroll continue button
-		self.scroll_continue_button = ctk.CTkButton(self.window, text="Continue", border_width=0, command=scrollContinueFunction)
+		self.scroll_continue_button = ctk.CTkButton(self.scroll_frame, text="Continue", border_width=0, command=scrollContinueFunction)
 
 		#Wigets from here is for the question individually
 
@@ -298,7 +305,7 @@ class Edit:
 
 		self.delete_button = ctk.CTkButton(self.add_delete_frame, text="Delete this Question", border_width=0, command=deleteQuestionFunction)
 
-                # Info button: Contains the help information about what the "add question page" does
+        # Info button: Contains the help information about what the "add question page" does
 		self.info = ctk.CTkButton(self.window, text="", border_width=0, command=infoFunction)
 
 		#Contains the time and marks entry widgets
@@ -319,6 +326,9 @@ class Edit:
 		#Cancel Button
 		self.cancel_details_page_button = ctk.CTkButton(self.window, text="Cancel", border_width=0, command=cancelChangeAQuestionFunction)
 
+		# Continue Present
+		self.continue_present = True
+		
 		#Continue Button
 		self.continue_details_page_button = ctk.CTkButton(self.window, text="Continue", border_width=0, command=continueChangeAQuestionFunction)
 
