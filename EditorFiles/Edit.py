@@ -244,11 +244,28 @@ class Edit:
 				self.add_button.pack_forget()
 				self.delete_button.pack_forget()
 
+				# Changing the "cancel_details_page_button" button function
+				self.cancel_details_page_button.configure(command=addNewQuestionCancelFunction)
+
 				# Preventing the "continue_actual_question_page_button" from appearing on the next page
 				self.continue_present = False
 
 			# Maybe add a timer here to reduce the confusion at this point
 			self.app.after(100, displayAddQuestion)
+
+		def addNewQuestionCancelFunction():
+			# Bringing back the continue button on the actual page
+			self.continue_present = True
+
+			forgetChangeAQuestionWidgets()
+
+			# Changing the question label to the usual text
+			self.question_number_label.configure(text=f"Question {self.question_number}'s time setting and marks:")
+
+			# Changing the cancel button command to its original command
+			self.cancel_details_page_button.configure(command=cancelChangeAQuestionFunction)
+
+			self.app.after(100, displayChangeAQuestionWidgets)
 
 		def infoFunction():
 			# This function is implemented to the info button
@@ -262,7 +279,15 @@ class Edit:
 
 		def cancelChangeAQuestionFunction():
 			forgetChangeAQuestionWidgets()
-			displayScrollWidgets()
+			if self.question_number > 1:
+				# Change the question nummber minus 1
+				self.question_number-=1
+
+				# Updating the question number label
+				self.question_number_label.configure(text=f"Question {self.question_number}'s time setting and marks:")
+				
+				ExFunc.displayActualQuestionPageWidgets(self, True)			
+			else: displayScrollWidgets()
 
 		def continueChangeAQuestionFunction():
 			print("Continue here")
@@ -271,6 +296,25 @@ class Edit:
 				print("Dones't work")
 				forgetChangeAQuestionWidgets()
 				ExFunc.displayActualQuestionPageWidgets(self, self.continue_present)
+
+		def actualQuestionCancelFunction():
+			ExFunc.forgetActualQuestionPageWidgets(self)				
+			displayChangeAQuestionWidgets()
+
+		def actualQuestionContinueFunction():
+			# Don't forget to implement Validations
+			ExFunc.forgetActualQuestionPageWidgets(self)
+
+			# Update the question number by adding one to it
+			self.question_number+=1
+
+			# Updating the question number label
+			self.question_number_label.configure(text=f"Question {self.question_number}'s time setting and marks:")
+
+			displayChangeAQuestionWidgets()
+
+		def actualQuestionDoneFunction():
+			pass
 
 		# Wigets here is for the scroll frame only Validator
 
@@ -402,12 +446,12 @@ class Edit:
 		    self.without_options_textbox.insert("0.0", "Please add your answer")
 
 		# Continue Button
-		self.continue_actual_question_page_button = ctk.CTkButton(self.window, text="Continue", border_width=0)
+		self.continue_actual_question_page_button = ctk.CTkButton(self.window, text="Continue", border_width=0, command=actualQuestionContinueFunction)
 		#Cancel Button
-		self.cancel_actual_question_page_button = ctk.CTkButton(self.window, text="Cancel", border_width=0)
+		self.cancel_actual_question_page_button = ctk.CTkButton(self.window, text="Cancel", border_width=0, command=actualQuestionCancelFunction)
 
 		#Done Button
-		self.done_button = ctk.CTkButton(self.window, text="Done", border_width=0)
+		self.done_button = ctk.CTkButton(self.window, text="Done", border_width=0, command=actualQuestionDoneFunction)
 		
 		self.forgetOptionsWindowWidgets()
 		displayScrollWidgets()

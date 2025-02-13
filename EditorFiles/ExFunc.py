@@ -6,6 +6,7 @@ import customtkinter as ctk
 from PIL import Image
 
 def Validator(topic_entry_widget, time_entry_widget, marks_entry_widget):
+    # Don't forget to remove parameters and add "self" parameters
     return True #This return statement stays True is all the validation meet the requirements
 
     #Validating the topic names input
@@ -57,6 +58,7 @@ def Validator(topic_entry_widget, time_entry_widget, marks_entry_widget):
         return False
 
 def selectedOption(option_A_entry, option_B_entry, option_C_entry, option_D_entry, options_variable):
+    # Don't forget to remove parameters and add "self" parameters
     if options_variable.get() == "A": #if Option A is selected
         option_A_entry.configure(text_color="#00FF00")
         option_B_entry.configure(text_color="#FF0000")
@@ -79,6 +81,8 @@ def selectedOption(option_A_entry, option_B_entry, option_C_entry, option_D_entr
         option_D_entry.configure(text_color="#00FF00")
 
 def actualQuestionValidation(option_A_entry, option_B_entry, option_C_entry, option_D_entry, option_A_button, option_B_button, option_C_button, option_D_button, options_variable, answer_format_menu_variable, without_options_textbox, question, image_filename):
+    # Don't forget to remove parameters and add "self" parameters
+
     #List of all options entry
     options_entry = [option_A_entry, option_B_entry, option_C_entry, option_D_entry]
     option_radio_buttons = [option_A_button, option_B_button, option_C_button, option_D_button]
