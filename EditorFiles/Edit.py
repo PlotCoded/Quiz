@@ -298,8 +298,11 @@ class Edit:
 				ExFunc.displayActualQuestionPageWidgets(self, self.continue_present)
 
 		def actualQuestionCancelFunction():
-			ExFunc.forgetActualQuestionPageWidgets(self)				
+			ExFunc.forgetActualQuestionPageWidgets(self)
 			displayChangeAQuestionWidgets()
+
+			if self.continue_present == False:
+				self.add_delete_frame.pack_forget()
 
 		def actualQuestionContinueFunction():
 			# Don't forget to implement Validations
@@ -314,7 +317,20 @@ class Edit:
 			displayChangeAQuestionWidgets()
 
 		def actualQuestionDoneFunction():
-			pass
+			done = tk.messagebox.askyesno(title="Exit", message="Are you sure you want to save this topic?")
+			if done:
+				ExFunc.forgetActualQuestionPageWidgets(self)
+				if self.continue_present == True:
+					displayScrollWidgets()
+				else:
+					# Updating the question number
+					self.question_number+=1
+					self.question_number_label.configure(text=f"Question {self.question_number}'s time setting and marks:")
+
+					# Allowing the continue button to be seen as it has entered the Change a Question Widgets
+					self.continue_present = True
+					
+					displayChangeAQuestionWidgets()
 
 		# Wigets here is for the scroll frame only Validator
 
