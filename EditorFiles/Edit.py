@@ -15,6 +15,12 @@ class Edit:
 		self.window.title("Edit")
 		self.window.geometry("750x500+500+150")
 
+		def destroyCommand():
+			you_sure = tk.messagebox.askyesno(title="Exit", message="Are you sure you want to exit out of this window?", default="no")
+
+			if you_sure:
+				self.window.destroy()
+
 		def displayWidgets():
 			self.description.pack()
 			self.edit_scroll_frame.pack()
@@ -22,6 +28,9 @@ class Edit:
 		def forgetWidgets():
 			self.description.pack_forget()
 			self.edit_scroll_frame.pack_forget()
+
+		# Implementing the exit command
+		self.window.protocol("WM_DELETE_WINDOW", destroyCommand)
 
 		#Creating an attribute of the functions above
 		self.forget_main_window_widgets = forgetWidgets
@@ -57,8 +66,6 @@ class Edit:
 			self.displayWidgets()
 
 		def optionsWindowNextFunction():
-			print(self.editing_options.get())
-
 			#If the user choice to change topic details by selecting "Change Topic Details" in the editing options menu
 			if self.editing_options.get() == "Change Topic Details":
 				self.changeTopicDetails()
@@ -66,6 +73,10 @@ class Edit:
 			#If the user choice to change question by selecting "Change a Question" in the editing options menu
 			elif self.editing_options.get() == "Change a Question":
 				self.changeAQuestion()
+
+			#If the user choice to change question by selecting "Delete a Question" in the editing options menu
+			elif self.editing_options.get() == "Delete a Question":
+				self.deleteQuestion()
 
 		#Creating an attribute of the "forgetOptionsWindowWidgets" and "displayOptionsWindowWidgets" functions
 		self.forgetOptionsWindowWidgets = forgetOptionsWindowWidgets
@@ -249,8 +260,13 @@ class Edit:
 				# Preventing the "continue_actual_question_page_button" from appearing on the next page
 				self.continue_present = False
 
+				# Changing the solution and hint variables for only adding new questions purposes
+
 			# Maybe add a timer here to reduce the confusion at this point
 			self.app.after(100, displayAddQuestion)
+
+			# Configuring the done button just for the add new question page
+			self.done_button.configure(command=addNewQuestionDoneFunction)
 
 		def addNewQuestionCancelFunction():
 			# Bringing back the continue button on the actual page
@@ -264,7 +280,15 @@ class Edit:
 			# Changing the cancel button command to its original command
 			self.cancel_details_page_button.configure(command=cancelChangeAQuestionFunction)
 
-			self.app.after(100, displayChangeAQuestionWidgets)
+		def addNewQuestionDoneFunction():
+			ExFunc.forgetActualQuestionPageWidgets(self)
+
+			# Configuring the variables back to their original state
+			self.continue_present = True
+			self.question_number_label.configure(text=f"Question {self.question_number}'s time setting and marks:")
+			self.done_button.configure(command=actualQuestionDoneFunction)
+
+			displayChangeAQuestionWidgets()
 
 		def infoFunction():
 			# This function is implemented to the info button
@@ -274,7 +298,15 @@ class Edit:
 			text = ""
 
 		def deleteQuestionFunction():
-			pass
+			you_sure = tk.messagebox.askyesno(title="Delete",message="Are you sure you want to delete this question?")
+
+			if you_sure:
+				if self.question_number > 1:
+					self.question_number-=1
+					self.question_number_label.configure(text=f"Question {self.question_number}'s time setting and marks:")
+					
+					forgetChangeAQuestionWidgets()
+					displayChangeAQuestionWidgets()
 
 		def cancelChangeAQuestionFunction():
 			forgetChangeAQuestionWidgets()
@@ -288,9 +320,7 @@ class Edit:
 				ExFunc.displayActualQuestionPageWidgets(self, True)			
 			else: displayScrollWidgets()
 
-		def continueChangeAQuestionFunction():
-			print("Continue here")
-			print(self.time)
+		def continueChangeAQuestionFunction():	
 			if ExFunc.Validator(None, self.time, self.marks): #If the validation does meet its needs then it allows the actual question widgets to be displayed,else not displayed
 				print("Dones't work")
 				forgetChangeAQuestionWidgets()
@@ -313,7 +343,11 @@ class Edit:
 			displayChangeAQuestionWidgets()
 
 		def actualQuestionDoneFunction():
-			pass
+			you_sure = tk.messagebox.askyesno(title="Save", message="Are you sure you want to save this topic?")
+
+			if you_sure:
+				ExFunc.forgetActualQuestionPageWidgets(self)
+				displayScrollWidgets()
 
 		# Wigets here is for the scroll frame only Validator
 
@@ -384,19 +418,19 @@ class Edit:
 		self.format_var = tk.StringVar(value=self.question_formats[0])
 		self.format_menu = ctk.CTkOptionMenu(self.frame1, values=self.question_formats, variable=self.format_var, command=actualQuestionFormatFunction)
 		
-		self.hint = "" #Making an attribute to store the hint
+		self.hint = "" # Making an attribute to store the hint
 
 		self.solution_and_feedback = "" #Making an attribute to store the solution and feedback 
 		self.solution_image_filename = "Pictures/AddImage.jpg" #Making an attribute to store the solution image 
+		
+		# Solution button: When clicked, it allows the user to add the solution and feedback to that question
+		self.solution_and_feedback_button = ctk.CTkButton(self.frame1, text="Add Solutions", command=solutionFunction)
 
-		#Hint image for the button
+		# Hint image for the button
 		self.hint_img = ctk.CTkImage(light_image=Image.open("Pictures/Hint.png"), size=(30,30))
 
 		#Hint button: When clicked, it allows the user to add or changes an assigned hint 
 		self.hint_button = ctk.CTkButton(self.frame1, text="Add Hint", image=self.hint_img, command=hintFunction)
-
-		#Solution button: When clicked, it allows the user to add the solution and feedback to that question
-		self.solution_and_feedback_button = ctk.CTkButton(self.frame1, text="Add Solutions", command=solutionFunction)
 
 		#Question textbox: This is where the user inserts their question
 		self.question = ctk.CTkTextbox(self.window, width=600, text_color="#098bed", wrap="word")
@@ -455,5 +489,42 @@ class Edit:
 		self.forgetOptionsWindowWidgets()
 		displayScrollWidgets()
 
-		def deleteQuestion(self):
+	def deleteQuestion(self):
+		# Removing the previous widgets that was on the page
+		self.forgetOptionsWindowWidgets()
+
+		def forgetDeleteWidgets():
+			self.delete_scroll_frame.pack_forget()
+			self.scroll_delete_cancel_button.pack_forget()
+			self.scroll_delete_button.pack_forget()
+
+		def deleteCommand():
 			pass
+
+		def deleteCancelFunction():
+			forgetDeleteWidgets()
+			self.optionsWindow()
+
+		def deleteFunction():
+			you_sure = tk.messagebox.askyesnocancel(title="Delete",message="Do you actually want to delete this questions?")
+
+			if you_sure:
+				forgetDeleteWidgets()
+				self.optionsWindow()
+
+		# Scroll Frame
+		self.delete_scroll_frame = ctk.CTkScrollableFrame(self.window, corner_radius=0, border_width=0, fg_color="#c3c3c3",orientation="vertical", width=750, height=500)
+		self.delete_scroll_frame.pack(expand=True, fill="both")
+
+		#Adding questions
+		for _  in range(5): 
+			variable = tk.IntVar(value=0)
+			ctk.CTkCheckBox(self.delete_scroll_frame, text=f"Question {_+1}", variable=variable, onvalue=1, offvalue=0, command=deleteCommand).pack(pady=50,expand=False)
+
+		#Scroll cancel button
+		self.scroll_delete_cancel_button = ctk.CTkButton(self.delete_scroll_frame, text="Cancel", border_width=0, command=deleteCancelFunction)
+		self.scroll_delete_cancel_button.pack(side="left", padx=100)
+		
+		#Scroll continue button
+		self.scroll_delete_button = ctk.CTkButton(self.delete_scroll_frame, text="Delete", border_width=0, command=deleteFunction)
+		self.scroll_delete_button.pack(side="right", padx=100)

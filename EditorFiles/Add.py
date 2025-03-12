@@ -14,6 +14,12 @@ class Add:
         self.window.title("Add")
         self.window.geometry("800x550+300+50")
 
+        def destroyCommand():
+            you_sure = tk.messagebox.askyesno(title="Exit", message="Are you sure you want to exit out of this window?", default="no")
+
+            if you_sure:
+                self.window.destroy()
+
         #Functions
         def randomize():
             print(self.randomize.get())
@@ -61,6 +67,9 @@ class Add:
             exit = tk.messagebox.askyesno(title="Exit", message="Are you sure you want to your exit?", default="no")
             if exit:
                 self.window.destroy()
+
+        # Implementing the exit command
+        self.window.protocol("WM_DELETE_WINDOW", destroyCommand)
 
         #Variable to keep track of the question
         self.question_number = 1
@@ -222,7 +231,7 @@ class Add:
             displayDetailsPageWidgets()
 
         def doneFunction():
-            done = tk.messagebox.askyesno(title="Exit", message="Are you sure you want to save this topic?")
+            done = tk.messagebox.askyesno(title="Save", message="Are you sure you want to save this topic?")
             if done:
                 self.window.destroy()
 
