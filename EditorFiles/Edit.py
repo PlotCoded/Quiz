@@ -243,6 +243,7 @@ class Edit:
 
 		def addNewQuestionFunction():
 			#Editing the question number label to give more info
+			# Note: At this point, people might get a bit confused with the UI design because of the way it moved from an editing question to a new question
 			self.question_number_label.configure(text=f"This is now the new question {self.question_number+1}.")
 
 			forgetChangeAQuestionWidgets() # Forgetting the Options Page
@@ -334,8 +335,11 @@ class Edit:
 				ExFunc.displayActualQuestionPageWidgets(self, self.continue_present)
 
 		def actualQuestionCancelFunction():
-			ExFunc.forgetActualQuestionPageWidgets(self)				
+			ExFunc.forgetActualQuestionPageWidgets(self)
 			displayChangeAQuestionWidgets()
+
+			if self.continue_present == False:
+				self.add_delete_frame.pack_forget()
 
 		def actualQuestionContinueFunction():
 			# Don't forget to implement Validations
@@ -355,7 +359,7 @@ class Edit:
 			if you_sure:
 				ExFunc.forgetActualQuestionPageWidgets(self)
 				displayScrollWidgets()
-
+			
 		# Wigets here is for the scroll frame only Validator
 
 		# Guide on what to do
