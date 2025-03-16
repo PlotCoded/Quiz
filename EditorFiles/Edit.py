@@ -280,6 +280,9 @@ class Edit:
 			# Changing the cancel button command to its original command
 			self.cancel_details_page_button.configure(command=cancelChangeAQuestionFunction)
 
+			# Bringing back the previous widgets "Change a question widgets"
+			displayChangeAQuestionWidgets()
+
 		def addNewQuestionDoneFunction():
 			ExFunc.forgetActualQuestionPageWidgets(self)
 
@@ -287,6 +290,9 @@ class Edit:
 			self.continue_present = True
 			self.question_number_label.configure(text=f"Question {self.question_number}'s time setting and marks:")
 			self.done_button.configure(command=actualQuestionDoneFunction)
+
+			# Changing the solutions widgets to its default
+			self.solution_image_filename = "Pictures/AddImage.jpg"
 
 			displayChangeAQuestionWidgets()
 
@@ -310,6 +316,7 @@ class Edit:
 
 		def cancelChangeAQuestionFunction():
 			forgetChangeAQuestionWidgets()
+
 			if self.question_number > 1:
 				# Change the question nummber minus 1
 				self.question_number-=1
@@ -317,7 +324,7 @@ class Edit:
 				# Updating the question number label
 				self.question_number_label.configure(text=f"Question {self.question_number}'s time setting and marks:")
 				
-				ExFunc.displayActualQuestionPageWidgets(self, True)			
+				ExFunc.displayActualQuestionPageWidgets(self, True)	
 			else: displayScrollWidgets()
 
 		def continueChangeAQuestionFunction():	
