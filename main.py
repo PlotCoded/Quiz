@@ -38,11 +38,11 @@ class App(ctk.CTk):
         self.header = Header(self)
         self.header.header()
 
-        self.menu = Menu(self)
-        self.menu.menu()
-
         self.question_page = QuestionPage(self)
         self.question_page.welcome()
+
+        self.menu = Menu(self)
+        self.menu.menu()
 
         self.mainloop()
 
@@ -190,7 +190,7 @@ class Menu:
 
         #Inserting subjects
         for _ in range(10):
-            ctk.CTkButton(self.scroll_frame, text="Tom").pack(pady=50)
+            ctk.CTkButton(self.scroll_frame, text="Tom", command=self.app.question_page.starting).pack(pady=50)
 
 class QuestionPage:
     def __init__(self, app):
@@ -218,10 +218,96 @@ class QuestionPage:
         self.arrow_label.pack()
 
         #Starting Button
-        self.starting_button = ctk.CTkButton(self.frame, text="Start Here",width=225,height=105,corner_radius=10, font=("Comic Sans MS",40))
+        self.starting_button = ctk.CTkButton(self.frame, text="Start Here", width=225, height=105, command=self.start, corner_radius=10, font=("Comic Sans MS",40))
         self.starting_button.pack(expand=True)
 
-    def start():
-        pass
+    def start(self):
+        # Removing all previos widgets
+        self.instruction.pack_forget()
+        self.arrow_label.pack_forget()
+        self.starting_button.pack_forget()
+
+        def displayHintFunction():
+            pass
+
+        def nextFunction():
+            pass
+
+        def viewSolutionsFunction():
+            pass
+
+        # Hint/Header Frame
+        self.hint_frame = ctk.CTkFrame(self.frame, border_width=0, fg_color="#e3e3e3", width=900, height=75)
+
+        # Hint Button
+        self.hint_button = ctk.CTkButton(self.hint_frame, text="View Hint", command=displayHintFunction)
+
+        # Widgets that display the question_page
+        # Image
+        image_width = 1000
+        image_height = 400
+
+        self.file_name = "Pictures/AddImage.jpg"
+        self.image = ctk.CTkImage(light_image=Image.open(self.file_name), size=(image_width,image_height))
+        self.image_label = ctk.CTkLabel(self.frame, text="", image=self.image, width=image_width, height=image_height)
+
+        # Label
+        self.text_label = ctk.CTkTextbox(self.frame)
+
+        #Option frames
+        self.option_frame1 = ctk.CTkFrame(self.frame, border_width=0, fg_color="#e3e3e3",height=50)
+
+        self.option_frame2 = ctk.CTkFrame(self.frame, border_width=0, fg_color="#e3e3e3",height=50)
+
+        #Options variable
+        self.options_variable = tk.StringVar()
+
+        #Options button(radio button) and their entries
+        self.option_A_button = ctk.CTkRadioButton(self.option_frame1,variable=self.options_variable, value="A", text="", command=lambda: ExFunc.selectedOption(self.option_A_entry, self.option_B_entry, self.option_C_entry, self.option_D_entry, self.options_variable))
+
+        self.option_A_entry = ctk.CTkEntry(self.option_frame1, border_width=2, width=275, placeholder_text="Option A", placeholder_text_color="#b3b3b3")
+
+        self.option_B_button = ctk.CTkRadioButton(self.option_frame1,variable=self.options_variable, value="B", text="", command=lambda: ExFunc.selectedOption(self.option_A_entry, self.option_B_entry, self.option_C_entry, self.option_D_entry, self.options_variable))
+
+        self.option_B_entry = ctk.CTkEntry(self.option_frame1, border_width=2, width=275, placeholder_text="Option B", placeholder_text_color="#b3b3b3")
+
+        self.option_C_button = ctk.CTkRadioButton(self.option_frame2,variable=self.options_variable, value="C", text="", command=lambda: ExFunc.selectedOption(self.option_A_entry, self.option_B_entry, self.option_C_entry, self.option_D_entry, self.options_variable))
+
+        self.option_C_entry = ctk.CTkEntry(self.option_frame2, border_width=2, width=275, placeholder_text="Option C", placeholder_text_color="#b3b3b3")
+
+        self.option_D_button = ctk.CTkRadioButton(self.option_frame2,variable=self.options_variable, value="D", text="", command=lambda: ExFunc.selectedOption(self.option_A_entry, self.option_B_entry, self.option_C_entry, self.option_D_entry, self.options_variable))
+
+        self.option_D_entry = ctk.CTkEntry(self.option_frame2, border_width=2, width=275, placeholder_text="Option D", placeholder_text_color="#b3b3b3")
+
+        #Without Options Textbox
+        self.without_options_textbox = ctk.CTkTextbox(self.frame, width=600, height=50, text_color="#00FF00")
+
+        # Footer Frame
+        self.footer_frame = ctk.CTkFrame(self.frame, border_width=1, fg_color="#e3e3e3")
+
+        # Next Button
+        self.next_button = ctk.CTkButton(self.footer_frame, text="Next", command=nextFunction)
+
+        # Solutions Button
+        self.solutions_button = ctk.CTkButton(self.footer_frame, text="View Solutions", command=viewSolutionsFunction)
+
+        # Displaying widgets
+        self.hint_frame.pack(fill="x")
+        self.hint_button.place(relx=0.75, rely=0.25)
+
+        if True:
+            self.image_label.pack(expand=False,pady=10)
+
+        if True:
+            self.option_frame1.pack(fill="x", pady=3, padx=10)
+            self.option_frame2.pack(fill="x",pady=3,padx=10)
+            self.option_A_button.place(relx=0.15, rely=0.1)
+            self.option_A_entry.place(relx=0.19,rely=0.1)
+            self.option_B_button.place(relx=0.5,rely=0.1,)
+            self.option_B_entry.place(relx=0.54,rely=0.1)
+            self.option_C_button.place(relx=0.15,rely=0.1)
+            self.option_C_entry.place(relx=0.19,rely=0.1)
+            self.option_D_button.place(relx=0.5,rely=0.1)
+            self.option_D_entry.place(relx=0.54,rely=0.1)
 
 app = App()
