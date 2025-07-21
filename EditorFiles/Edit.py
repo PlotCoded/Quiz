@@ -329,7 +329,7 @@ class Edit:
 			else: displayScrollWidgets()
 
 		def continueChangeAQuestionFunction():	
-			if ExFunc.Validator(None, self.time, self.marks): #If the validation does meet its needs then it allows the actual question widgets to be displayed,else not displayed
+			if ExFunc.Validator(None, self.time, self.marks) != False: #If the validation does meet its needs then it allows the actual question widgets to be displayed,else not displayed
 				print("Dones't work")
 				forgetChangeAQuestionWidgets()
 				ExFunc.displayActualQuestionPageWidgets(self, self.continue_present)
@@ -343,22 +343,24 @@ class Edit:
 
 		def actualQuestionContinueFunction():
 			# Don't forget to implement Validations
-			ExFunc.forgetActualQuestionPageWidgets(self)
+			if ExFunc.actualQuestionValidation(self.option_A_entry, self.option_B_entry, self.option_C_entry, self.option_D_entry, self.option_A_button, self.option_B_button, self.option_C_button, self.option_D_button, self.options_variable, self.answer_format_menu_variable, self.without_options_textbox, self.question, self.image_filename):
+				ExFunc.forgetActualQuestionPageWidgets(self)
 
-			# Update the question number by adding one to it
-			self.question_number+=1
+				# Update the question number by adding one to it
+				self.question_number+=1
 
-			# Updating the question number label
-			self.question_number_label.configure(text=f"Question {self.question_number}'s time setting and marks:")
+				# Updating the question number label
+				self.question_number_label.configure(text=f"Question {self.question_number}'s time setting and marks:")
 
-			displayChangeAQuestionWidgets()
+				displayChangeAQuestionWidgets()
 
 		def actualQuestionDoneFunction():
-			you_sure = tk.messagebox.askyesno(title="Save", message="Are you sure you want to save this topic?")
+			if ExFunc.actualQuestionValidation(self.option_A_entry, self.option_B_entry, self.option_C_entry, self.option_D_entry, self.option_A_button, self.option_B_button, self.option_C_button, self.option_D_button, self.options_variable, self.answer_format_menu_variable, self.without_options_textbox, self.question, self.image_filename):
+				you_sure = tk.messagebox.askyesno(title="Save", message="Are you sure you want to save this topic?")
 
-			if you_sure:
-				ExFunc.forgetActualQuestionPageWidgets(self)
-				displayScrollWidgets()
+				if you_sure:
+					ExFunc.forgetActualQuestionPageWidgets(self)
+					displayScrollWidgets()
 			
 		# Wigets here is for the scroll frame only Validator
 
@@ -441,7 +443,7 @@ class Edit:
 		self.hint_img = ctk.CTkImage(light_image=Image.open("Pictures/Hint.png"), size=(30,30))
 
 		#Hint button: When clicked, it allows the user to add or changes an assigned hint 
-		self.hint_button = ctk.CTkButton(self.frame1, text="Add Hint", image=self.hint_img, command=hintFunction)
+		self.hint_button = ctk.CTkButton(self.frame1, text="Add Hint", command=hintFunction)
 
 		#Question textbox: This is where the user inserts their question
 		self.question = ctk.CTkTextbox(self.window, width=600, text_color="#098bed", wrap="word")

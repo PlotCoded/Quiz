@@ -4,7 +4,7 @@ from tkinter import ttk
 from PIL import Image
 import Storage
 import random
-from EditorFiles import Search, Add, Edit, Delete
+from EditorFiles import Search, Add, Edit, Delete, ExFunc
 
 #Applying the theme of the window
 ctk.set_default_color_theme("Storage\\Theme.json")
@@ -127,67 +127,6 @@ class Menu:
         self.edit_button.pack(expand=True,fill="x",side="left")
         self.delete_button.pack(expand=True,fill="x",side="left")
 
-        #Creating an hover effect
-        def hover(button_type):
-            if button_type == "Search":
-                self.search_image = ctk.CTkImage(light_image=Image.open("Pictures\\Hover\\HoverSearch.jpg"),size=(30,30))
-                self.search_button.configure(image=self.search_image, fg_color="#098bed")
-            elif button_type == "Add":
-                self.add_image = ctk.CTkImage(light_image=Image.open("Pictures\\Hover\\HoverAdd.png"),size=(30,30))
-                self.add_button.configure(image=self.add_image, fg_color="#098bed")
-            elif button_type == "Edit":
-                self.edit_image = ctk.CTkImage(light_image=Image.open("Pictures\\Hover\\HoverEdit.png"),size=(30,30))
-                self.edit_button.configure(image=self.edit_image, fg_color="#098bed")
-            elif button_type == "Delete":
-                self.delete_image = ctk.CTkImage(light_image=Image.open("Pictures\\Hover\\HoverDelete.png"),size=(30,30))
-                self.delete_button.configure(image=self.delete_image, fg_color="#098bed")
-
-        def leave(button_type):
-            if button_type == "Search":
-                self.search_image = ctk.CTkImage(light_image=Image.open("Pictures\\Search.jpg"),size=(30,30))
-                self.search_button.configure(image=self.search_image, fg_color="#01a9f3")
-            elif button_type == "Add":
-                self.add_image = ctk.CTkImage(light_image=Image.open("Pictures\\Add.png"),size=(30,30))
-                self.add_button.configure(image=self.add_image, fg_color="#01a9f3")
-            elif button_type == "Edit":
-                self.edit_image = ctk.CTkImage(light_image=Image.open("Pictures\\Edit.png"),size=(30,30))
-                self.edit_button.configure(image=self.edit_image, fg_color="#01a9f3")
-            elif button_type == "Delete":
-                self.delete_image = ctk.CTkImage(light_image=Image.open("Pictures\\Delete.png"),size=(30,30))
-                self.delete_button.configure(image=self.delete_image, fg_color="#01a9f3")
-
-        def click(button_type):
-            if button_type == "Search":
-                self.search_image = ctk.CTkImage(light_image=Image.open("Pictures\\Search.jpg"),size=(30,30))
-                self.search_button.configure(image=self.search_image)
-            elif button_type == "Add":
-                self.add_image = ctk.CTkImage(light_image=Image.open("Pictures\\Add.png"),size=(30,30))
-                self.add_button.configure(image=self.add_image)
-            elif button_type == "Edit":
-                self.edit_image = ctk.CTkImage(light_image=Image.open("Pictures\\Edit.png"),size=(30,30))
-                self.edit_button.configure(image=self.edit_image)
-            elif button_type == "Delete":
-                self.delete_image = ctk.CTkImage(light_image=Image.open("Pictures\\Delete.png"),size=(30,30))
-                self.delete_button.configure(image=self.delete_image)
-
-        #Mouse Hover
-        self.search_button.bind("<Enter>", lambda event: hover("Search"))
-        self.add_button.bind("<Enter>", lambda event: hover("Add"))
-        self.edit_button.bind("<Enter>", lambda event: hover("Edit"))
-        self.delete_button.bind("<Enter>", lambda event: hover("Delete"))
-
-        #Mouse Leave
-        self.search_button.bind("<Leave>", lambda event: leave("Search"))
-        self.add_button.bind("<Leave>", lambda event: leave("Add"))
-        self.edit_button.bind("<Leave>", lambda event: leave("Edit"))
-        self.delete_button.bind("<Leave>", lambda event: leave("Delete"))
-
-        #Mouse Click
-        self.search_button.bind("<Button-1>", lambda event: leave("Search"))
-        self.add_button.bind("<Button-1>", lambda event: leave("Add"))
-        self.edit_button.bind("<Button-1>", lambda event: leave("Edit"))
-        self.delete_button.bind("<Button-1>", lambda event: leave("Delete"))
-
         #Inserting subjects
         for _ in range(10):
             ctk.CTkButton(self.scroll_frame, text="Tom", command=self.app.question_page.starting).pack(pady=50)
@@ -195,6 +134,8 @@ class Menu:
 class QuestionPage:
     def __init__(self, app):
         self.app = app
+
+        self.finished_before = False
 
     def welcome(self):
         #This frame contains the welcome instruction and tells to choose a topic from the menu
@@ -206,16 +147,22 @@ class QuestionPage:
         self.instruction.pack(expand=True, fill="both")
 
     def starting(self):
+        # Getting rid of all previous widgets
+        if self.finished_before == True:
+            self.congratulations.pack_forget()
+            self.marks.pack_forget()
+
         #New Instruction
         self.instruction.configure(text="Please answer the questions listed\n after clicking the button below")
         self.instruction.configure(font=("Comic Sans MS",48))
+        self.instruction.pack(expand=True)
 
         #Arrow Image
         self.arrow = ctk.CTkImage(light_image = Image.open("Pictures\\Arrow.jpg"), size=(170,170))
 
         #arrow label
         self.arrow_label = ctk.CTkLabel(self.frame, text="", image=self.arrow)
-        self.arrow_label.pack()
+        self.arrow_label.pack(expand=True)
 
         #Starting Button
         self.starting_button = ctk.CTkButton(self.frame, text="Start Here", width=225, height=105, command=self.start, corner_radius=10, font=("Comic Sans MS",40))
@@ -228,13 +175,47 @@ class QuestionPage:
         self.starting_button.pack_forget()
 
         def displayHintFunction():
-            pass
+            self.display_hint_window = ctk.CTkToplevel(self.app)
+            self.display_hint_window.transient(self.app)
+            self.display_hint_window.title("Hint")
+            self.display_hint_window.geometry("600x200+300+50")
+
+            # Displaying the hint in text format
+            self.display_hint_label = ctk.CTkLabel(self.display_hint_window, text="This is the hint")
+
+            # Displaying the hint in picture format
+            self.display_hint_file_name = "Pictures/Hint.png"
+            self.display_hint_image = ctk.CTkImage(light_image=Image.open(self.display_hint_file_name), size=(600,200))
+            self.display_hint_image_label = ctk.CTkLabel(self.display_hint_window, text="", image=self.display_hint_image, width=600, height=200)
+
+            # Displaying hint
+            if True:
+                self.display_hint_image_label.pack()
+            elif False:
+                self.display_hint_label.pack()
 
         def nextFunction():
-            pass
+            self.finished()
 
         def viewSolutionsFunction():
-            pass
+            self.display_solutions_window = ctk.CTkToplevel(self.app)
+            self.display_solutions_window.transient(self.app)
+            self.display_solutions_window.title("Solution")
+            self.display_solutions_window.geometry("600x200+300+50")
+
+            # Displaying the hint in text format
+            self.display_solutions_label = ctk.CTkLabel(self.display_solutions_window, text="This is the solution")
+
+            # Displaying the hint in picture format
+            self.display_solutions_file_name = "Pictures/Hint.png"
+            self.display_solutions_image = ctk.CTkImage(light_image=Image.open(self.display_solutions_file_name), size=(600,200))
+            self.display_solutions_image_label = ctk.CTkLabel(self.display_solutions_window, text="", image=self.display_solutions_image, width=600, height=200)
+
+            # Displaying hint
+            if False:
+                self.display_solutions_image_label.pack()
+            elif True:
+                self.display_solutions_label.pack()
 
         # Hint/Header Frame
         self.hint_frame = ctk.CTkFrame(self.frame, border_width=0, fg_color="#e3e3e3", width=900, height=75)
@@ -244,7 +225,7 @@ class QuestionPage:
 
         # Widgets that display the question_page
         # Image
-        image_width = 1000
+        image_width = 900
         image_height = 400
 
         self.file_name = "Pictures/AddImage.jpg"
@@ -252,43 +233,46 @@ class QuestionPage:
         self.image_label = ctk.CTkLabel(self.frame, text="", image=self.image, width=image_width, height=image_height)
 
         # Label
-        self.text_label = ctk.CTkTextbox(self.frame)
+        self.text_label = ctk.CTkTextbox(self.frame, width=900, height=350, fg_color="#c3c3c3", wrap="word", border_width=4, state="disabled")
 
         #Option frames
-        self.option_frame1 = ctk.CTkFrame(self.frame, border_width=0, fg_color="#e3e3e3",height=50)
+        self.option_frame1 = ctk.CTkFrame(self.frame, border_width=0, fg_color="#e3e3e3",height=70)
 
-        self.option_frame2 = ctk.CTkFrame(self.frame, border_width=0, fg_color="#e3e3e3",height=50)
+        self.option_frame2 = ctk.CTkFrame(self.frame, border_width=0, fg_color="#e3e3e3",height=70)
 
         #Options variable
         self.options_variable = tk.StringVar()
 
         #Options button(radio button) and their entries
-        self.option_A_button = ctk.CTkRadioButton(self.option_frame1,variable=self.options_variable, value="A", text="", command=lambda: ExFunc.selectedOption(self.option_A_entry, self.option_B_entry, self.option_C_entry, self.option_D_entry, self.options_variable))
+        radio_button_width = 35
+        radio_button_height = 35
 
-        self.option_A_entry = ctk.CTkEntry(self.option_frame1, border_width=2, width=275, placeholder_text="Option A", placeholder_text_color="#b3b3b3")
+        self.option_A_button = ctk.CTkRadioButton(self.option_frame1, corner_radius=10, radiobutton_width=radio_button_width, radiobutton_height=radio_button_height, variable=self.options_variable, value="A", text="")
 
-        self.option_B_button = ctk.CTkRadioButton(self.option_frame1,variable=self.options_variable, value="B", text="", command=lambda: ExFunc.selectedOption(self.option_A_entry, self.option_B_entry, self.option_C_entry, self.option_D_entry, self.options_variable))
+        self.option_A_entry = ctk.CTkEntry(self.option_frame1, border_width=2, width=325, height=35, corner_radius=10,placeholder_text="Option A", placeholder_text_color="#b3b3b3", state="disabled")
 
-        self.option_B_entry = ctk.CTkEntry(self.option_frame1, border_width=2, width=275, placeholder_text="Option B", placeholder_text_color="#b3b3b3")
+        self.option_B_button = ctk.CTkRadioButton(self.option_frame1, corner_radius=10, radiobutton_width=radio_button_width, radiobutton_height=radio_button_height, variable=self.options_variable, value="B", text="")
 
-        self.option_C_button = ctk.CTkRadioButton(self.option_frame2,variable=self.options_variable, value="C", text="", command=lambda: ExFunc.selectedOption(self.option_A_entry, self.option_B_entry, self.option_C_entry, self.option_D_entry, self.options_variable))
+        self.option_B_entry = ctk.CTkEntry(self.option_frame1, border_width=2, width=325, height=35, corner_radius=10, placeholder_text="Option B", placeholder_text_color="#b3b3b3", state="disabled")
 
-        self.option_C_entry = ctk.CTkEntry(self.option_frame2, border_width=2, width=275, placeholder_text="Option C", placeholder_text_color="#b3b3b3")
+        self.option_C_button = ctk.CTkRadioButton(self.option_frame2, corner_radius=10, radiobutton_width=radio_button_width, radiobutton_height=radio_button_height, variable=self.options_variable, value="C", text="")
 
-        self.option_D_button = ctk.CTkRadioButton(self.option_frame2,variable=self.options_variable, value="D", text="", command=lambda: ExFunc.selectedOption(self.option_A_entry, self.option_B_entry, self.option_C_entry, self.option_D_entry, self.options_variable))
+        self.option_C_entry = ctk.CTkEntry(self.option_frame2, border_width=2, width=325, height=35, corner_radius=10, placeholder_text="Option C", placeholder_text_color="#b3b3b3", state="disabled")
 
-        self.option_D_entry = ctk.CTkEntry(self.option_frame2, border_width=2, width=275, placeholder_text="Option D", placeholder_text_color="#b3b3b3")
+        self.option_D_button = ctk.CTkRadioButton(self.option_frame2, corner_radius=10, radiobutton_width=radio_button_width, radiobutton_height=radio_button_height, variable=self.options_variable, value="D", text="")
+
+        self.option_D_entry = ctk.CTkEntry(self.option_frame2, border_width=2, width=325, height=35, corner_radius=10, placeholder_text="Option D", placeholder_text_color="#b3b3b3", state="disabled")
 
         #Without Options Textbox
         self.without_options_textbox = ctk.CTkTextbox(self.frame, width=600, height=50, text_color="#00FF00")
 
         # Footer Frame
-        self.footer_frame = ctk.CTkFrame(self.frame, border_width=1, fg_color="#e3e3e3")
+        self.footer_frame = ctk.CTkFrame(self.frame, border_width=0, fg_color="#e3e3e3")
 
         # Next Button
         self.next_button = ctk.CTkButton(self.footer_frame, text="Next", command=nextFunction)
 
-        # Solutions Button
+        # Solutions Button: This button is only displayed when one has answered a question
         self.solutions_button = ctk.CTkButton(self.footer_frame, text="View Solutions", command=viewSolutionsFunction)
 
         # Displaying widgets
@@ -296,7 +280,9 @@ class QuestionPage:
         self.hint_button.place(relx=0.75, rely=0.25)
 
         if True:
-            self.image_label.pack(expand=False,pady=10)
+            self.text_label.pack(pady=10)
+        else:
+            self.image_label.pack(pady=10)
 
         if True:
             self.option_frame1.pack(fill="x", pady=3, padx=10)
@@ -309,5 +295,33 @@ class QuestionPage:
             self.option_C_entry.place(relx=0.19,rely=0.1)
             self.option_D_button.place(relx=0.5,rely=0.1)
             self.option_D_entry.place(relx=0.54,rely=0.1)
+
+        self.footer_frame.pack(fill="both")
+        self.next_button.pack(side="left", padx=250)
+        self.solutions_button.pack(side="right", padx=250)
+    
+    def finished(self):
+        # Getting rid of previous widgets
+        self.hint_frame.pack_forget()
+        self.text_label.pack_forget()
+        self.image_label.pack_forget()
+        self.option_frame1.pack_forget()
+        self.option_frame2.pack_forget()
+        self.footer_frame.pack_forget()
+
+        self.congratulations = ctk.CTkLabel(self.frame, text="Congratulations", font=("Comic Sans MS",42))
+
+        # Marks info
+        marks_gotten = 0
+        total_marks = 100
+
+        # Marks widget
+        self.marks = ctk.CTkLabel(self.frame, text=f"You got a {marks_gotten} out of {total_marks}", font=("Comic Sans MS",42))
+
+        # Displaying widgets
+        self.congratulations.pack()
+        self.marks.pack(expand=True)
+
+        self.finished_before = True # Allowing the frame to be cleared of previous widgets allowing for a new topic
 
 app = App()

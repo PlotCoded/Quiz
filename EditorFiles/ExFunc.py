@@ -6,12 +6,9 @@ import customtkinter as ctk
 from PIL import Image
 
 def Validator(topic_entry_widget, time_entry_widget, marks_entry_widget):
-    # Don't forget to remove parameters and add "self" parameters
-    return True #This return statement stays True is all the validation meet the requirements
-
     #Validating the topic names input
     if topic_entry_widget != None:
-        if topic_entry_widget.get().isidentifier() == False:
+        if topic_entry_widget.get() != None and topic_entry_widget.get().isidentifier() == False:
             tk.messagebox.showinfo(title="Invalid Topic Name", message="Your topic name doesn't have valid character(A-Z or _)")
             return False
 

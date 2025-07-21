@@ -78,7 +78,7 @@ class Add:
         self.frameA = ctk.CTkFrame(self.window, border_width=0, fg_color="#c3c3c3")
 
         #Allowing the user to enter the name of their topic
-        self.topic_var = tk.StringVar(value="TopicName") #This value is for testing
+        self.topic_var = tk.StringVar(value="TopicName*") #This value is for testing
         self.topic = ctk.CTkEntry(self.frameA, textvariable=self.topic_var, border_width=0, corner_radius=10, width=200, justify="center", placeholder_text="Topic Name", placeholder_text_color="#c3c3c3")
 
         #Randomize checkbox
@@ -222,12 +222,12 @@ class Add:
         def cancelActualQuestionPageFunction():
             forgetActualQuestionPageWidgets()
 
-            #Decrementing the question number by 1 only if the number is greater than one and displaying the question number
+            # Decrementing the question number by 1 only if the number is greater than one and displaying the question number
             if self.question_number > 1:
                 self.question_number-=1
             self.question_number_label.configure(text=f"Question {self.question_number}'s time setting and marks:")
 
-            #Redisplaying the details page widgets
+            # Redisplaying the details page widgets
             displayDetailsPageWidgets()
 
         def doneFunction():
@@ -244,10 +244,10 @@ class Add:
         self.format_menu = ctk.CTkOptionMenu(self.frame1, values=self.question_formats, variable=self.format_var, command=actualQuestionFormatFunction)
 
         #Hint image for the button
-        self.hint_img = ctk.CTkImage(light_image=Image.open("Pictures/Hint.png"), size=(30,30))
+        self.hint_img = ctk.CTkImage(light_image=Image.open("Pictures/AddImage.jpg"), size=(30,30))
 
         #Hint button: When clicked, it allows the user to add or changes an assigned hint 
-        self.hint_button = ctk.CTkButton(self.frame1, text="Add Hint", image=self.hint_img, command=hintFunction)
+        self.hint_button = ctk.CTkButton(self.frame1, text="Add Hint", command=hintFunction)
 
         #Solution button: When clicked, it allows the user to add the solution and feedback to that question
         self.solution_and_feedback_button = ctk.CTkButton(self.frame1, text="Add Solutions", command=solutionFunction)
