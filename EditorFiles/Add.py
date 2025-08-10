@@ -9,113 +9,137 @@ class Add:
         self.app = app
 
     def detailsPage(self):
-        self.window = ctk.CTkToplevel(self.app)
-        self.window.transient(self.app)
-        self.window.title("Add")
-        self.window.geometry("800x550+300+50")
+        if self.app.window_up == False:
+            # Control variable to prevent more than one editor window from opening at the same time
+            self.app.window_up = True
 
-        def destroyCommand():
-            you_sure = tk.messagebox.askyesno(title="Exit", message="Are you sure you want to exit out of this window?", default="no")
+            self.window = ctk.CTkToplevel(self.app)
+            self.window.transient(self.app)
+            self.window.title("Add")
+            self.window.geometry("800x550+300+50")
 
-            if you_sure:
-                self.window.destroy()
+            def destroyCommand():
+                you_sure = tk.messagebox.askyesno(title="Exit", message="Are you sure you want to exit out of this window?", default="no")
 
-        #Functions
-        def randomize():
-            print(self.randomize.get())
+                if you_sure:
+                    self.window.destroy()
+                    self.app.window_up = False
 
-        global displayDetailsPageWidgets
-        def displayDetailsPageWidgets():
-            self.frameA.pack(pady=10)
-            self.topic.pack(padx=10, side="left")
-            self.randomize.pack(side="right", pady=20, padx=20)
-            self.question_number_label.pack(pady=20)
-            self.frameB.pack(pady=30)
-            self.time.pack(padx=10, side="left")
-            self.marks.pack(padx=10,side="left")
-            self.answer_format_menu.pack(pady=20, padx=20)
-            self.continue_details_page_button.pack(side="left", padx=20, pady=20, expand=True)
+            #Functions
+            def randomize():
+                print(self.randomize.get())
 
-            #Displaying the "cancel button" when the user is just starting to add questions, in other words when the question number is 1
-            if self.question_number > 1:
-                self.cancel_details_page_button.pack(side="left", padx=20, pady=20, expand=True)
+            global displayDetailsPageWidgets
+            def displayDetailsPageWidgets():
+                self.frameA.pack(pady=10)
+                self.topic.pack(padx=10, side="left")
+                self.randomize.pack(side="right", pady=20, padx=20)
+                self.question_number_label.pack(pady=20)
+                self.frameB.pack(pady=30)
+                self.time.pack(padx=10, side="left")
+                self.marks.pack(padx=10,side="left")
+                self.answer_format_menu.pack(pady=20, padx=20)
+                self.continue_details_page_button.pack(side="left", padx=20, pady=20, expand=True)
 
-            self.exit_button.pack(side="left", padx=20, pady=20, expand=True)
+                #Displaying the "cancel button" when the user is just starting to add questions, in other words when the question number is 1
+                if self.question_number > 1:
+                    self.cancel_details_page_button.pack(side="left", padx=20, pady=20, expand=True)
 
-        def forgetDetailsPageWidgets():
-            self.frameA.pack_forget()
-            self.frameB.pack_forget()
-            self.answer_format_menu.pack_forget()
-            self.continue_details_page_button.pack_forget()
-            self.cancel_details_page_button.pack_forget()
-            self.exit_button.pack_forget()
+                self.exit_button.pack(side="left", padx=20, pady=20, expand=True)
 
-        def continueFunction():
-            if ExFunc.Validator(self.topic, self.time, self.marks) != False:
+                # Enabling and disabling the topic and randomize widgets depending on the question number
+                if self.question_number != 1:
+                    self.topic.configure(state="disabled")
+                    self.randomize.configure(state="disabled")
+                else:
+                    self.topic.configure(state="normal")
+                    self.randomize.configure(state="normal")
+
+            def forgetDetailsPageWidgets():
+                self.frameA.pack_forget()
+                self.frameB.pack_forget()
+                self.answer_format_menu.pack_forget()
+                self.continue_details_page_button.pack_forget()
+                self.cancel_details_page_button.pack_forget()
+                self.exit_button.pack_forget()
+
+            def continueFunction():
+                if ExFunc.Validator(self.topic, self.time, self.marks) != False:
+                    forgetDetailsPageWidgets()
+
+                    #Opening the next page
+                    self.actualQuestionPage()
+
+                    # Recording the data passed to it
+                    def record():
+                        print(self.randomize.get())
+                        ExFunc.data["Randomize"] = self.randomize.get()
+                        ExFunc.data["Time"][self.question_number-1] =  self.time_var.get()
+                        ExFunc.data["Marks"][self.question_number-1] =  self.marks_var.get()
+                        ExFunc.data["Option Type"][self.question_number-1] =  self.answer_format_menu_variable.get()
+                        ExFunc.data["Question No"][self.question_number-1] = self.question_number
+
+                    record()
+                    print(ExFunc.data)
+
+            def cancelDetailsPageFunction():
                 forgetDetailsPageWidgets()
 
-                #Opening the next page
+                #Opening the previous page
                 self.actualQuestionPage()
 
-        def cancelDetailsPageFunction():
-            forgetDetailsPageWidgets()
+                print(self.question_number)
 
-            #Opening the previous page
-            self.actualQuestionPage()
+            def exitFunction():
+                exit = tk.messagebox.askyesno(title="Exit", message="Are you sure you want to your exit?", default="no")
+                if exit:
+                    self.window.destroy()
 
-        def exitFunction():
-            exit = tk.messagebox.askyesno(title="Exit", message="Are you sure you want to your exit?", default="no")
-            if exit:
-                self.window.destroy()
+            # Implementing the exit command
+            self.window.protocol("WM_DELETE_WINDOW", destroyCommand)
 
-        # Implementing the exit command
-        self.window.protocol("WM_DELETE_WINDOW", destroyCommand)
+            #Variable to keep track of the question
+            self.question_number = 1
 
-        #Variable to keep track of the question
-        self.question_number = 1
+            #Contains the option menu and randomize checkbox
+            self.frameA = ctk.CTkFrame(self.window, border_width=0, fg_color="#c3c3c3")
 
-        #Contains the option menu and randomize checkbox
-        self.frameA = ctk.CTkFrame(self.window, border_width=0, fg_color="#c3c3c3")
+            #Allowing the user to enter the name of their topic
+            self.topic_var = tk.StringVar(value="TopicName") #This value is for testing
+            self.topic = ctk.CTkEntry(self.frameA, textvariable=self.topic_var, border_width=0, corner_radius=10, width=200, justify="center", placeholder_text="Topic Name", placeholder_text_color="#c3c3c3")
 
-        #Allowing the user to enter the name of their topic
-        self.topic_var = tk.StringVar(value="TopicName*") #This value is for testing
-        self.topic = ctk.CTkEntry(self.frameA, textvariable=self.topic_var, border_width=0, corner_radius=10, width=200, justify="center", placeholder_text="Topic Name", placeholder_text_color="#c3c3c3")
+            #Randomize checkbox
+            self.randomize = ctk.CTkCheckBox(self.frameA, text="Randomize", offvalue=False, onvalue=False,command=randomize)
 
-        #Randomize checkbox
-        self.randomize = ctk.CTkCheckBox(self.frameA, text="Randomize", offvalue=0, onvalue=1,command=randomize)
+            #Details frame: Contains the question number, subject name, subject time an subject 
+            self.frameB = ctk.CTkFrame(self.window, border_width=0, fg_color="#c3c3c3")
 
-        #Details frame: Contains the question number, subject name, subject time an subject 
-        self.frameB = ctk.CTkFrame(self.window, border_width=0, fg_color="#c3c3c3")
+            #Creating title label
+            self.question_number_label = ctk.CTkLabel(self.frameB, text=f"Question {self.question_number}'s time setting and marks:")
 
-        #Creating title label
-        self.question_number_label = ctk.CTkLabel(self.frameB, text=f"Question {self.question_number}'s time setting and marks:")
+            #Allowing the user to enter the time boundry for their an individual question
+            self.time_var = tk.StringVar(value="00:00:10")
+            self.time = ctk.CTkEntry(self.frameB, textvariable=self.time_var, border_width=0, corner_radius=10, width=200, justify="center",placeholder_text_color="#c3c3c3", placeholder_text="00:00:00")
 
-        #Allowing the user to enter the time boundry for their an individual question
-        # self.hours = "01" 
-        # self.minutes = "00" 
-        # self.seconds = "00" 
-        self.time_var = tk.StringVar(value="00:00:10")
-        self.time = ctk.CTkEntry(self.frameB, textvariable=self.time_var, border_width=0, corner_radius=10, width=200, justify="center",placeholder_text_color="#c3c3c3", placeholder_text="00:00:00")
+            #Allowing the user to enter the total marks for their an individual question
+            self.marks_var = tk.IntVar(value=1)
+            self.marks = ctk.CTkEntry(self.frameB, textvariable=self.marks_var, border_width=0, corner_radius=10, width=200, justify="center", placeholder_text="0", placeholder_text_color="#c3c3c3")
 
-        #Allowing the user to enter the total marks for their an individual question
-        self.marks_var = tk.IntVar(value=1)
-        self.marks = ctk.CTkEntry(self.frameB, textvariable=self.marks_var, border_width=0, corner_radius=10, width=200, justify="center", placeholder_text="0", placeholder_text_color="#c3c3c3")
+            #Option Menu
+            self.answer_format = ["Options","Without Options"]
+            self.answer_format_menu_variable = tk.StringVar(value=self.answer_format[0])
+            self.answer_format_menu = ctk.CTkOptionMenu(self.window, values=self.answer_format, variable=self.answer_format_menu_variable)
 
-        #Option Menu
-        self.answer_format = ["Options","Without Options"]
-        self.answer_format_menu_variable = tk.StringVar(value=self.answer_format[0])
-        self.answer_format_menu = ctk.CTkOptionMenu(self.window, values=self.answer_format, variable=self.answer_format_menu_variable)
+            #Continue Button
+            self.continue_details_page_button = ctk.CTkButton(self.window, text="Continue", border_width=0, command=continueFunction)
 
-        #Continue Button
-        self.continue_details_page_button = ctk.CTkButton(self.window, text="Continue", border_width=0, command=continueFunction)
+            #Cancel Button
+            self.cancel_details_page_button = ctk.CTkButton(self.window, text="Cancel", border_width=0, command=cancelDetailsPageFunction)
 
-        #Cancel Button
-        self.cancel_details_page_button = ctk.CTkButton(self.window, text="Cancel", border_width=0, command=cancelDetailsPageFunction)
+            #Exit Button
+            self.exit_button = ctk.CTkButton(self.window, text="Exit", border_width=0, command=exitFunction)
 
-        #Exit Button
-        self.exit_button = ctk.CTkButton(self.window, text="Exit", border_width=0, command=exitFunction)
-
-        displayDetailsPageWidgets()
+            displayDetailsPageWidgets()
 
     def actualQuestionPage(self):
         self.hint = "" #Making an attribute to store the 
@@ -219,16 +243,34 @@ class Add:
                 forgetActualQuestionPageWidgets()
                 displayDetailsPageWidgets()
 
+                def record():
+                    print(self.randomize.get())
+                    ExFunc.data["Text Question"][self.question_number-2] = self.question.get("0.0","end")
+                    ExFunc.data["Image Question"][self.question_number-2] =  self.image_filename
+                    ExFunc.data["Hint"][self.question_number-2] =  self.hint
+                    ExFunc.data["Solution Text"][self.question_number-2] =  self.solution_and_feedback
+                    ExFunc.data["Solution Image"][self.question_number-2] = self.solution_image_filename
+                    ExFunc.data["Options"][self.question_number-2] = [self.option_A_entry.get(), self.option_B_entry.get(), self.option_C_entry.get(), self.option_D_entry.get()]
+                    ExFunc.data["Answer"][self.question_number-2] = self.without_options_textbox.get("0.0", "end")
+                
+                record()
+                print(ExFunc.data)
+
         def cancelActualQuestionPageFunction():
             forgetActualQuestionPageWidgets()
 
             # Decrementing the question number by 1 only if the number is greater than one and displaying the question number
-            if self.question_number > 1:
-                self.question_number-=1
+            # if self.question_number > 1:
+            #     self.question_number-=1
             self.question_number_label.configure(text=f"Question {self.question_number}'s time setting and marks:")
 
             # Redisplaying the details page widgets
             displayDetailsPageWidgets()
+
+            # Displaying the details saves previously for this page corresponding on the question number filled in
+            self.time_var.set(ExFunc.data["Time"][self.question_number-1])
+            self.marks_var.get(ExFunc.data["Marks"][self.question_number-1])
+            self.answer_format_menu_variable.get(ExFunc.data["Option Type"][self.question_number-1])
 
         def doneFunction():
             done = tk.messagebox.askyesno(title="Save", message="Are you sure you want to save this topic?")
@@ -242,9 +284,6 @@ class Add:
         self.question_formats = ["Text","Image","Video"]
         self.format_var = tk.StringVar(value=self.question_formats[0])
         self.format_menu = ctk.CTkOptionMenu(self.frame1, values=self.question_formats, variable=self.format_var, command=actualQuestionFormatFunction)
-
-        #Hint image for the button
-        self.hint_img = ctk.CTkImage(light_image=Image.open("Pictures/AddImage.jpg"), size=(30,30))
 
         #Hint button: When clicked, it allows the user to add or changes an assigned hint 
         self.hint_button = ctk.CTkButton(self.frame1, text="Add Hint", command=hintFunction)

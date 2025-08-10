@@ -297,3 +297,38 @@ def forgetSolutionWidgets(self):
 
 def solutionCancelFunction(self):
     self.solution_and_feedback_window.destroy()
+
+# Storage part
+data = {
+    "Randomize": True,
+    "Time": ["00:00:10","00:00:60","00:03:00","00:01:00","00:07:30",],
+    "Marks": [1,1,1,1,1],
+    "Option Type": ["Without Options", "Options", "Without Options", "Options", "Without Options"],
+    "Text Question": ["What is the sum of 1 and 1?","What is the largest prime in between 100 and 200?","What is the value of the integral of f(x) in the interval [2,5], for which f(x) = x^2?","What is gradient of e^x when x = ln(1)?","Find the sum of all natural numbers bettween 1 to 100"],
+    "Image Question": ["Pictures/AddImage.jpg","Pictures/AddImage.jpg","Pictures/AddImage.jpg","Pictures/AddImage.jpg","Pictures/AddImage.jpg"],
+    "Question No": [1,2,3,4,5],
+    "Hint": [None, "Try starting from 200 downwards",None, "f(f^-1(x)) = x?","Try pairing up the starting number to the end number"],
+    "Solution Text": ["2","199","39","1","5050"],
+    "Solution Image": ["Pictures/AddImage.jpg","Pictures/AddImage.jpg","Pictures/AddImage.jpg","Pictures/AddImage.jpg","Pictures/AddImage.jpg"],
+    "Options": [["2","199","39","1"], ["2","199","39","1"],["2","199","39","1"],["2","199","39","1"],["2","199","39","5050"]],
+    "Answer": ["2","199","39","1","5050"]
+}
+
+data = {
+    "Randomize": True,
+    "Time": [],
+    "Marks": [],
+    "Option Type": [],
+    "Text Question": [],
+    "Image Question": [],
+    "Question No": [],
+    "Hint": [],
+    "Solution Text": [],
+    "Solution Image": [],
+    "Options": [],
+    "Answer": []
+}
+
+def save(data):
+    dataframe = pandas.DataFrame(data, index=list(range(len(data["Question No"]))))
+    dataframe.to_csv("P.csv") # Creating the file for the topic. This file contains all the details for the topic created

@@ -1,8 +1,8 @@
+import os
 import customtkinter as ctk
 import tkinter as tk
 from tkinter import ttk
 from PIL import Image
-import Storage
 import random
 from EditorFiles import Search, Add, Edit, Delete, ExFunc
 
@@ -14,6 +14,8 @@ class App(ctk.CTk):
     def __init__(self):
         super().__init__()
 
+        self.window_up = False
+        
         #Adding a title
         self.title("Quiz")
 
@@ -127,23 +129,43 @@ class Menu:
         self.edit_button.pack(expand=True,fill="x",side="left")
         self.delete_button.pack(expand=True,fill="x",side="left")
 
-        #Inserting subjects
-        for _ in range(10):
-            ctk.CTkButton(self.scroll_frame, text="Tom", command=self.app.question_page.starting).pack(pady=50)
+        # Getting the names of the topics
+        filenames = os.listdir(r"C:\Users\hp\Documents\Quiz\Storage")
+
+        for file in filenames:
+            if ".csv" in file:
+                # Displaying the topic on the menu
+                exec(f"self.{file[::-4]} = ctk.CTkButton(self.scroll_frame, text='{file[:-4]}', command=self.app.question_page.starting)")
+                exec(f"self.{file[::-4]}.pack(pady=50)")
 
 class QuestionPage:
     def __init__(self, app):
         self.app = app
-
+        
         self.finished_before = False
 
-    def welcome(self):
         #This frame contains the welcome instruction and tells to choose a topic from the menu
         self.frame = ctk.CTkFrame(self.app, border_width=1, fg_color="#e3e3e3")
-        self.frame.grid(row=1, column=0, rowspan=21, columnspan=21,sticky="nsew")
-
+        
         #Instruction label
         self.instruction = ctk.CTkLabel(self.frame, text="Please choose a topic listed \n after clicking the Menu button", font=("Comic Sans MS",42), width=200,height=50,fg_color="#e3e3e3")
+
+        #New Instruction
+        self.instruction.configure(text="Please answer the questions listed\n after clicking the button below")
+        self.instruction.configure(font=("Comic Sans MS",48))
+
+        #Arrow Image
+        self.arrow = ctk.CTkImage(light_image = Image.open("Pictures\\Arrow.jpg"), size=(170,170))
+
+        #arrow label
+        self.arrow_label = ctk.CTkLabel(self.frame, text="", image=self.arrow)
+
+        #Starting Button
+        self.starting_button = ctk.CTkButton(self.frame, text="Start Here", width=225, height=105, command=self.start, corner_radius=10, font=("Comic Sans MS",40))
+
+    def welcome(self):
+        self.frame.grid(row=1, column=0, rowspan=21, columnspan=21,sticky="nsew")
+
         self.instruction.pack(expand=True, fill="both")
 
     def starting(self):
@@ -152,20 +174,14 @@ class QuestionPage:
             self.congratulations.pack_forget()
             self.marks.pack_forget()
 
-        #New Instruction
-        self.instruction.configure(text="Please answer the questions listed\n after clicking the button below")
-        self.instruction.configure(font=("Comic Sans MS",48))
+        # Ensuring the widgets doesn't get placed again and again
+        self.instruction.pack_forget()
+        self.arrow_label.pack_forget()
+        self.starting_button.pack_forget()
+
+        # Packing the widgets
         self.instruction.pack(expand=True)
-
-        #Arrow Image
-        self.arrow = ctk.CTkImage(light_image = Image.open("Pictures\\Arrow.jpg"), size=(170,170))
-
-        #arrow label
-        self.arrow_label = ctk.CTkLabel(self.frame, text="", image=self.arrow)
         self.arrow_label.pack(expand=True)
-
-        #Starting Button
-        self.starting_button = ctk.CTkButton(self.frame, text="Start Here", width=225, height=105, command=self.start, corner_radius=10, font=("Comic Sans MS",40))
         self.starting_button.pack(expand=True)
 
     def start(self):

@@ -10,43 +10,48 @@ class Edit:
 		self.app = app
 
 	def mainWindow(self):
-		self.window = ctk.CTkToplevel(self.app)
-		self.window.transient(self.app)
-		self.window.title("Edit")
-		self.window.geometry("750x500+500+150")
+		if self.app.window_up == False:
+			# Control variable to prevent more than one editor window from opening at the same time
+			self.app.window_up = True
 
-		def destroyCommand():
-			you_sure = tk.messagebox.askyesno(title="Exit", message="Are you sure you want to exit out of this window?", default="no")
+			self.window = ctk.CTkToplevel(self.app)
+			self.window.transient(self.app)
+			self.window.title("Edit")
+			self.window.geometry("750x500+500+150")
 
-			if you_sure:
-				self.window.destroy()
+			def destroyCommand():
+				you_sure = tk.messagebox.askyesno(title="Exit", message="Are you sure you want to exit out of this window?", default="no")
 
-		def displayWidgets():
-			self.description.pack()
-			self.edit_scroll_frame.pack()
+				if you_sure:
+					self.window.destroy()
+					self.app.window_up = False
 
-		def forgetWidgets():
-			self.description.pack_forget()
-			self.edit_scroll_frame.pack_forget()
+			def displayWidgets():
+				self.description.pack()
+				self.edit_scroll_frame.pack()
 
-		# Implementing the exit command
-		self.window.protocol("WM_DELETE_WINDOW", destroyCommand)
+			def forgetWidgets():
+				self.description.pack_forget()
+				self.edit_scroll_frame.pack_forget()
 
-		#Creating an attribute of the functions above
-		self.forget_main_window_widgets = forgetWidgets
-		self.displayWidgets = displayWidgets
+			# Implementing the exit command
+			self.window.protocol("WM_DELETE_WINDOW", destroyCommand)
 
-		#Adding a label describing the page
-		self.description = ctk.CTkLabel(self.window, text="Please select a topic to make changes to it")
+			#Creating an attribute of the functions above
+			self.forget_main_window_widgets = forgetWidgets
+			self.displayWidgets = displayWidgets
 
-		#Creating a scrollbar for all the topics
-		self.edit_scroll_frame = ctk.CTkScrollableFrame(self.window, corner_radius=0, border_width=0, fg_color="#c3c3c3",orientation="vertical", width=750, height=500)
+			#Adding a label describing the page
+			self.description = ctk.CTkLabel(self.window, text="Please select a topic to make changes to it")
 
-		#Inserting subjects
-		for _ in range(10):
-			ctk.CTkButton(self.edit_scroll_frame, text="Tom", command=self.optionsWindow).pack(pady=50)
+			#Creating a scrollbar for all the topics
+			self.edit_scroll_frame = ctk.CTkScrollableFrame(self.window, corner_radius=0, border_width=0, fg_color="#c3c3c3",orientation="vertical", width=750, height=500)
 
-		displayWidgets()
+			#Inserting subjects
+			for _ in range(10):
+				ctk.CTkButton(self.edit_scroll_frame, text="Tom", command=self.optionsWindow).pack(pady=50)
+
+			displayWidgets()
 
 	def optionsWindow(self):
 		def displayOptionsWindowWidgets():

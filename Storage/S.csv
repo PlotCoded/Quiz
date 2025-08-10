@@ -1,0 +1,6 @@
+,Randomize,Time,Marks,Option Type,Text Question,Image Question,Question No,Hint,Solution Text,Solution Image,Options,Answer
+0,True,00:00:10,1,Without Options,What is the sum of 1 and 1?,Pictures/AddImage.jpg,1,,2,Pictures/AddImage.jpg,"['2', '199', '39', '1']",2
+1,True,00:00:60,1,Options,What is the largest prime in between 100 and 200?,Pictures/AddImage.jpg,2,Try starting from 200 downwards,199,Pictures/AddImage.jpg,"['2', '199', '39', '1']",199
+2,True,00:03:00,1,Without Options,"What is the value of the integral of f(x) in the interval [2,5], for which f(x) = x^2?",Pictures/AddImage.jpg,3,,39,Pictures/AddImage.jpg,"['2', '199', '39', '1']",39
+3,True,00:01:00,1,Options,What is gradient of e^x when x = ln(1)?,Pictures/AddImage.jpg,4,f(f^-1(x)) = x?,1,Pictures/AddImage.jpg,"['2', '199', '39', '1']",1
+4,True,00:07:30,1,Without Options,Find the sum of all natural numbers bettween 1 to 100,Pictures/AddImage.jpg,5,Try pairing up the starting number to the end number,5050,Pictures/AddImage.jpg,"['2', '199', '39', '5050']",5050
