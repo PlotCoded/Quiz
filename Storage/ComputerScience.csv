@@ -1,0 +1,6 @@
+,Randomize,Time,Marks,Option Type,Text Question,Image Question,Question No,Hint,Solution Text,Solution Image,Options,Answer
+0,TRUE,00:00:10,1,Without Options,What is a network?,Pictures/AddImage.jpg,1,,,Pictures/AddImage.jpg,[],A Collection of two of more interconnected devices that transmit data to each other
+1,TRUE,00:00:10,1,Without Options,What is LAN?,Pictures/AddImage.jpg,2,LOCAL Area Newtork,,Pictures/AddImage.jpg,[],Network over a small geographical area
+2,TRUE,00:00:10,1,Without Options,What is WAN?,Pictures/AddImage.jpg,3,WIDE Area Network,,Pictures/AddImage.jpg,"['2', '199', '39', '1']",Network over a large geographical area
+3,TRUE,00:30:00,1,Options,Which of this is an not an advantage of LAN?,Pictures/AddImage.jpg,4,,,Pictures/AddImage.jpg,"['Resource Sharing', 'Sharing of pheripherals', 'Easy to set up', 'Simple and reasonable cost']",1
+4,TRUE,00:07:30,1,Without Options,Find the sum of all natural numbers bettween 1 to 100,Pictures/AddImage.jpg,5,Try pairing up the starting number to the end number,5050,Pictures/AddImage.jpg,"['2', '199', '39', '5050']",5050

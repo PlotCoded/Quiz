@@ -27,7 +27,8 @@ class Add:
 
             #Functions
             def randomize():
-                print(self.randomize.get())
+                # print(self.randomize.get()) 
+                pass 
 
             global displayDetailsPageWidgets
             def displayDetailsPageWidgets():
@@ -72,12 +73,20 @@ class Add:
 
                     # Recording the data passed to it
                     def record():
-                        print(self.randomize.get())
+                        print(ExFunc.data)
+                        # Adding new elements(quite more like changing the element by indexing)
                         ExFunc.data["Randomize"] = self.randomize.get()
                         ExFunc.data["Time"][self.question_number-1] =  self.time_var.get()
                         ExFunc.data["Marks"][self.question_number-1] =  self.marks_var.get()
                         ExFunc.data["Option Type"][self.question_number-1] =  self.answer_format_menu_variable.get()
                         ExFunc.data["Question No"][self.question_number-1] = self.question_number
+
+                        # Adding "None" to the end of all list inother to add new elements through indexing
+                        ExFunc.data["Randomize"] = self.randomize.get()
+                        ExFunc.data["Time"].append(None)
+                        ExFunc.data["Marks"].append(None)
+                        ExFunc.data["Option Type"].append(None)
+                        ExFunc.data["Question No"].append(None)
 
                     record()
                     print(ExFunc.data)
@@ -85,10 +94,11 @@ class Add:
             def cancelDetailsPageFunction():
                 forgetDetailsPageWidgets()
 
-                #Opening the previous page
-                self.actualQuestionPage()
+                # Changing the question in order to re display the previous data
+                self.question_number-=1
 
-                print(self.question_number)
+                # Opening the previous page
+                self.actualQuestionPage()
 
             def exitFunction():
                 exit = tk.messagebox.askyesno(title="Exit", message="Are you sure you want to your exit?", default="no")
@@ -143,11 +153,8 @@ class Add:
 
     def actualQuestionPage(self):
         self.hint = "" #Making an attribute to store the 
-        print(self.hint, "when clicked the hint buton")
 
         def hintFunction():
-            print(self.hint, "when clicked the hint buton")
-
             ExFunc.createHintWidgets(self)
 
         self.solution_and_feedback = "" #Making an attribute to store the solution and feedback 
@@ -222,7 +229,7 @@ class Add:
         def questionImageFunction(event):
             self.image_filename = ctk.filedialog.askopenfilename()
 
-            #Handling potential errors. Eg, when the user chooses a non-image file, i.e exe, mp4, py
+            #Handling potential errors. Eg, when the user chooses a non-image file, i.e exe, mp4, py 
             try:
                 #Displaying the image on the question image label
                 self.question_image.configure(light_image=Image.open(self.image_filename))
@@ -235,26 +242,39 @@ class Add:
                 self.image_filename = "Pictures/AddImage.jpg"
 
         def continueActualQuestionPageFunction(): 
-            if ExFunc.actualQuestionValidation(self.option_A_entry, self.option_B_entry, self.option_C_entry, self.option_D_entry, self.option_A_button, self.option_B_button, self.option_C_button, self.option_D_button, self.options_variable, self.answer_format_menu_variable, self.without_options_textbox, self.question, self.image_filename):
-                #Incrementing the question to allow the user to move to the next question
-                self.question_number+=1
-                self.question_number_label.configure(text=f"Question {self.question_number} time settings and marks")
-                
-                forgetActualQuestionPageWidgets()
-                displayDetailsPageWidgets()
+            if ExFunc.actualQuestionValidation(self.option_A_entry, self.option_B_entry, self.option_C_entry, self.option_D_entry, self.option_A_button, self.option_B_button, self.option_C_button, self.option_D_button, self.options_variable, self.answer_format_menu_variable, self.without_options_textbox, self.question, self.image_filename):    
+                forgetActualQuestionPageWidgets() 
 
                 def record():
                     print(self.randomize.get())
-                    ExFunc.data["Text Question"][self.question_number-2] = self.question.get("0.0","end")
-                    ExFunc.data["Image Question"][self.question_number-2] =  self.image_filename
-                    ExFunc.data["Hint"][self.question_number-2] =  self.hint
-                    ExFunc.data["Solution Text"][self.question_number-2] =  self.solution_and_feedback
-                    ExFunc.data["Solution Image"][self.question_number-2] = self.solution_image_filename
-                    ExFunc.data["Options"][self.question_number-2] = [self.option_A_entry.get(), self.option_B_entry.get(), self.option_C_entry.get(), self.option_D_entry.get()]
-                    ExFunc.data["Answer"][self.question_number-2] = self.without_options_textbox.get("0.0", "end")
-                
+                    print(self.question_number)
+
+                    # Adding new elements(quite more like changing the elements through indexing)
+                    ExFunc.data["Text Question"][self.question_number-1] = self.question.get("0.0","end")
+                    ExFunc.data["Image Question"][self.question_number-1] =  self.image_filename
+                    ExFunc.data["Hint"][self.question_number-1] =  self.hint
+                    ExFunc.data["Solution Text"][self.question_number-1] =  self.solution_and_feedback
+                    ExFunc.data["Solution Image"][self.question_number-1] = self.solution_image_filename
+                    ExFunc.data["Options"][self.question_number-1] = [self.option_A_entry.get(), self.option_B_entry.get(), self.option_C_entry.get(), self.option_D_entry.get()]
+                    ExFunc.data["Answer"][self.question_number-1] = self.without_options_textbox.get("0.0", "end")
+                    
+                    # Adding "None" to the end of each list to allow changing element by indexing
+                    ExFunc.data["Text Question"].append(None)
+                    ExFunc.data["Image Question"].append(None)
+                    ExFunc.data["Hint"].append(None)
+                    ExFunc.data["Solution Text"].append(None)
+                    ExFunc.data["Solution Image"].append(None)
+                    ExFunc.data["Options"].append(None)
+                    ExFunc.data["Answer"].append(None)
+
                 record()
                 print(ExFunc.data)
+
+                #Incrementing the question to allow the user to move to the next question
+                self.question_number+=1
+                self.question_number_label.configure(text=f"Question {self.question_number} time settings and marks")
+
+                displayDetailsPageWidgets()
 
         def cancelActualQuestionPageFunction():
             forgetActualQuestionPageWidgets()
@@ -267,17 +287,24 @@ class Add:
             # Redisplaying the details page widgets
             displayDetailsPageWidgets()
 
+            def reDisplay():
+                # Adding new elements(quite more like changing the element by indexing)
+                self.time_var.set(ExFunc.data["Time"][self.question_number-1])
+                self.marks_var.set(ExFunc.data["Marks"][self.question_number-1])
+                self.answer_format_menu_variable.set(ExFunc.data["Option Type"][self.question_number-1])
+
+            reDisplay()
             # Displaying the details saves previously for this page corresponding on the question number filled in
-            self.time_var.set(ExFunc.data["Time"][self.question_number-1])
-            self.marks_var.get(ExFunc.data["Marks"][self.question_number-1])
-            self.answer_format_menu_variable.get(ExFunc.data["Option Type"][self.question_number-1])
+            # self.time_var.set(ExFunc.data["Time"][self.question_number-1])
+            # self.marks_var.get(ExFunc.data["Marks"][self.question_number-1])
+            # self.answer_format_menu_variable.get(ExFunc.data["Option Type"][self.question_number-1])
 
         def doneFunction():
             done = tk.messagebox.askyesno(title="Save", message="Are you sure you want to save this topic?")
             if done:
                 self.window.destroy()
 
-        #This frame is used as a container for the "format menu" and the "hint button"
+        #This frame is used as a container for the "format menu" and the "hint button" print
         self.frame1 = ctk.CTkFrame(self.window, border_width=0, fg_color="#c3c3c3")
 
         #Question Format Menu
@@ -294,9 +321,6 @@ class Add:
         #Question textbox: This is where the user inserts their question
         self.question = ctk.CTkTextbox(self.window, width=600, text_color="#098bed", wrap="word")
         
-        #The is a guide in the "question" textbox at the beginning of every making a new topic
-        if self.question_number == 1:
-            self.question.insert("0.0", "Please add your question")
         self.question.focus_set()
 
         #Question Image: This label stores the question(in image form) inserted by the user
@@ -347,3 +371,27 @@ class Add:
         self.done_button = ctk.CTkButton(self.window, text="Done", border_width=0, command=doneFunction)
 
         ExFunc.displayActualQuestionPageWidgets(self, True)
+
+        def reDisplay():
+            if len(ExFunc.data["Text Question"]) > 1:
+                print("Re display cancel details function")
+
+                self.hint = ExFunc.data["Hint"][-2]
+                self.solution_and_feedback = ExFunc.data["Solution Text"][-2]
+                self.solution_image_filename = ExFunc.data["Solution Image"][-2]
+
+                # Change the format option widget to display the right format
+                self.format_var.set(ExFunc.data["Option Type"][-2])
+
+                self.question.insert("0.0", ExFunc.data["Text Question"][-2])
+                self.image_filename = ExFunc.data["Image Question"][-2]
+
+                # Displaying the values in the options widgets
+                print(ExFunc.data["Options"][-2][0])
+                self.option_A_entry.insert(0,ExFunc.data["Options"][-2][0])
+                self.option_B_entry.insert(0,ExFunc.data["Options"][-2][1])
+                self.option_C_entry.insert(0,ExFunc.data["Options"][-2][2])
+                self.option_D_entry.insert(0,ExFunc.data["Options"][-2][3])
+
+                # Setting the option variable to display the right answer
+        reDisplay()

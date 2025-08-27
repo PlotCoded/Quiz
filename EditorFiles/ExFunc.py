@@ -119,6 +119,9 @@ def displayActualQuestionPageWidgets(self, continue_present):
     #If the questin format is to be in text form
     if self.format_var.get() == "Text":
         self.question.pack(pady=10)
+
+        # For testing
+        # self.question.insert("0.0","Which is the odd one?")
         self.question_image_label.pack_forget()
 
     #Else if the question format is to be in image form
@@ -142,6 +145,13 @@ def displayActualQuestionPageWidgets(self, continue_present):
         self.option_C_entry.place(relx=0.09,rely=0.1)
         self.option_D_button.place(relx=0.5,rely=0.1)
         self.option_D_entry.place(relx=0.54,rely=0.1)
+
+        # For testing
+        # if self.question_number == 1:
+        #     self.option_A_entry.insert(0,"Apple")
+        #     self.option_B_entry.insert(0,"Banana")
+        #     self.option_C_entry.insert(0,"Denmark")
+        #     self.option_D_entry.insert(0,"Cherry")
 
     elif self.answer_format_menu_variable.get() == "Without Options":
         self.without_options_textbox.pack()
@@ -230,7 +240,7 @@ def questionImageFunction(self):
     print(self.image_filename)
     #Handling potential errors. Eg, when the user chooses a non-image file, i.e exe, mp4, py
     try:
-        #Displaying the image on the question image label
+        #Displaying the image on the question image label format
         self.question_image.configure(light_image=Image.open(self.image_filename))
         print("No error occured")
     except Exception as message:
@@ -298,35 +308,35 @@ def forgetSolutionWidgets(self):
 def solutionCancelFunction(self):
     self.solution_and_feedback_window.destroy()
 
-# Storage part
-data = {
-    "Randomize": True,
-    "Time": ["00:00:10","00:00:60","00:03:00","00:01:00","00:07:30",],
-    "Marks": [1,1,1,1,1],
-    "Option Type": ["Without Options", "Options", "Without Options", "Options", "Without Options"],
-    "Text Question": ["What is the sum of 1 and 1?","What is the largest prime in between 100 and 200?","What is the value of the integral of f(x) in the interval [2,5], for which f(x) = x^2?","What is gradient of e^x when x = ln(1)?","Find the sum of all natural numbers bettween 1 to 100"],
-    "Image Question": ["Pictures/AddImage.jpg","Pictures/AddImage.jpg","Pictures/AddImage.jpg","Pictures/AddImage.jpg","Pictures/AddImage.jpg"],
-    "Question No": [1,2,3,4,5],
-    "Hint": [None, "Try starting from 200 downwards",None, "f(f^-1(x)) = x?","Try pairing up the starting number to the end number"],
-    "Solution Text": ["2","199","39","1","5050"],
-    "Solution Image": ["Pictures/AddImage.jpg","Pictures/AddImage.jpg","Pictures/AddImage.jpg","Pictures/AddImage.jpg","Pictures/AddImage.jpg"],
-    "Options": [["2","199","39","1"], ["2","199","39","1"],["2","199","39","1"],["2","199","39","1"],["2","199","39","5050"]],
-    "Answer": ["2","199","39","1","5050"]
-}
+# # Storage part
+# data = {
+#     "Randomize": True,
+#     "Time": ["00:00:10","00:00:60","00:03:00","00:01:00","00:07:30",], format_var
+#     "Marks": [1,1,1,1,1],
+#     "Option Type": ["Without Options", "Options", "Without Options", "Options", "Without Options"],
+#     "Text Question": ["What is the sum of 1 and 1?","What is the largest prime in between 100 and 200?","What is the value of the integral of f(x) in the interval [2,5], for which f(x) = x^2?","What is gradient of e^x when x = ln(1)?","Find the sum of all natural numbers bettween 1 to 100"],
+#     "Image Question": ["Pictures/AddImage.jpg","Pictures/AddImage.jpg","Pictures/AddImage.jpg","Pictures/AddImage.jpg","Pictures/AddImage.jpg"],
+#     "Question No": [1,2,3,4,5],
+#     "Hint": [None, "Try starting from 200 downwards",None, "f(f^-1(x)) = x?","Try pairing up the starting number to the end number"],
+#     "Solution Text": ["2","199","39","1","5050"],
+#     "Solution Image": ["Pictures/AddImage.jpg","Pictures/AddImage.jpg","Pictures/AddImage.jpg","Pictures/AddImage.jpg","Pictures/AddImage.jpg"],
+#     "Options": [["2","199","39","1"], ["2","199","39","1"],["2","199","39","1"],["2","199","39","1"],["2","199","39","5050"]],
+#     "Answer": ["2","199","39","1","5050"]
+# }
 
 data = {
     "Randomize": True,
-    "Time": [],
-    "Marks": [],
-    "Option Type": [],
-    "Text Question": [],
-    "Image Question": [],
-    "Question No": [],
-    "Hint": [],
-    "Solution Text": [],
-    "Solution Image": [],
-    "Options": [],
-    "Answer": []
+    "Time": [None],
+    "Marks": [None],
+    "Option Type": [None],
+    "Text Question": [None],
+    "Image Question": [None],
+    "Question No": [None],
+    "Hint": [None],
+    "Solution Text": [None],
+    "Solution Image": [None],
+    "Options": [None],
+    "Answer": [None]
 }
 
 def save(data):
