@@ -257,6 +257,7 @@ class Add:
                     ExFunc.data["Solution Image"][self.question_number-1] = self.solution_image_filename
                     ExFunc.data["Options"][self.question_number-1] = [self.option_A_entry.get(), self.option_B_entry.get(), self.option_C_entry.get(), self.option_D_entry.get()]
                     ExFunc.data["Answer"][self.question_number-1] = self.without_options_textbox.get("0.0", "end")
+                    ExFunc.data["Option Choosen"][self.question_number-1] = self.options_variable.get()
                     
                     # Adding "None" to the end of each list to allow changing element by indexing
                     ExFunc.data["Text Question"].append(None)
@@ -266,6 +267,7 @@ class Add:
                     ExFunc.data["Solution Image"].append(None)
                     ExFunc.data["Options"].append(None)
                     ExFunc.data["Answer"].append(None)
+                    ExFunc.data["Option Choosen"].append(None)
 
                 record()
                 print(ExFunc.data)
@@ -357,10 +359,6 @@ class Add:
         #Without Options Textbox
         self.without_options_textbox = ctk.CTkTextbox(self.window, width=600, height=50, text_color="#00FF00")
         
-        #Guide in the "without options textbox" for every beginning of every topic
-        if self.question_number == 1:
-            self.without_options_textbox.insert("0.0", "Please add your answer")
-
         #Continue Button
         self.continue_actual_question_page_button = ctk.CTkButton(self.window, text="Continue", border_width=0, command=continueActualQuestionPageFunction)
 
@@ -374,24 +372,30 @@ class Add:
 
         def reDisplay():
             if len(ExFunc.data["Text Question"]) > 1:
+                pos = self.question_number
                 print("Re display cancel details function")
 
                 self.hint = ExFunc.data["Hint"][-2]
                 self.solution_and_feedback = ExFunc.data["Solution Text"][-2]
                 self.solution_image_filename = ExFunc.data["Solution Image"][-2]
 
-                # Change the format option widget to display the right format
-                self.format_var.set(ExFunc.data["Option Type"][-2])
-
                 self.question.insert("0.0", ExFunc.data["Text Question"][-2])
                 self.image_filename = ExFunc.data["Image Question"][-2]
 
                 # Displaying the values in the options widgets
-                print(ExFunc.data["Options"][-2][0])
                 self.option_A_entry.insert(0,ExFunc.data["Options"][-2][0])
                 self.option_B_entry.insert(0,ExFunc.data["Options"][-2][1])
                 self.option_C_entry.insert(0,ExFunc.data["Options"][-2][2])
                 self.option_D_entry.insert(0,ExFunc.data["Options"][-2][3])
 
+                # Displaying answer in the answer textbox
+                self.answer_format
+
                 # Setting the option variable to display the right answer
+                self.without_options_textbox.insert("0.0", ExFunc.data["Answer"][-2])
+
+                # Setting the answer choosen
+                self.options_variable.set(ExFunc.data["Option Choosen"][-2])
+                ExFunc.selectedOption(self.option_A_entry,self.option_B_entry,self.option_C_entry,self.option_D_entry, self.options_variable)
+
         reDisplay()

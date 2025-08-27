@@ -336,6 +336,7 @@ data = {
     "Solution Text": [None],
     "Solution Image": [None],
     "Options": [None],
+    "Option Choosen": [None],
     "Answer": [None]
 }
 
