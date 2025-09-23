@@ -73,8 +73,7 @@ class Add:
                     self.actualQuestionPage()
 
                     # Recording the data passed to it
-                    def record():
-                        print(ExFunc.data)
+                    def record(): #print
                         # Adding new elements(quite more like changing the element by indexing)
                         ExFunc.data["Randomize"] = self.randomize.get()
                         ExFunc.data["Time"][self.question_number-1] =  self.time_var.get()
@@ -92,7 +91,6 @@ class Add:
                             ExFunc.data["Question No"].append(None)
 
                     record()
-                    print(ExFunc.data)
 
             def cancelDetailsPageFunction():
                 forgetDetailsPageWidgets()
@@ -106,21 +104,18 @@ class Add:
                 def reDisplay():
                     if len(ExFunc.data["Text Question"]) > 1:
                         pos = self.question_number-1
-                        print(pos)
 
                         self.hint = ExFunc.data["Hint"][pos]
                         self.solution_and_feedback = ExFunc.data["Solution Text"][pos]
-                        print("Here is your feedback",self.solution_and_feedback,pos)
                         self.solution_image_filename = ExFunc.data["Solution Image"][pos]
 
-                        print("Question", ExFunc.data["Text Question"][pos])
                         self.question.insert("0.0", ExFunc.data["Text Question"][pos])
                         self.image_filename = ExFunc.data["Image Question"][pos]
 
                         # Displaying the values in the options widgets
                         self.option_A_entry.insert(0,ExFunc.data["Options"][pos][0])
                         self.option_B_entry.insert(0,ExFunc.data["Options"][pos][1])
-                        self.option_C_entry.insert(0,ExFunc.data["Options"][pos][2])
+                        self.option_C_entry.insert(0,ExFunc.data["Options"][pos][2]) # print
                         self.option_D_entry.insert(0,ExFunc.data["Options"][pos][3])
 
                         # Displaying answer in the answer textbox
@@ -230,8 +225,7 @@ class Add:
             
             #Textbox widget for text only
             self.solution_textbox = ctk.CTkTextbox(self.solution_and_feedback_window, width=500, height=300, border_width=0, text_color="#c8b800", wrap="word")
-            print("Solution",self.solution_and_feedback,"here")
-            # if self.solution_and_feedback == None: self.solution_and_feedback = ""
+            # if self.solution_and_feedback == None: self.solution_and_feedback = "" #print
             self.solution_textbox.insert("0.0", self.solution_and_feedback) #Inserting the solution to the textbox
            
             #Add image widget for images only
@@ -283,9 +277,6 @@ class Add:
                 forgetActualQuestionPageWidgets() 
 
                 def record():
-                    print(self.randomize.get())
-                    print(self.question_number)
-
                     # Adding new elements(quite more like changing the elements through indexing)
                     ExFunc.data["Text Question"][self.question_number-1] = self.question.get("0.0","end")
                     ExFunc.data["Image Question"][self.question_number-1] =  self.image_filename
@@ -308,18 +299,17 @@ class Add:
                         ExFunc.data["Option Choosen"].append(None)
 
                 record()
-                print(ExFunc.data)
 
                 #Incrementing the question to allow the user to move to the next question
                 self.question_number+=1
-                self.question_number_label.configure(text=f"Question {self.question_number} time settings and marks") # None
+                self.question_number_label.configure(text=f"Question {self.question_number} time settings and marks") # None #print
 
                 displayDetailsPageWidgets()
 
         def cancelActualQuestionPageFunction():
             forgetActualQuestionPageWidgets()
 
-            # Decrementing the question number by 1 only if the number is greater than one and displaying the question number
+            # Decrementing the question number by 1 only if the number is greater than one and displaying the question number '#print'
             # if self.question_number > 1:
             #     self.question_number-=1
             self.question_number_label.configure(text=f"Question {self.question_number}'s time setting and marks:")
@@ -414,14 +404,11 @@ class Add:
         def reDisplay():
             if ExFunc.data["Text Question"][self.question_number-1] != None: # and len(ExFunc.data["Text Question"]) > 1:
                 pos = self.question_number-1
-                print(pos)
 
                 self.hint = ExFunc.data["Hint"][pos]
                 self.solution_and_feedback = ExFunc.data["Solution Text"][pos]
-                print("Here is your feedback",self.solution_and_feedback,pos)
                 self.solution_image_filename = ExFunc.data["Solution Image"][pos]
 
-                print("Question", ExFunc.data["Text Question"][pos])
                 self.question.insert("0.0", ExFunc.data["Text Question"][pos])
                 self.image_filename = ExFunc.data["Image Question"][pos]
 
