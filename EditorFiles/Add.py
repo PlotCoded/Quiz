@@ -162,7 +162,7 @@ class Add:
             self.time = ctk.CTkEntry(self.frameB, textvariable=self.time_var, border_width=0, corner_radius=10, width=200, justify="center",placeholder_text_color="#c3c3c3", placeholder_text="00:00:00")
 
             #Allowing the user to enter the total marks for their an individual question
-            self.marks_var = tk.IntVar(value=1)
+            self.marks_var = tk.StringVar(value="1")
             self.marks = ctk.CTkEntry(self.frameB, textvariable=self.marks_var, border_width=0, corner_radius=10, width=200, justify="center", placeholder_text="0", placeholder_text_color="#c3c3c3")
 
             #Option Menu
