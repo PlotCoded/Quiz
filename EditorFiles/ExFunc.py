@@ -340,6 +340,6 @@ data = {
     "Answer": [None]
 }
 
-def save(data):
-    dataframe = pandas.DataFrame(data, index=list(range(len(data["Question No"]))))
-    dataframe.to_csv("P.csv") # Creating the file for the topic. This file contains all the details for the topic created
+# def save(data):
+#     dataframe = pandas.DataFrame(data, index=list(range(len(data["Question No"]))))
+#     dataframe.to_csv("P.csv") # Creating the file for the topic. This file contains all the details for the topic created

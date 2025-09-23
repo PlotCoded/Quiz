@@ -1,6 +1,7 @@
 import customtkinter as ctk
 import tkinter as tk
 from PIL import Image
+import pandas
 
 from EditorFiles import ExFunc
 
@@ -83,10 +84,12 @@ class Add:
 
                         # Adding "None" to the end of all list inother to add new elements through indexing
                         ExFunc.data["Randomize"] = self.randomize.get()
-                        ExFunc.data["Time"].append(None)
-                        ExFunc.data["Marks"].append(None)
-                        ExFunc.data["Option Type"].append(None)
-                        ExFunc.data["Question No"].append(None)
+
+                        if ExFunc.data["Time"][-1] != None:
+                            ExFunc.data["Time"].append(None)
+                            ExFunc.data["Marks"].append(None)
+                            ExFunc.data["Option Type"].append(None)
+                            ExFunc.data["Question No"].append(None)
 
                     record()
                     print(ExFunc.data)
@@ -99,6 +102,38 @@ class Add:
 
                 # Opening the previous page
                 self.actualQuestionPage()
+
+                def reDisplay():
+                    if len(ExFunc.data["Text Question"]) > 1:
+                        pos = self.question_number-1
+                        print(pos)
+
+                        self.hint = ExFunc.data["Hint"][pos]
+                        self.solution_and_feedback = ExFunc.data["Solution Text"][pos]
+                        print("Here is your feedback",self.solution_and_feedback,pos)
+                        self.solution_image_filename = ExFunc.data["Solution Image"][pos]
+
+                        print("Question", ExFunc.data["Text Question"][pos])
+                        self.question.insert("0.0", ExFunc.data["Text Question"][pos])
+                        self.image_filename = ExFunc.data["Image Question"][pos]
+
+                        # Displaying the values in the options widgets
+                        self.option_A_entry.insert(0,ExFunc.data["Options"][pos][0])
+                        self.option_B_entry.insert(0,ExFunc.data["Options"][pos][1])
+                        self.option_C_entry.insert(0,ExFunc.data["Options"][pos][2])
+                        self.option_D_entry.insert(0,ExFunc.data["Options"][pos][3])
+
+                        # Displaying answer in the answer textbox
+                        self.answer_format
+
+                        # Setting the option variable to display the right answer
+                        self.without_options_textbox.insert("0.0", ExFunc.data["Answer"][pos])
+
+                        # Setting the answer choosen
+                        self.options_variable.set(ExFunc.data["Option Choosen"][pos])
+                        ExFunc.selectedOption(self.option_A_entry,self.option_B_entry,self.option_C_entry,self.option_D_entry, self.options_variable)
+
+                reDisplay()
 
             def exitFunction():
                 exit = tk.messagebox.askyesno(title="Exit", message="Are you sure you want to your exit?", default="no")
@@ -195,6 +230,8 @@ class Add:
             
             #Textbox widget for text only
             self.solution_textbox = ctk.CTkTextbox(self.solution_and_feedback_window, width=500, height=300, border_width=0, text_color="#c8b800", wrap="word")
+            print("Solution",self.solution_and_feedback,"here")
+            # if self.solution_and_feedback == None: self.solution_and_feedback = ""
             self.solution_textbox.insert("0.0", self.solution_and_feedback) #Inserting the solution to the textbox
            
             #Add image widget for images only
@@ -260,21 +297,22 @@ class Add:
                     ExFunc.data["Option Choosen"][self.question_number-1] = self.options_variable.get()
                     
                     # Adding "None" to the end of each list to allow changing element by indexing
-                    ExFunc.data["Text Question"].append(None)
-                    ExFunc.data["Image Question"].append(None)
-                    ExFunc.data["Hint"].append(None)
-                    ExFunc.data["Solution Text"].append(None)
-                    ExFunc.data["Solution Image"].append(None)
-                    ExFunc.data["Options"].append(None)
-                    ExFunc.data["Answer"].append(None)
-                    ExFunc.data["Option Choosen"].append(None)
+                    if ExFunc.data["Text Question"][-1] != None:
+                        ExFunc.data["Text Question"].append(None)
+                        ExFunc.data["Image Question"].append(None)
+                        ExFunc.data["Hint"].append(None)
+                        ExFunc.data["Solution Text"].append(None)
+                        ExFunc.data["Solution Image"].append(None)
+                        ExFunc.data["Options"].append(None)
+                        ExFunc.data["Answer"].append(None)
+                        ExFunc.data["Option Choosen"].append(None)
 
                 record()
                 print(ExFunc.data)
 
                 #Incrementing the question to allow the user to move to the next question
                 self.question_number+=1
-                self.question_number_label.configure(text=f"Question {self.question_number} time settings and marks")
+                self.question_number_label.configure(text=f"Question {self.question_number} time settings and marks") # None
 
                 displayDetailsPageWidgets()
 
@@ -304,6 +342,9 @@ class Add:
         def doneFunction():
             done = tk.messagebox.askyesno(title="Save", message="Are you sure you want to save this topic?")
             if done:
+                dataframe = pandas.DataFrame(ExFunc.data, index=list(range(len(ExFunc.data["Question No"]))))
+                dataframe.to_csv(f"{self.topic_var.get()}.csv")
+
                 self.window.destroy()
 
         #This frame is used as a container for the "format menu" and the "hint button" print
@@ -371,31 +412,33 @@ class Add:
         ExFunc.displayActualQuestionPageWidgets(self, True)
 
         def reDisplay():
-            if len(ExFunc.data["Text Question"]) > 1:
-                pos = self.question_number
-                print("Re display cancel details function")
+            if ExFunc.data["Text Question"][self.question_number-1] != None: # and len(ExFunc.data["Text Question"]) > 1:
+                pos = self.question_number-1
+                print(pos)
 
-                self.hint = ExFunc.data["Hint"][-2]
-                self.solution_and_feedback = ExFunc.data["Solution Text"][-2]
-                self.solution_image_filename = ExFunc.data["Solution Image"][-2]
+                self.hint = ExFunc.data["Hint"][pos]
+                self.solution_and_feedback = ExFunc.data["Solution Text"][pos]
+                print("Here is your feedback",self.solution_and_feedback,pos)
+                self.solution_image_filename = ExFunc.data["Solution Image"][pos]
 
-                self.question.insert("0.0", ExFunc.data["Text Question"][-2])
-                self.image_filename = ExFunc.data["Image Question"][-2]
+                print("Question", ExFunc.data["Text Question"][pos])
+                self.question.insert("0.0", ExFunc.data["Text Question"][pos])
+                self.image_filename = ExFunc.data["Image Question"][pos]
 
                 # Displaying the values in the options widgets
-                self.option_A_entry.insert(0,ExFunc.data["Options"][-2][0])
-                self.option_B_entry.insert(0,ExFunc.data["Options"][-2][1])
-                self.option_C_entry.insert(0,ExFunc.data["Options"][-2][2])
-                self.option_D_entry.insert(0,ExFunc.data["Options"][-2][3])
+                self.option_A_entry.insert(0,ExFunc.data["Options"][pos][0])
+                self.option_B_entry.insert(0,ExFunc.data["Options"][pos][1])
+                self.option_C_entry.insert(0,ExFunc.data["Options"][pos][2])
+                self.option_D_entry.insert(0,ExFunc.data["Options"][pos][3])
 
                 # Displaying answer in the answer textbox
                 self.answer_format
 
                 # Setting the option variable to display the right answer
-                self.without_options_textbox.insert("0.0", ExFunc.data["Answer"][-2])
+                self.without_options_textbox.insert("0.0", ExFunc.data["Answer"][pos])
 
                 # Setting the answer choosen
-                self.options_variable.set(ExFunc.data["Option Choosen"][-2])
+                self.options_variable.set(ExFunc.data["Option Choosen"][pos])
                 ExFunc.selectedOption(self.option_A_entry,self.option_B_entry,self.option_C_entry,self.option_D_entry, self.options_variable)
 
         reDisplay()
