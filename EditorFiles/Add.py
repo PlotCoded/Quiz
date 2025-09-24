@@ -70,7 +70,7 @@ class Add:
                     forgetDetailsPageWidgets()
 
                     #Opening the next page
-                    self.actualQuestionPage()
+                    self.actualQuestionPage() #display
 
                     # Recording the data passed to it
                     def record(): #print
@@ -158,7 +158,7 @@ class Add:
             self.question_number_label = ctk.CTkLabel(self.frameB, text=f"Question {self.question_number}'s time setting and marks:")
 
             #Allowing the user to enter the time boundry for their an individual question
-            self.time_var = tk.StringVar(value="00:00:10")
+            self.time_var = tk.StringVar(value="00:00:11")
             self.time = ctk.CTkEntry(self.frameB, textvariable=self.time_var, border_width=0, corner_radius=10, width=200, justify="center",placeholder_text_color="#c3c3c3", placeholder_text="00:00:00")
 
             #Allowing the user to enter the total marks for their an individual question
@@ -238,7 +238,7 @@ class Add:
             self.solution_cancel_button = ctk.CTkButton(self.solution_and_feedback_window, text="Cancel",border_width=0, command=lambda: ExFunc.solutionCancelFunction(self))
 
             #Displaying wigets
-            ExFunc.displaySolutionWidgets(self)
+            ExFunc.displaySolutionWidgets(self) #display
 
         def forgetActualQuestionPageWidgets():
             #Forgetting the widgets
