@@ -1,7 +1,7 @@
 import customtkinter as ctk
 import tkinter as tk
 from PIL import Image
-import time
+import time, os, pandas
 
 from EditorFiles import ExFunc
 
@@ -47,10 +47,16 @@ class Edit:
 			#Creating a scrollbar for all the topics
 			self.edit_scroll_frame = ctk.CTkScrollableFrame(self.window, corner_radius=0, border_width=0, fg_color="#c3c3c3",orientation="vertical", width=750, height=500)
 
-			#Inserting subjects
-			for _ in range(10):
-				ctk.CTkButton(self.edit_scroll_frame, text="Tom", command=self.optionsWindow).pack(pady=50)
+			# Inserting the topics
+			filenames = os.listdir(r"C:\Users\hp\Documents\Quiz\Storage")
 
+			for file in filenames:
+			    if ".csv" in file:
+			        # Displaying the topic on the menu
+			        exec(f"self.{file[::-4]} = ctk.CTkButton(self.edit_scroll_frame, text='{file[:-4]}', command=self.optionsWindow)")
+			        exec(f"self.{file[::-4]}.pack(pady=50)")
+			        exec(f"self.topic_name = '{file[:-4]}'")
+			
 			displayWidgets()
 
 	def optionsWindow(self):
@@ -138,14 +144,18 @@ class Edit:
 		def saveTopicDetailsFunction():
 			cancelTopicDetailsFunction() #Next
 
+			# Updating the topic
+			data = pandas.read_csv(fr"C:\Users\hp\Documents\Quiz\Storage\{self.topic_name}.csv")
+			print(data, type(data), self.topic_name)
+
 		#Forgeting the main window's widgets
 		self.forgetOptionsWindowWidgets()
 
 		#Indicator label
-		self.indicator = ctk.CTkLabel(self.window, text=f"Change #topic's name or its the randomize option")
+		self.indicator = ctk.CTkLabel(self.window, text=f"Change {self.topic_name}'s topic name or its the randomize option")
 
 		#Allowing the user to enter the name of their topic
-		self.topic_var = tk.StringVar(value="EnterNewTopicName") #This value is for testing
+		self.topic_var = tk.StringVar(value=self.topic_name) #This value is for testing
 		self.topic = ctk.CTkEntry(self.window, textvariable=self.topic_var, border_width=0, corner_radius=10, width=300, justify="center", placeholder_text="Topic Name", placeholder_text_color="#c3c3c3")
 
 		#Randomize checkbox

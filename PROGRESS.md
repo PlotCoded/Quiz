@@ -9,7 +9,10 @@
 
 <li>20:48 Another problem right now is that when I move forward, the time and marks entry values do not change to the saved value inserted before it, it returns the value of the previous widgets instead, backwards works fine, it returns the value of the saved value inserted, but when you go forward, it doesn't work properly
 </li>
-<li></li>
+<li>17:22. Decided to leave it alone for now in the mean time, there are other features to focus on that are more important to complete, those other problems can be fixed later on in the future. 28/09/25</li>
+
+<li>17:39 Moving on Edit widgets/section 28/09/25<li>
+<li>
 </ul>
 
 # Copyright (c) 2024 Sam

@@ -4,7 +4,6 @@ from PIL import Image
 import pandas
 
 from EditorFiles import ExFunc
-
 class Add:
     def __init__(self, app):
         self.app = app
