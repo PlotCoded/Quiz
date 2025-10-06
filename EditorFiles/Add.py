@@ -48,7 +48,7 @@ class Add:
 
                 self.exit_button.pack(side="left", padx=20, pady=20, expand=True)
 
-                # Enabling and disabling the topic and randomize widgets depending on the question number
+                # Enabling and disabling the topic and randomize widgets depending on the question number to_
                 if self.question_number != 1:
                     self.topic.configure(state="disabled")
                     self.randomize.configure(state="disabled")
@@ -332,7 +332,7 @@ class Add:
             done = tk.messagebox.askyesno(title="Save", message="Are you sure you want to save this topic?")
             if done:
                 dataframe = pandas.DataFrame(ExFunc.data, index=list(range(len(ExFunc.data["Question No"]))))
-                dataframe.to_csv(f"{self.topic_var.get()}.csv")
+                dataframe.to_csv(f"Storage\\{self.topic_var.get()}.csv") #print
 
                 self.window.destroy()
 

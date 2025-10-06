@@ -1,3 +1,4 @@
+# proceed
 import customtkinter as ctk
 import tkinter as tk
 from PIL import Image
@@ -9,57 +10,10 @@ class Edit:
 	def __init__(self, app):
 		self.app = app
 
-	def mainWindow(self):
-		if self.app.window_up == False:
-			# Control variable to prevent more than one editor window from opening at the same time
-			self.app.window_up = True
+	def optionsWindow(self, topic_name):
+		self.topic_name = topic_name
+		# print(self.topic_name)
 
-			self.window = ctk.CTkToplevel(self.app)
-			self.window.transient(self.app)
-			self.window.title("Edit")
-			self.window.geometry("750x500+500+150")
-
-			def destroyCommand():
-				you_sure = tk.messagebox.askyesno(title="Exit", message="Are you sure you want to exit out of this window?", default="no")
-
-				if you_sure:
-					self.window.destroy()
-					self.app.window_up = False
-
-			def displayWidgets():
-				self.description.pack()
-				self.edit_scroll_frame.pack()
-
-			def forgetWidgets():
-				self.description.pack_forget()
-				self.edit_scroll_frame.pack_forget()
-
-			# Implementing the exit command
-			self.window.protocol("WM_DELETE_WINDOW", destroyCommand)
-
-			#Creating an attribute of the functions above
-			self.forget_main_window_widgets = forgetWidgets
-			self.displayWidgets = displayWidgets
-
-			#Adding a label describing the page
-			self.description = ctk.CTkLabel(self.window, text="Please select a topic to make changes to it")
-
-			#Creating a scrollbar for all the topics
-			self.edit_scroll_frame = ctk.CTkScrollableFrame(self.window, corner_radius=0, border_width=0, fg_color="#c3c3c3",orientation="vertical", width=750, height=500)
-
-			# Inserting the topics
-			filenames = os.listdir(r"C:\Users\hp\Documents\Quiz\Storage")
-
-			for file in filenames:
-			    if ".csv" in file:
-			        # Displaying the topic on the menu
-			        exec(f"self.{file[::-4]} = ctk.CTkButton(self.edit_scroll_frame, text='{file[:-4]}', command=self.optionsWindow)")
-			        exec(f"self.{file[::-4]}.pack(pady=50)")
-			        exec(f"self.topic_name = '{file[:-4]}'")
-			
-			displayWidgets()
-
-	def optionsWindow(self):
 		def displayOptionsWindowWidgets():
 			self.guide.pack(pady=30)
 			self.editing_options.pack()
@@ -113,6 +67,60 @@ class Edit:
 
 		displayOptionsWindowWidgets()
 
+	def mainWindow(self):
+		if self.app.window_up == False:
+			# Control variable to prevent more than one editor window from opening at the same time
+			self.app.window_up = True
+
+			self.window = ctk.CTkToplevel(self.app)
+			self.window.transient(self.app)
+			self.window.title("Edit")
+			self.window.geometry("750x500+500+150")
+
+			def destroyCommand():
+				you_sure = tk.messagebox.askyesno(title="Exit", message="Are you sure you want to exit out of this window?", default="no")
+
+				if you_sure:
+					self.window.destroy()
+					self.app.window_up = False
+
+			def displayWidgets():
+				self.description.pack()
+				self.edit_scroll_frame.pack()
+
+			def forgetWidgets():
+				self.description.pack_forget()
+				self.edit_scroll_frame.pack_forget()
+
+			# Implementing the exit command
+			self.window.protocol("WM_DELETE_WINDOW", destroyCommand)
+
+			#Creating an attribute of the functions above
+			self.forget_main_window_widgets = forgetWidgets
+			self.displayWidgets = displayWidgets
+
+			#Adding a label describing the page
+			self.description = ctk.CTkLabel(self.window, text="Please select a topic to make changes to it")
+
+			#Creating a scrollbar for all the topics
+			self.edit_scroll_frame = ctk.CTkScrollableFrame(self.window, corner_radius=0, border_width=0, fg_color="#c3c3c3",orientation="vertical", width=750, height=500)
+
+			# Inserting the topics
+			filenames = os.listdir(r"C:\Users\hp\Documents\Quiz\Storage")
+
+			self.buttons = {}  # store buttons so you can access them later
+
+			for file in filenames:
+			    if file.endswith(".csv"):
+			        file_name = file[:-4]  # remove ".csv"
+			        # capture the current file_name in the lambda default
+			        call = lambda f=file_name: self.optionsWindow(f)
+			        button = ctk.CTkButton(self.edit_scroll_frame, text=file_name, command=call)
+			        button.pack(pady=50)
+			        self.buttons[file_name] = button
+
+			displayWidgets()
+
 	#This function is to edit the topic's meta data
 	def changeTopicDetails(self):
 		def displayTopicDetailsWidgets():
@@ -139,14 +147,47 @@ class Edit:
 
 		def cancelTopicDetailsFunction():
 			forgetTopicDetailsWidgets()
-			self.displayOptionsWindowWidgets()
+			self.displayWidgets()
 
-		def saveTopicDetailsFunction():
+		def saveTopicDetailsFunction(): # proceed
 			cancelTopicDetailsFunction() #Next
 
 			# Updating the topic
 			data = pandas.read_csv(fr"C:\Users\hp\Documents\Quiz\Storage\{self.topic_name}.csv")
-			print(data, type(data), self.topic_name)
+			data = data.replace(True, self.randomize.get())
+
+			# Deleting the previous topic
+			os.remove(f"Storage\\{self.topic_name}.csv")
+
+			#  Updating the existing buttons
+			# self.buttons.pop(self.topic_name)
+			
+			# Storing the changes on the file
+			data.to_csv(f"Storage\\{self.topic_var.get()}.csv")
+
+			# Redisplaying the button properly and updated this time
+			# Getting rid of the previous buttons and outdated buttons
+			for button in self.buttons:
+				self.buttons[button].pack_forget()
+
+			# Getting the new list of topics
+			filenames = os.listdir(r"C:\Users\hp\Documents\Quiz\Storage")
+
+			self.buttons = {}  # store buttons so you can access them later
+
+			# Displaying the new buttons
+			for file in filenames:
+			    if file.endswith(".csv"):
+			        file_name = file[:-4]  # remove ".csv"
+			        # capture the current file_name in the lambda default
+			        call = lambda f=file_name: self.optionsWindow(f)
+			        button = ctk.CTkButton(self.edit_scroll_frame, text=file_name, command=call)
+			        button.pack(pady=50)
+			        self.buttons[file_name] = button
+
+			self.displayWidgets()
+			# print(data, type(data), self.topic_name, "\n", data.to_dict())
+			# print(self.buttons)
 
 		#Forgeting the main window's widgets
 		self.forgetOptionsWindowWidgets()
@@ -159,7 +200,7 @@ class Edit:
 		self.topic = ctk.CTkEntry(self.window, textvariable=self.topic_var, border_width=0, corner_radius=10, width=300, justify="center", placeholder_text="Topic Name", placeholder_text_color="#c3c3c3")
 
 		#Randomize checkbox
-		self.randomize = ctk.CTkCheckBox(self.window, text="Change the randomize option", offvalue=0, onvalue=1)
+		self.randomize = ctk.CTkCheckBox(self.window, text="Change the randomize option", offvalue=False, onvalue=True)
 
 		#Cancel Button
 		self.cancel_change_topic_detail_button = ctk.CTkButton(self.window, text="Cancel", border_width=0, command=cancelTopicDetailsFunction)
@@ -508,6 +549,7 @@ class Edit:
 
 		# Continue Button
 		self.continue_actual_question_page_button = ctk.CTkButton(self.window, text="Continue", border_width=0, command=actualQuestionContinueFunction)
+		
 		#Cancel Button
 		self.cancel_actual_question_page_button = ctk.CTkButton(self.window, text="Cancel", border_width=0, command=actualQuestionCancelFunction)
 

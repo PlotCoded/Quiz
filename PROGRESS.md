@@ -11,8 +11,8 @@
 </li>
 <li>17:22. Decided to leave it alone for now in the mean time, there are other features to focus on that are more important to complete, those other problems can be fixed later on in the future. 28/09/25</li>
 
-<li>17:39 Moving on Edit widgets/section 28/09/25<li>
-<li>
+<li>17:39 Moving on Edit widgets section 28/09/25. Right now, I have the problem of argument passage, I can't pass in the topic name as an argument properly. It just passes in the last topic in the menu(list of buttons)</li>
+<li>21:20 6/10/25. I have fixed the issue and now I have finished the Edit change details about topic par</li>
 </ul>
 
 # Copyright (c) 2024 Sam
