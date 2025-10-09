@@ -2,7 +2,7 @@
 
 import re
 import tkinter as tk
-import customtkinter as ctk
+import customtkinter as ctk, pandas
 from PIL import Image
 
 def Validator(topic_entry_widget, time_entry_widget, marks_entry_widget):
@@ -343,3 +343,9 @@ data = {
 # def save(data):
 #     dataframe = pandas.DataFrame(data, index=list(range(len(data["Question No"]))))
 #     dataframe.to_csv("P.csv") # Creating the file for the topic. This file contains all the details for the topic created
+
+# dataframe = pandas.DataFrame(data, index=list(range(len(data["Question No"]))))
+
+# print(dataframe["Question No"], "\n\n\n\n\n", type(data["Question No"]))
+# for i in dataframe["Question No"]:
+#     print(i)

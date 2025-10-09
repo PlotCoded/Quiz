@@ -135,7 +135,7 @@ class Add:
                     self.window.destroy()
 
             # Implementing the exit command
-            self.window.protocol("WM_DELETE_WINDOW", destroyCommand)
+            self.window.protocol("WM_DELETE_WINDOW", destroyCommand) 
 
             #Variable to keep track of the question
             self.question_number = 1

@@ -13,6 +13,9 @@
 
 <li>17:39 Moving on Edit widgets section 28/09/25. Right now, I have the problem of argument passage, I can't pass in the topic name as an argument properly. It just passes in the last topic in the menu(list of buttons)</li>
 <li>21:20 6/10/25. I have fixed the issue and now I have finished the Edit change details about topic par</li>
+
+<li>21: 18 09/10/25. Moving on to "Change a Question" page</li>
+<li>22: 33 09/10/25. I have made the progress of when you click that button "Change a Queestion" on its option menu, it shows you the questions in the form of a checkboxes of that topic you choose on the scroll window</li>
 </ul>
 
 # Copyright (c) 2024 Sam

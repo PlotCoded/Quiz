@@ -149,7 +149,7 @@ class Edit:
 			forgetTopicDetailsWidgets()
 			self.displayWidgets()
 
-		def saveTopicDetailsFunction(): # proceed
+		def saveTopicDetailsFunction(): 
 			cancelTopicDetailsFunction() #Next
 
 			# Updating the topic
@@ -211,7 +211,7 @@ class Edit:
 		displayTopicDetailsWidgets()
 
 	#To edit the actual questions
-	def changeAQuestion(self):
+	def changeAQuestion(self): # proceed
 		def displayScrollWidgets():
 			# Guide on what to do
 			self.question_guide.pack()
@@ -417,7 +417,10 @@ class Edit:
 				if you_sure:
 					ExFunc.forgetActualQuestionPageWidgets(self)
 					displayScrollWidgets()
-			
+		
+		# Getting the stored data
+		data = pandas.read_csv(f"Storage\\{self.topic_name}.csv")
+
 		# Wigets here is for the scroll frame only Validator
 
 		# Guide on what to do
@@ -427,9 +430,21 @@ class Edit:
 		self.scroll_frame = ctk.CTkScrollableFrame(self.window, corner_radius=0, border_width=0, fg_color="#c3c3c3",orientation="vertical", width=750, height=500)
 
 		#Adding questions
-		for _  in range(5):
-			variable = tk.IntVar(value=1)
-			ctk.CTkRadioButton(self.scroll_frame, text=f"Question {_+1}", variable=variable, value=_+1, command=questionsCommand).pack(pady=50,expand=False)
+
+		self.question_checkboxes = {}  # store buttons so you can access them later
+
+		# Displaying the new buttons
+		for questions in data["Question No"]:
+			questions = int(questions)
+			# capture the current file_name in the lambda default
+			call = lambda f=questions: questionsCommand()
+			question_checkbox = ctk.CTkRadioButton(self.scroll_frame, text=questions, command=call)
+			question_checkbox.pack(pady=50)
+			self.question_checkboxes[questions] = question_checkbox
+
+		# for _  in range(5):
+		# 	variable = tk.IntVar(value=1)
+		# 	ctk.CTkRadioButton(self.scroll_frame, text=f"Question {_+1}", variable=variable, value=_+1, command=questionsCommand).pack(pady=50,expand=False)
 
 		#Scroll cancel button
 		self.scroll_cancel_button = ctk.CTkButton(self.scroll_frame, text="Cancel", border_width=0, command=scrollCancelFunction)
