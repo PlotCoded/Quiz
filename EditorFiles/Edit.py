@@ -95,20 +95,20 @@ class Edit:
 			# Implementing the exit command
 			self.window.protocol("WM_DELETE_WINDOW", destroyCommand)
 
-			#Creating an attribute of the functions above
+			# Creating an attribute of the functions above
 			self.forget_main_window_widgets = forgetWidgets
 			self.displayWidgets = displayWidgets
 
-			#Adding a label describing the page
+			# Adding a label describing the page
 			self.description = ctk.CTkLabel(self.window, text="Please select a topic to make changes to it")
 
-			#Creating a scrollbar for all the topics
+			# Creating a scrollbar for all the topics
 			self.edit_scroll_frame = ctk.CTkScrollableFrame(self.window, corner_radius=0, border_width=0, fg_color="#c3c3c3",orientation="vertical", width=750, height=500)
 
 			# Inserting the topics
 			filenames = os.listdir(r"C:\Users\hp\Documents\Quiz\Storage")
 
-			self.buttons = {}  # store buttons so you can access them later
+			self.buttons = {} # store buttons so you can access them later
 
 			for file in filenames:
 			    if file.endswith(".csv"):
@@ -121,7 +121,7 @@ class Edit:
 
 			displayWidgets()
 
-	#This function is to edit the topic's meta data
+	# This function is to edit the topic's meta data
 	def changeTopicDetails(self):
 		def displayTopicDetailsWidgets():
 			self.indicator.pack()
@@ -138,7 +138,7 @@ class Edit:
 			self.cancel_change_topic_detail_button.pack_forget()
 
 		def nameValidator():
-			#Validating the topic names input
+			# Validating the topic names input
 			if self.topic.get().isidentifier() == False:
 				tk.messagebox.showinfo(title="Invalid Topic Name", message="Your topic name doesn't have valid character(A-Z or _)")
 				return False
@@ -150,7 +150,7 @@ class Edit:
 			self.displayWidgets()
 
 		def saveTopicDetailsFunction(): 
-			cancelTopicDetailsFunction() #Next
+			cancelTopicDetailsFunction() # Next
 
 			# Updating the topic
 			data = pandas.read_csv(fr"C:\Users\hp\Documents\Quiz\Storage\{self.topic_name}.csv")
@@ -159,7 +159,7 @@ class Edit:
 			# Deleting the previous topic
 			os.remove(f"Storage\\{self.topic_name}.csv")
 
-			#  Updating the existing buttons
+			# Updating the existing buttons
 			# self.buttons.pop(self.topic_name)
 			
 			# Storing the changes on the file
@@ -189,28 +189,28 @@ class Edit:
 			# print(data, type(data), self.topic_name, "\n", data.to_dict())
 			# print(self.buttons)
 
-		#Forgeting the main window's widgets
+		# Forgeting the main window's widgets
 		self.forgetOptionsWindowWidgets()
 
-		#Indicator label
+		# Indicator label
 		self.indicator = ctk.CTkLabel(self.window, text=f"Change {self.topic_name}'s topic name or its the randomize option")
 
-		#Allowing the user to enter the name of their topic
+		# Allowing the user to enter the name of their topic
 		self.topic_var = tk.StringVar(value=self.topic_name) #This value is for testing
 		self.topic = ctk.CTkEntry(self.window, textvariable=self.topic_var, border_width=0, corner_radius=10, width=300, justify="center", placeholder_text="Topic Name", placeholder_text_color="#c3c3c3")
 
-		#Randomize checkbox
+		# Randomize checkbox
 		self.randomize = ctk.CTkCheckBox(self.window, text="Change the randomize option", offvalue=False, onvalue=True)
 
-		#Cancel Button
+		# Cancel Button
 		self.cancel_change_topic_detail_button = ctk.CTkButton(self.window, text="Cancel", border_width=0, command=cancelTopicDetailsFunction)
 
-		#Save Button
+		# Save Button
 		self.save_change_topic_detail_button = ctk.CTkButton(self.window, text="Save", border_width=0, command=saveTopicDetailsFunction)
 		
 		displayTopicDetailsWidgets()
 
-	#To edit the actual questions
+	# To edit the actual questions
 	def changeAQuestion(self): # proceed
 		def displayScrollWidgets():
 			# Guide on what to do
@@ -257,9 +257,24 @@ class Edit:
 			self.cancel_details_page_button.pack_forget()
 			self.continue_details_page_button.pack_forget()
 
-		def questionsCommand():
+		def questionsCommand(question, question_checkbox, all_checkbox):
 			forgetScrollWidget()
+
+			# Implementing functionalities
+			self.edit_question_number = question
+
 			displayChangeAQuestionWidgets()
+
+			# Updating the widgets data
+			data = pandas.read_csv(fr"C:\Users\hp\Documents\Quiz\Storage\{self.topic_name}.csv")
+			
+			for column, items in data.items():
+				if column == "Time":
+					self.time_var.set(value=items[question-1])
+				elif column == "Marks":
+					self.marks_var.set(value=items[question-1])
+			
+			self.question_number_label.configure(text=f"Question {self.edit_question_number}'s time setting and marks:")
 
 		def hintFunction():
 			ExFunc.createHintWidgets(self)
@@ -323,7 +338,7 @@ class Edit:
 			self.app.after(100, displayAddQuestion)
 
 			# Configuring the done button just for the add new question page
-			self.done_button.configure(command=addNewQuestionDoneFunction)
+			self.done_button.configure(command=addNewQuestionDoneFunction) # print
 
 		def addNewQuestionCancelFunction():
 			# Bringing back the continue button on the actual page
@@ -386,9 +401,8 @@ class Edit:
 
 		def continueChangeAQuestionFunction():	
 			if ExFunc.Validator(None, self.time, self.marks) != False: #If the validation does meet its needs then it allows the actual question widgets to be displayed,else not displayed
-				print("Dones't work")
 				forgetChangeAQuestionWidgets()
-				ExFunc.displayActualQuestionPageWidgets(self, self.continue_present)
+				ExFunc.displayActualQuestionPageWidgets(self, self.continue_present) # print
 
 		def actualQuestionCancelFunction():
 			ExFunc.forgetActualQuestionPageWidgets(self)
@@ -433,14 +447,15 @@ class Edit:
 
 		self.question_checkboxes = {}  # store buttons so you can access them later
 
-		# Displaying the new buttons
+		# Displaying the new radio buttons
 		for questions in data["Question No"]:
-			questions = int(questions)
+			question = int(questions)
 			# capture the current file_name in the lambda default
-			call = lambda f=questions: questionsCommand()
-			question_checkbox = ctk.CTkRadioButton(self.scroll_frame, text=questions, command=call)
+			call = lambda f=question: questionsCommand(question, question_checkbox.cget("text"), self.question_checkboxes)
+			question_checkbox = ctk.CTkRadioButton(self.scroll_frame, text=str(question), command=call)
+			question_checkbox.cget("text")
 			question_checkbox.pack(pady=50)
-			self.question_checkboxes[questions] = question_checkbox
+			self.question_checkboxes[question] = question_checkbox
 
 		# for _  in range(5):
 		# 	variable = tk.IntVar(value=1)
