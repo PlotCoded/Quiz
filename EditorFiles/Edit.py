@@ -263,8 +263,6 @@ class Edit:
 			# Implementing functionalities
 			self.edit_question_number = question
 
-			displayChangeAQuestionWidgets()
-
 			# Updating the widgets data
 			data = pandas.read_csv(fr"C:\Users\hp\Documents\Quiz\Storage\{self.topic_name}.csv")
 			
@@ -273,8 +271,23 @@ class Edit:
 					self.time_var.set(value=items[question-1])
 				elif column == "Marks":
 					self.marks_var.set(value=items[question-1])
+				elif column == "Option Type":
+					self.answer_format_menu_variable.set(items[question-1])
+				elif column == "Text Question":
+					self.question.insert("0.0", items[question-1])
+				elif column == "Image Question":
+					self.image_filename = "Pictures/Hint.png" #insert
+					self.question_image = ctk.CTkImage(light_image=Image.open(self.image_filename), size=(400,200))
+					self.question_image_label = ctk.CTkLabel(self.window, image=self.question_image, text="", width=400, height=200)
+				elif column == "Hint":
+					self.hint = items[question-1]
+				elif column == "Solution Image":
+					self.solution_image_filename = items[question-1]
+					self.solution_question_image_label = ctk.CTkImage(light_image=Image.open(self.solution_image_filename), size=(400,200))
+				elif column == "Solution Text":
+					self.solution_and_feedback = items[question-1]
 			
-			self.question_number_label.configure(text=f"Question {self.edit_question_number}'s time setting and marks:")
+			displayChangeAQuestionWidgets()
 
 		def hintFunction():
 			ExFunc.createHintWidgets(self)
@@ -402,7 +415,7 @@ class Edit:
 		def continueChangeAQuestionFunction():	
 			if ExFunc.Validator(None, self.time, self.marks) != False: #If the validation does meet its needs then it allows the actual question widgets to be displayed,else not displayed
 				forgetChangeAQuestionWidgets()
-				ExFunc.displayActualQuestionPageWidgets(self, self.continue_present) # print
+				ExFunc.displayActualQuestionPageWidgets(self, False)
 
 		def actualQuestionCancelFunction():
 			ExFunc.forgetActualQuestionPageWidgets(self)
@@ -520,7 +533,7 @@ class Edit:
 		self.hint = "" # Making an attribute to store the hint
 
 		self.solution_and_feedback = "" #Making an attribute to store the solution and feedback 
-		self.solution_image_filename = "Pictures/AddImage.jpg" #Making an attribute to store the solution image 
+		self.solution_image_filename = "Pictures/AddImage.jpg" #Making an attribute to store the solution image
 		
 		# Solution button: When clicked, it allows the user to add the solution and feedback to that question
 		self.solution_and_feedback_button = ctk.CTkButton(self.frame1, text="Add Solutions", command=solutionFunction)

@@ -5,6 +5,7 @@ from tkinter import ttk
 from PIL import Image
 import random
 from EditorFiles import Search, Add, Edit, Delete, ExFunc
+import pandas
 
 #Applying the theme of the window
 ctk.set_default_color_theme("Storage\\Theme.json")
@@ -74,7 +75,7 @@ class Header:
         #Creating the subject label
         #Note: This is an entry acting as a label because labels don't have a border
         self.subject = "None"
-        self.subject_var = tk.StringVar(value = f"Subject: {self.subject}")
+        self.subject_var = tk.StringVar(value = f"Topic: {self.subject}")
         self.topic_label= ctk.CTkEntry(self.scroll_frame, textvariable=self.subject_var, width=250,height=65, corner_radius=100,border_width=3, justify="center",state="disabled")
         self.topic_label.pack(expand=True, side="left")
 
@@ -88,7 +89,7 @@ class Header:
         #Creating the marks label
         #Note: This is an entry acting as a label because labels don't have a border        
         self.marks = 0
-        self.score_var = tk.IntVar(value = f"Marks: {self.marks}")
+        self.score_var = tk.StringVar(value = f"Marks: {self.marks}")
         self.score_label= ctk.CTkEntry(self.scroll_frame, textvariable=self.score_var, width=250, height=65, corner_radius=100,border_width=3, justify="center",state="disabled")
         self.score_label.pack(expand=True, side="left")
 
@@ -132,11 +133,23 @@ class Menu:
         # Getting the names of the topics
         filenames = os.listdir(r"C:\Users\hp\Documents\Quiz\Storage")
 
+        # for file in filenames:
+        #     if ".csv" in file:
+        #         # Displaying the topic on the menu
+        #         exec(f"self.{file[::-4]} = ctk.CTkButton(self.scroll_frame, text='{file[:-4]}', command=lambda: self.app.question_page.starting(f'self.{file[::-4]}') )")
+        #         exec(f"self.{file[::-4]}.pack(pady=50)")
+
+        self.buttons = {}  # store buttons so you can access them later
+
+        # Displaying the new buttons
         for file in filenames:
-            if ".csv" in file:
-                # Displaying the topic on the menu
-                exec(f"self.{file[::-4]} = ctk.CTkButton(self.scroll_frame, text='{file[:-4]}', command=self.app.question_page.starting)")
-                exec(f"self.{file[::-4]}.pack(pady=50)")
+            if file.endswith(".csv"):
+                file_name = file[:-4]  # remove ".csv"
+                # capture the current file_name in the lambda default
+                call = lambda f=file_name: self.app.question_page.starting(f)
+                button = ctk.CTkButton(self.scroll_frame, text=file_name, command=call)
+                button.pack(pady=50)
+                self.buttons[file_name] = button
 
 class QuestionPage:
     def __init__(self, app):
@@ -168,11 +181,27 @@ class QuestionPage:
 
         self.instruction.pack(expand=True, fill="both")
 
-    def starting(self):
+    def starting(self, topic_name):
         # Getting rid of all previous widgets
         if self.finished_before == True:
             self.congratulations.pack_forget()
             self.marks.pack_forget()
+
+        self.topic_name = topic_name # Storing the topic name
+        self.app.header.subject_var.set(value=f"Topic: {self.topic_name}")
+
+        self.data = pandas.read_csv(fr"C:\Users\hp\Documents\Quiz\Storage\{self.topic_name}.csv")
+
+        for column, items in self.data.items():
+            if column == "Time":
+                self.app.header.time_var.set(value=f"Time: {items[0]}")
+            elif column == "Marks":
+                self.app.header.score_var.set(value=f"Marks: {items[0]}")
+            break
+
+        self.question_number = 0 # Needs to keep track on which question you are on
+
+        # Updating widgets that needs to be updated
 
         # Ensuring the widgets doesn't get placed again and again
         self.instruction.pack_forget()
@@ -185,6 +214,16 @@ class QuestionPage:
         self.starting_button.pack(expand=True)
 
     def start(self):
+        # Updating the question 
+        self.question_number+=1
+
+        for column, items in self.data.items():
+            if column == "Time":
+                self.app.header.time_var.set(value=f"Time: {items[question_number-1]}")
+            elif column == "Marks":
+                self.app.header.score_var.set(value=f"Marks: {items[question_number-1]}")
+            break
+
         # Removing all previos widgets
         self.instruction.pack_forget()
         self.arrow_label.pack_forget()
@@ -200,15 +239,18 @@ class QuestionPage:
             self.display_hint_label = ctk.CTkLabel(self.display_hint_window, text="This is the hint")
 
             # Displaying the hint in picture format
-            self.display_hint_file_name = "Pictures/Hint.png"
-            self.display_hint_image = ctk.CTkImage(light_image=Image.open(self.display_hint_file_name), size=(600,200))
-            self.display_hint_image_label = ctk.CTkLabel(self.display_hint_window, text="", image=self.display_hint_image, width=600, height=200)
+            # self.display_hint_file_name = "Pictures/Hint.png"
+
+            for column, items in self.data.items():
+                if column == "Hint":
+                    self.display_hint_label = ctk.CTkLabel(self.display_hint_window, text="{items[question_number-1]}")
+                break
+            
+            # self.display_hint_image = ctk.CTkImage(light_image=Image.open(self.display_hint_file_name), size=(600,200))
+            # self.display_hint_image_label = ctk.CTkLabel(self.display_hint_window, text="", image=self.display_hint_image, width=600, height=200)
 
             # Displaying hint
-            if True:
-                self.display_hint_image_label.pack()
-            elif False:
-                self.display_hint_label.pack()
+            self.display_hint_label.pack()
 
         def nextFunction():
             self.finished()

@@ -20,7 +20,11 @@
 <li>11:32 24/10/25. Moving one to the problem of functionality and interface, when I click any of the check boxes in Choose a Question Widget, it doesn't do any backend functionalities and implementing interaction with the user</li>
 <li>I had skipped that problem, can't find the solution at this moment</li>
 
-<li>07:59 31/10/25 Moved on to a new problem, updating the question when you click on a change a question checkbox. Done the time and marks widgets, also the question label instruction label</li>
+<li>07:59 31/10/25 Moved on to a new problem, updating the question when you click on a change a question checkbox. Done the time and marks widgets</li>
+
+<li> 09:00 5/12/25 Continuing with the updating the question when you click on a change a question checkbox</li>
+
+<li> 20:10 Removing the continue function in the edit section</li>
 </ul>
 
 # Copyright (c) 2024 Sam
