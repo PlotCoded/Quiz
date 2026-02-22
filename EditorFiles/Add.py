@@ -331,8 +331,9 @@ class Add:
         def doneFunction():
             done = tk.messagebox.askyesno(title="Save", message="Are you sure you want to save this topic?")
             if done:
-                dataframe = pandas.DataFrame(ExFunc.data, index=list(range(len(ExFunc.data["Question No"]))))
-                dataframe.to_csv(f"Storage\\{self.topic_var.get()}.csv") #print
+                print(ExFunc.data)
+                dataframe = pandas.DataFrame(ExFunc.data, index=list(range(len(ExFunc.data["Text Question"]))))
+                dataframe.to_csv(f"Storage\\{self.topic_var.get()}.csv")
 
                 self.window.destroy()
 

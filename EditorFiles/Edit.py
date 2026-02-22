@@ -10,7 +10,7 @@ class Edit:
 	def __init__(self, app):
 		self.app = app
 
-	def optionsWindow(self, topic_name):
+	def optionsWindow(self, topic_name): #textbox
 		self.topic_name = topic_name
 		# print(self.topic_name)
 

@@ -6,6 +6,7 @@ from PIL import Image
 import random
 from EditorFiles import Search, Add, Edit, Delete, ExFunc
 import pandas
+from ast import literal_eval
 
 #Applying the theme of the window
 ctk.set_default_color_theme("Storage\\Theme.json")
@@ -195,7 +196,7 @@ class QuestionPage:
         for column, items in self.data.items():
             if column == "Time":
                 self.app.header.time_var.set(value=f"Time: {items[0]}")
-            elif column == "Marks":
+            if column == "Marks":
                 self.app.header.score_var.set(value=f"Marks: {items[0]}")
             break
 
@@ -215,14 +216,41 @@ class QuestionPage:
 
     def start(self):
         # Updating the question 
-        self.question_number+=1
+        self.question_number = 0
+
+        # Questions
+        self.questions = []
+        # Options
+        self.options = []
+        #Answers
+        self.answers = []
+        # Option types
+        self.option_types = []
 
         for column, items in self.data.items():
             if column == "Time":
-                self.app.header.time_var.set(value=f"Time: {items[question_number-1]}")
-            elif column == "Marks":
-                self.app.header.score_var.set(value=f"Marks: {items[question_number-1]}")
-            break
+                self.app.header.time_var.set(value=f"Time: {items[self.question_number]}")
+            if column == "Marks":
+                self.app.header.score_var.set(value=f"Marks: {items[self.question_number]}")
+            if column == "Text Question":
+                self.questions = items
+            if column == "Options":
+                self.options = items
+            if column == "Answer":
+                self.answers  = items
+            if column == "Option Type":
+                self.option_types = items
+
+        self.answer_inserted = []
+        self.questions = tuple(self.questions)
+       
+        __ = []
+        for _ in self.options:
+            __.append(tuple(literal_eval(_)))
+
+        self.options = tuple(__)
+        self.answers = tuple(self.answers)
+        self.option_types = tuple(self.option_types)
 
         # Removing all previos widgets
         self.instruction.pack_forget()
@@ -244,8 +272,7 @@ class QuestionPage:
             for column, items in self.data.items():
                 if column == "Hint":
                     self.display_hint_label = ctk.CTkLabel(self.display_hint_window, text="{items[question_number-1]}")
-                break
-            
+                            
             # self.display_hint_image = ctk.CTkImage(light_image=Image.open(self.display_hint_file_name), size=(600,200))
             # self.display_hint_image_label = ctk.CTkLabel(self.display_hint_window, text="", image=self.display_hint_image, width=600, height=200)
 
@@ -253,7 +280,31 @@ class QuestionPage:
             self.display_hint_label.pack()
 
         def nextFunction():
-            self.finished()
+            print(self.question_number)
+            print(self.options_variable.get())
+            print(self.answers)
+            self.answer_inserted.append(self.answers[ExFunc.getAnswerChoosenIndex(self,self.options_variable.get())])
+            print(f"Answer to the question: {self.answers[self.question_number]}")
+            print(f"Answer inserted: {self.answer_inserted[self.question_number]}")
+            if self.question_number+1 == len(self.questions):
+                self.finished()
+            else:
+                self.question_number = self.question_number + 1
+
+                question = self.questions[self.question_number]
+                options = self.options[self.question_number]
+
+                self.text_label.insert("0.0",question)
+
+                self.option_A_entry.delete(0,last_index=300)
+                self.option_B_entry.delete(0,last_index=300)
+                self.option_C_entry.delete(0,last_index=300)
+                self.option_D_entry.delete(0,last_index=300)
+
+                self.option_A_entry.insert(0,options[0])
+                self.option_B_entry.insert(0,options[1])
+                self.option_C_entry.insert(0,options[2])
+                self.option_D_entry.insert(0,options[3])
 
         def viewSolutionsFunction():
             self.display_solutions_window = ctk.CTkToplevel(self.app)
@@ -291,7 +342,7 @@ class QuestionPage:
         self.image_label = ctk.CTkLabel(self.frame, text="", image=self.image, width=image_width, height=image_height)
 
         # Label
-        self.text_label = ctk.CTkTextbox(self.frame, width=900, height=350, fg_color="#c3c3c3", wrap="word", border_width=4, state="disabled")
+        self.text_label = ctk.CTkTextbox(self.frame, width=900, height=350, fg_color="#c3c3c3", wrap="word", border_width=4,)
 
         #Option frames
         self.option_frame1 = ctk.CTkFrame(self.frame, border_width=0, fg_color="#e3e3e3",height=70)
@@ -299,7 +350,7 @@ class QuestionPage:
         self.option_frame2 = ctk.CTkFrame(self.frame, border_width=0, fg_color="#e3e3e3",height=70)
 
         #Options variable
-        self.options_variable = tk.StringVar()
+        self.options_variable = tk.StringVar(value="A")
 
         #Options button(radio button) and their entries
         radio_button_width = 35
@@ -307,19 +358,19 @@ class QuestionPage:
 
         self.option_A_button = ctk.CTkRadioButton(self.option_frame1, corner_radius=10, radiobutton_width=radio_button_width, radiobutton_height=radio_button_height, variable=self.options_variable, value="A", text="")
 
-        self.option_A_entry = ctk.CTkEntry(self.option_frame1, border_width=2, width=325, height=35, corner_radius=10,placeholder_text="Option A", placeholder_text_color="#b3b3b3", state="disabled")
+        self.option_A_entry = ctk.CTkEntry(self.option_frame1, border_width=2, width=325, height=35, corner_radius=10,placeholder_text="Option A", placeholder_text_color="#b3b3b3", state="normal")
 
         self.option_B_button = ctk.CTkRadioButton(self.option_frame1, corner_radius=10, radiobutton_width=radio_button_width, radiobutton_height=radio_button_height, variable=self.options_variable, value="B", text="")
 
-        self.option_B_entry = ctk.CTkEntry(self.option_frame1, border_width=2, width=325, height=35, corner_radius=10, placeholder_text="Option B", placeholder_text_color="#b3b3b3", state="disabled")
+        self.option_B_entry = ctk.CTkEntry(self.option_frame1, border_width=2, width=325, height=35, corner_radius=10, placeholder_text="Option B", placeholder_text_color="#b3b3b3", state="normal")
 
         self.option_C_button = ctk.CTkRadioButton(self.option_frame2, corner_radius=10, radiobutton_width=radio_button_width, radiobutton_height=radio_button_height, variable=self.options_variable, value="C", text="")
 
-        self.option_C_entry = ctk.CTkEntry(self.option_frame2, border_width=2, width=325, height=35, corner_radius=10, placeholder_text="Option C", placeholder_text_color="#b3b3b3", state="disabled")
+        self.option_C_entry = ctk.CTkEntry(self.option_frame2, border_width=2, width=325, height=35, corner_radius=10, placeholder_text="Option C", placeholder_text_color="#b3b3b3", state="normal")
 
         self.option_D_button = ctk.CTkRadioButton(self.option_frame2, corner_radius=10, radiobutton_width=radio_button_width, radiobutton_height=radio_button_height, variable=self.options_variable, value="D", text="")
 
-        self.option_D_entry = ctk.CTkEntry(self.option_frame2, border_width=2, width=325, height=35, corner_radius=10, placeholder_text="Option D", placeholder_text_color="#b3b3b3", state="disabled")
+        self.option_D_entry = ctk.CTkEntry(self.option_frame2, border_width=2, width=325, height=35, corner_radius=10, placeholder_text="Option D", placeholder_text_color="#b3b3b3", state="normal")
 
         #Without Options Textbox
         self.without_options_textbox = ctk.CTkTextbox(self.frame, width=600, height=50, text_color="#00FF00")
@@ -337,7 +388,11 @@ class QuestionPage:
         self.hint_frame.pack(fill="x")
         self.hint_button.place(relx=0.75, rely=0.25)
 
+        question = self.questions[self.question_number]
+        options = self.options[self.question_number]
+
         if True:
+            self.text_label.insert("0.0",question) # Inseting the question 
             self.text_label.pack(pady=10)
         else:
             self.image_label.pack(pady=10)
@@ -353,6 +408,12 @@ class QuestionPage:
             self.option_C_entry.place(relx=0.19,rely=0.1)
             self.option_D_button.place(relx=0.5,rely=0.1)
             self.option_D_entry.place(relx=0.54,rely=0.1)
+
+            # Inserting the options
+            self.option_A_entry.insert(0,options[0])
+            self.option_B_entry.insert(0,options[1])
+            self.option_C_entry.insert(0,options[2])
+            self.option_D_entry.insert(0,options[3])
 
         self.footer_frame.pack(fill="both")
         self.next_button.pack(side="left", padx=250)
@@ -371,10 +432,16 @@ class QuestionPage:
 
         # Marks info
         marks_gotten = 0
-        total_marks = 100
+        total_marks = len(self.answers)
+
+        for i in range(len(self.answer_inserted)):
+            if str(self.answer_inserted[i]) == str(self.answers[i]):
+                marks_gotten+=1
+
+        percentage = (marks_gotten/total_marks)*100
 
         # Marks widget
-        self.marks = ctk.CTkLabel(self.frame, text=f"You got a {marks_gotten} out of {total_marks}", font=("Comic Sans MS",42))
+        self.marks = ctk.CTkLabel(self.frame, text=f"You got a {marks_gotten} out of {total_marks} or {round (percentage,2)}%", font=("Comic Sans MS",42))
 
         # Displaying widgets
         self.congratulations.pack()

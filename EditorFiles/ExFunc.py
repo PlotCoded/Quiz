@@ -146,13 +146,6 @@ def displayActualQuestionPageWidgets(self, continue_present):
         self.option_D_button.place(relx=0.5,rely=0.1)
         self.option_D_entry.place(relx=0.54,rely=0.1)
 
-        # For testing
-        # if self.question_number == 1:
-        #     self.option_A_entry.insert(0,"Apple")
-        #     self.option_B_entry.insert(0,"Banana")
-        #     self.option_C_entry.insert(0,"Denmark")
-        #     self.option_D_entry.insert(0,"Cherry")
-
     elif self.answer_format_menu_variable.get() == "Without Options":
         self.without_options_textbox.pack()
 
@@ -307,6 +300,16 @@ def forgetSolutionWidgets(self):
 
 def solutionCancelFunction(self):
     self.solution_and_feedback_window.destroy()
+
+def getAnswerChoosenIndex(self,opt):
+    if self.option_A_button.cget("value") == opt:
+        return 0
+    elif self.option_B_button.cget("value") == opt:
+        return 1
+    elif self.option_C_button.cget("value") == opt:
+        return 2
+    elif self.option_D_button.cget("value") == opt:
+        return 3
 
 # # Storage part
 # data = {
