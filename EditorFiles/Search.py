@@ -16,13 +16,15 @@ class Search:
 				filenames = os.listdir(r"C:\Users\hp\Documents\Quiz\Storage")
 
 				for file in filenames:
-					if ".csv" in file and file[:-4] == self.search_bar_var.get():
+					topic_name = self.search_bar_var.get()
+					if ".csv" in file and file[:-4] == topic_name:
 						self.window.destroy()
-						self.app.question_page.starting()
+						self.app.question_page.topicClickedPage(topic_name)
 						self.app.window_up = False
 						break
 				else:
-					self.frame.pack_forget()
+					self.frame.pack_forget() # I am unpacking this frame honestly, so I can make it appear how I want it to.
+					# If it is not unpacked and then packed after the error has been displayer, it woudl display it in a weird way
 
 					# Error message 
 					self.error = ctk.CTkLabel(self.window, text="Sorry, this topic doesn't exist. \n Please enter a topic that has been created", text_color="red")

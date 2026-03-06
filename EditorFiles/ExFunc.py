@@ -5,27 +5,52 @@ import tkinter as tk
 import customtkinter as ctk, pandas
 from PIL import Image
 
-def Validator(topic_entry_widget, time_entry_widget, marks_entry_widget):
+def displayFirstPage(self):
+    self.frameA.pack(pady=10)
+    self.topic.pack(padx=10, side="left")
+    self.randomize.pack(side="right", pady=20, padx=20)
+    self.question_number_label.pack(pady=20)
+    self.frameB.pack(pady=30)
+    self.time.pack(padx=10, side="left")
+    self.marks.pack(padx=10,side="left")
+    self.answer_format_menu.pack(pady=20, padx=20)
+    self.continue_details_page_button.pack(side="left", padx=20, pady=20, expand=True)
+
+    #Only displaying the cancel button when there is a question behind it, eg, > question 1
+    if self.question_number > 1:
+        self.cancel_details_page_button.pack(side="left", padx=20, pady=20, expand=True)
+
+    self.exit_button.pack(side="left", padx=20, pady=20, expand=True)
+
+    # Enabling and disabling the topic and randomize widgets depending on the question number to
+    if self.question_number != 1:
+        self.topic.configure(state="disabled")
+        self.randomize.configure(state="disabled")
+    else:
+        self.topic.configure(state="normal")
+        self.randomize.configure(state="normal")
+
+def firstPageValidator(self,):
     #Validating the topic names input
-    if topic_entry_widget != None:
-        if topic_entry_widget.get() != None and topic_entry_widget.get().isidentifier() == False:
+    if self.topic != None:
+        if self.topic.get() != None and self.topic.get().isidentifier() == False:
             tk.messagebox.showinfo(title="Invalid Topic Name", message="Your topic name doesn't have valid character(A-Z or _)")
             return False
 
     #Validating for time entry widget
-    if len(time_entry_widget.get()) != 8:
+    if len(self.time.get()) != 8:
         tk.messagebox.showinfo(title="Invalid Time Format", message='Your time format must be in the correct form. Example: "01:13:30" with 2 double colon each between 3 two digits numbers')
         return False
 
     #Validating the time input
-    time = re.findall("[0-9][0-9]", time_entry_widget.get())
+    time = re.findall("[0-9][0-9]", self.time.get())
 
     #Validating for any zero time formats. Any also when the time format doesn't have 2 double colons and doesn't have 3 two digits numbers 
-    if len(time) !=3 or len(time_entry_widget.get().split(":")) != 3:
+    if len(time) !=3 or len(self.time.get().split(":")) != 3:
         tk.messagebox.showinfo(title="Invalid Time Format", message='Your time format must be in the correct form. Example: "01:13:30" with 2 double colon each between 3 two digits numbers')
         return False
 
-    if time_entry_widget.get() == "" or time_entry_widget.get() == "00:00:00":
+    if self.time.get() == "" or self.time.get() == "00:00:00":
         tk.messagebox.showinfo(title="Invalid Time Format", message='Your time value cannot be zero')
         return False
 
@@ -35,22 +60,22 @@ def Validator(topic_entry_widget, time_entry_widget, marks_entry_widget):
         return False
 
     #Validating for any string values
-    if re.findall("[a-zA-Z]", time_entry_widget.get()):
+    if re.findall("[a-zA-Z]", self.time.get()):
         tk.messagebox.showinfo(title="Invalid Time Format", message='Your time format must be in the correct form. Example: "01:13:30" with no alphabets')
         return False
 
     #Validating for any symbol characters except ":"
-    if re.findall(r"[!\"#$%&'()*+,\-./;<=>?@[\]^_`{|}~]", time_entry_widget.get()):
+    if re.findall(r"[!\"#$%&'()*+,\-./;<=>?@[\]^_`{|}~]", self.time.get()):
         tk.messagebox.showinfo(title="Invalid Time Format", message='Your time format must be in the correct form. Example: "01:13:30" with no symbols except ":"')
         return False
 
     #Validating for any spaces in the time
-    if re.findall("\\s", time_entry_widget.get()):
+    if re.findall("\\s", self.time.get()):
         tk.messagebox.showinfo(title="Invalid Time Format", message='Your time format must be in the correct form. Example: "01:13:30" with no spaces')
         return False        
 
     #Validating the marks input
-    if marks_entry_widget.get() == "" or marks_entry_widget.get() == "0" or marks_entry_widget.get().isnumeric() != True:
+    if self.marks.get() == "" or self.marks.get() == "0" or self.marks.get().isnumeric() != True:
         tk.messagebox.showinfo(title="Invalid Marks Assigned", message="Your marks assigned must be made up of digits only")
         return False
 
@@ -77,8 +102,8 @@ def selectedOption(option_A_entry, option_B_entry, option_C_entry, option_D_entr
         option_C_entry.configure(text_color="#FF0000")
         option_D_entry.configure(text_color="#00FF00")
 
-def actualQuestionValidation(option_A_entry, option_B_entry, option_C_entry, option_D_entry, option_A_button, option_B_button, option_C_button, option_D_button, options_variable, answer_format_menu_variable, without_options_textbox, question, image_filename):
-    # Don't forget to remove parameters and add "self" parameters
+def secondPageValidator(option_A_entry, option_B_entry, option_C_entry, option_D_entry, option_A_button, option_B_button, option_C_button, option_D_button, options_variable, answer_format_menu_variable, without_options_textbox, question, image_filename):
+    # Don't forget to remove parameters and add "self" parameters. #displayFirstPage
 
     #List of all options entry
     options_entry = [option_A_entry, option_B_entry, option_C_entry, option_D_entry]
@@ -179,7 +204,7 @@ def createHintWidgets(self):
     self.hint_entry = ctk.CTkEntry(self.hint_window, textvariable=self.hint_entry_variable, width=300, height=40, border_width=0, text_color="#c8b800")
     self.hint_ok_button = ctk.CTkButton(self.hint_window, text="Ok", border_width=0, command=lambda: hintOkFunction(self))
     self.hint_restart_button = ctk.CTkButton(self.hint_window, text="Restart Hint", border_width=0, command=lambda: restartHint(self))
-    self.hint_cancel_button = ctk.CTkButton(self.hint_window, text="Cancel",border_width=0, command=lambda: hintCancelFunction(self))
+    self.hint_cancel_button = ctk.CTkButton(self.hint_window, text="Cancel",border_width=0, command=lambda: hintCancelFunction(self)) #displayFirstPage
     
     #Displaying the widgets
     self.hint_title.pack()
@@ -190,7 +215,6 @@ def createHintWidgets(self):
 
 def hintOkFunction(self):
     if self.hint_entry.get() == "" or self.hint_entry.get().isspace():
-        print(self.hint, "If statement")
         tk.messagebox.showinfo(title="Invalid Hint", message="You have no real characters in your hint")
     else:
         #Deleting any previous hints and storing the current hint
@@ -311,44 +335,49 @@ def getAnswerChoosenIndex(self,opt):
     elif self.option_D_button.cget("value") == opt:
         return 3
 
+def save(self,data):
+    dataframe = pandas.DataFrame(data, index=tuple(range(len(data["Time"]))))
+    dataframe.to_csv(f"C:\\Users\\hp\\Documents\\Quiz\\Storage\\{self.topic_var.get()}.csv") # Creating the file for the topic. This file contains all the details for the topic created
+
 # # Storage part
-# data = {
-#     "Randomize": True,
-#     "Time": ["00:00:10","00:00:60","00:03:00","00:01:00","00:07:30",], format_var
-#     "Marks": [1,1,1,1,1],
-#     "Option Type": ["Without Options", "Options", "Without Options", "Options", "Without Options"],
-#     "Text Question": ["What is the sum of 1 and 1?","What is the largest prime in between 100 and 200?","What is the value of the integral of f(x) in the interval [2,5], for which f(x) = x^2?","What is gradient of e^x when x = ln(1)?","Find the sum of all natural numbers bettween 1 to 100"],
-#     "Image Question": ["Pictures/AddImage.jpg","Pictures/AddImage.jpg","Pictures/AddImage.jpg","Pictures/AddImage.jpg","Pictures/AddImage.jpg"],
-#     "Question No": [1,2,3,4,5],
-#     "Hint": [None, "Try starting from 200 downwards",None, "f(f^-1(x)) = x?","Try pairing up the starting number to the end number"],
-#     "Solution Text": ["2","199","39","1","5050"],
-#     "Solution Image": ["Pictures/AddImage.jpg","Pictures/AddImage.jpg","Pictures/AddImage.jpg","Pictures/AddImage.jpg","Pictures/AddImage.jpg"],
-#     "Options": [["2","199","39","1"], ["2","199","39","1"],["2","199","39","1"],["2","199","39","1"],["2","199","39","5050"]],
-#     "Answer": ["2","199","39","1","5050"]
-# }
+# if testing:
+    # data = {
+    #     "Randomize": True,
+    #     "Time": ["00:00:10","00:00:60","00:03:00","00:01:00","00:07:30",], format_var
+    #     "Marks": [1,1,1,1,1],
+    #     "Option Type": ["Without Options", "Options", "Without Options", "Options", "Without Options"],
+    #     "Text Question": ["What is the sum of 1 and 1?","What is the largest prime in between 100 and 200?","What is the value of the integral of f(x) in the interval [2,5], for which f(x) = x^2?","What is gradient of e^x when x = ln(1)?","Find the sum of all natural numbers bettween 1 to 100"],
+    #     "Image Question": ["Pictures/AddImage.jpg","Pictures/AddImage.jpg","Pictures/AddImage.jpg","Pictures/AddImage.jpg","Pictures/AddImage.jpg"],
+    #     "Question No": [1,2,3,4,5],
+    #     "Hint": [None, "Try starting from 200 downwards",None, "f(f^-1(x)) = x?","Try pairing up the starting number to the end number"],
+    #     "Solution Text": ["2","199","39","1","5050"],
+    #     "Solution Image": ["Pictures/AddImage.jpg","Pictures/AddImage.jpg","Pictures/AddImage.jpg","Pictures/AddImage.jpg","Pictures/AddImage.jpg"],
+    #     "Options": [["2","199","39","1"], ["2","199","39","1"],["2","199","39","1"],["2","199","39","1"],["2","199","39","5050"]],
+    #     "Answer": ["2","199","39","1","5050"]
+    # }
 
-data = {
-    "Randomize": True,
-    "Time": [None],
-    "Marks": [None],
-    "Option Type": [None],
-    "Text Question": [None],
-    "Image Question": [None],
-    "Question No": [None],
-    "Hint": [None],
-    "Solution Text": [None],
-    "Solution Image": [None],
-    "Options": [None],
-    "Option Choosen": [None],
-    "Answer": [None]
-}
+    # data = {
+    #     "Randomize": True,
+    #     "Time": [None],
+    #     "Marks": [None],
+    #     "Option Type": [None],
+    #     "Text Question": [None],
+    #     "Image Question": [None],
+    #     "Question No": [None],
+    #     "Hint": [None],
+    #     "Solution Text": [None],
+    #     "Solution Image": [None],
+    #     "Options": [None],
+    #     "Option Choosen": [None],
+    #     "Answer": [None]
+    # }
 
-# def save(data):
-#     dataframe = pandas.DataFrame(data, index=list(range(len(data["Question No"]))))
-#     dataframe.to_csv("P.csv") # Creating the file for the topic. This file contains all the details for the topic created
+    # def save(data):
+    #     dataframe = pandas.DataFrame(data, index=list(range(len(data["Time"]))))
+    #     dataframe.to_csv("P.csv") # Creating the file for the topic. This file contains all the details for the topic created
 
-# dataframe = pandas.DataFrame(data, index=list(range(len(data["Question No"]))))
+    # dataframe = pandas.DataFrame(data, index=list(range(len(data["Question No"]))))
 
-# print(dataframe["Question No"], "\n\n\n\n\n", type(data["Question No"]))
-# for i in dataframe["Question No"]:
-#     print(i)
+    # print(dataframe["Question No"], "\n\n\n\n\n", type(data["Question No"]))
+    # for i in dataframe["Question No"]:
+    #     print(i)

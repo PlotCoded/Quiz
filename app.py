@@ -27,7 +27,7 @@ class App(ctk.CTk):
         centery = 0
 
         #Setting the width and height of the app to max
-        self.geometry(f"{self.width}x{self.height}+{centerx}+{centery}") 
+        self.geometry(f"{self.width}x{self.height}+{centerx}+{centery}")
 
         # Creating grids for widgets placements
         self.columnconfigure(tuple(range(0,21)),weight=1)

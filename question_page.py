@@ -66,7 +66,7 @@ class QuestionPage:
         self.fields = ["Time","Marks","Option Type","Text Question","Image Question","Hint","Solution Text","Solution Image","Options","Answer"]
 
         for _ in self.fields:
-            if _ == "Options": 
+            if _ == "Options":
                 __ = []
                 for i in self.file[_]:
                     __.append(literal_eval(i))
@@ -87,28 +87,83 @@ class QuestionPage:
             self.display_hint_window.title("Hint")
             self.display_hint_window.geometry("600x200+300+50")
 
+            # Getting the hint for that question
+            hint = self.data["Hint"][self.question_number-1]
+
             # Displaying the hint in text format
-            self.display_hint_label = ctk.CTkLabel(self.display_hint_window, text="This is the hint")
-
-            # Displaying the hint in picture format
-            # self.display_hint_file_name = "Pictures/Hint.png"
-
-            for column, items in self.file.items():
-                if column == "Hint":
-                    self.display_hint_label = ctk.CTkLabel(self.display_hint_window, text="{items[question_number-1-1]}")
+            self.display_hint_label = ctk.CTkLabel(self.display_hint_window, text=f"{hint}")
                             
-            # self.display_hint_image = ctk.CTkImage(light_image=Image.open(self.display_hint_file_name), size=(600,200))
-            # self.display_hint_image_label = ctk.CTkLabel(self.display_hint_window, text="", image=self.display_hint_image, width=600, height=200)
-
             # Displaying hint
             self.display_hint_label.pack()
+
+        def displayNextWidgets():
+            if "display_solutions_label" in self.__dict__.keys(): self.display_solutions_label.pack_forget()
+            if "display_solutions_image_label" in self.__dict__.keys(): self.display_solutions_image_label.pack_forget()
+            if "next_button" in self.__dict__.keys(): self.next_button.pack_forget()
+            if "display_solutions_image_label" in self.__dict__.keys(): self.display_solutions_image_label.pack_forget()
+
+            # Displaying widgets
+            self.hint_frame.pack(fill="x")
+            self.hint_button.place(relx=0.75, rely=0.25)
+
+            question = self.data["Text Question"][self.question_number-1]
+            options = self.data["Options"][self.question_number-1]
+
+            if len(self.data["Text Question"][self.question_number-1]) > 0:
+                # Removing the last question to prevent it from reappearing together with the next question
+                self.question_textbox.delete("0.0", "end")
+
+                # Inserting the next question
+                self.question_textbox.insert("0.0",question)
+
+                self.question_textbox.pack(pady=10)
+            else:
+                self.image_label.pack(pady=10)
+
+            if self.data["Option Type"][self.question_number-1] == "Options":
+                self.option_frame1.pack(fill="x", pady=3, padx=10)
+                self.option_frame2.pack(fill="x",pady=3,padx=10)
+
+                self.option_A_button.place(relx=0.15, rely=0.1)
+                self.option_A_entry.place(relx=0.19,rely=0.1)
+                self.option_B_button.place(relx=0.5,rely=0.1,)
+                self.option_B_entry.place(relx=0.54,rely=0.1)
+                self.option_C_button.place(relx=0.15,rely=0.1)
+                self.option_C_entry.place(relx=0.19,rely=0.1)
+                self.option_D_button.place(relx=0.5,rely=0.1)
+                self.option_D_entry.place(relx=0.54,rely=0.1)
+
+                # Removing the last options to prevent it from reappearing together with the next options
+                self.option_A_entry.delete(0,last_index=tk.END)
+                self.option_B_entry.delete(0,last_index=tk.END)
+                self.option_C_entry.delete(0,last_index=tk.END)
+                self.option_D_entry.delete(0,last_index=tk.END)
+
+                # Inserting the next options
+                self.option_A_entry.insert(0,options[0])
+                self.option_B_entry.insert(0,options[1])
+                self.option_C_entry.insert(0,options[2])
+                self.option_D_entry.insert(0,options[3])
+            else:
+                self.without_options_textbox.delete("0.0","end")
+                self.without_options_textbox.pack()
+
+            self.footer_frame.pack(fill="both")
+
+            self.solutions_button = ctk.CTkButton(self.footer_frame, text="View Solutions", command=viewSolutionsFunction)
+            self.solutions_button.pack(padx=250)
 
         def nextFunction():
             # Getting the answer picked and storing it into a list
             answer_picked_index = ExFunc.getAnswerChoosenIndex(self,self.options_variable.get())
             options = self.data["Options"][self.question_number-1]
 
-            self.answer_inserted.append(options[answer_picked_index])
+            without_option_text = self.without_options_textbox.get("0.0","end").strip("\n")
+            
+            if self.data["Option Type"][self.question_number-1] == "Options":
+                self.answer_inserted.append(options[answer_picked_index])
+            else:
+                self.answer_inserted.append(without_option_text)
 
             if self.question_number == len(self.data["Text Question"]):
                 self.finished()
@@ -136,25 +191,38 @@ class QuestionPage:
                 self.option_C_entry.insert(0,options[2])
                 self.option_D_entry.insert(0,options[3])
 
+                # Displaying the widgets
+                displayNextWidgets()
+
         def viewSolutionsFunction():
-            self.display_solutions_window = ctk.CTkToplevel(self.app)
-            self.display_solutions_window.transient(self.app)
-            self.display_solutions_window.title("Solution")
-            self.display_solutions_window.geometry("600x200+300+50")
+            # Unpacking the previous widgets
+            self.hint_frame.pack_forget()
+            self.question_textbox.pack_forget()
+            self.solutions_button.pack_forget()
+            self.option_frame1.pack_forget()
+            self.option_frame2.pack_forget()
+            self.without_options_textbox.pack_forget()
 
-            # Displaying the hint in text format
-            self.display_solutions_label = ctk.CTkLabel(self.display_solutions_window, text="This is the solution")
-
-            # Displaying the hint in picture format
-            self.display_solutions_file_name = "Pictures/Hint.png"
+            # Displaying the solution in text format
+            answer =  self.data["Answer"][self.question_number-1]
+            solution_text = self.data["Solution Text"][self.question_number-1]
+            
+            # Displaying the solution in picture format
+            self.display_solutions_file_name = self.data["Solution Image"][self.question_number-1]
             self.display_solutions_image = ctk.CTkImage(light_image=Image.open(self.display_solutions_file_name), size=(600,200))
-            self.display_solutions_image_label = ctk.CTkLabel(self.display_solutions_window, text="", image=self.display_solutions_image, width=600, height=200)
+            self.display_solutions_image_label = ctk.CTkLabel(self.frame, text="", image=self.display_solutions_image, width=600, height=200)
 
-            # Displaying hint
-            if False:
-                self.display_solutions_image_label.pack()
-            elif True:
-                self.display_solutions_label.pack()
+            # Displaying solution
+            if not (self.display_solutions_file_name == "Pictures/Add.png"):
+                self.display_solutions_image_label.pack(pady=100)
+
+                self.display_solutions_label = ctk.CTkLabel(self.frame, text=f"The solution to question {self.question_number} is {answer}.\n{solution_text}")
+                self.display_solutions_label.pack(expand=True)
+            else:
+                self.display_solutions_label = ctk.CTkLabel(self.frame, text=f"The solution to question {self.question_number} is {answer}.\n{solution_text}")
+                self.display_solutions_label.pack(expand=True)
+
+            self.next_button.pack(expand=True, padx=250)
 
         # Hint/Header Frame
         self.hint_frame = ctk.CTkFrame(self.frame, border_width=0, fg_color="#e3e3e3", width=900, height=75)
@@ -167,7 +235,7 @@ class QuestionPage:
         image_width = 900
         image_height = 400
 
-        self.file_name = "Pictures/AddImage.jpg"
+        self.file_name = self.data["Image Question"][self.question_number-1]
         self.image = ctk.CTkImage(light_image=Image.open(self.file_name), size=(image_width,image_height))
         self.image_label = ctk.CTkLabel(self.frame, text="", image=self.image, width=image_width, height=image_height)
 
@@ -203,7 +271,7 @@ class QuestionPage:
         self.option_D_entry = ctk.CTkEntry(self.option_frame2, border_width=2, width=325, height=35, corner_radius=10, placeholder_text="Option D", placeholder_text_color="#b3b3b3", state="normal")
 
         #Without Options Textbox
-        self.without_options_textbox = ctk.CTkTextbox(self.frame, width=600, height=50, text_color="#00FF00")
+        self.without_options_textbox = ctk.CTkTextbox(self.frame, width=900, height=70, text_color="#000", wrap="word", border_width=4,)
 
         # Footer Frame
         self.footer_frame = ctk.CTkFrame(self.frame, border_width=0, fg_color="#e3e3e3")
@@ -214,40 +282,7 @@ class QuestionPage:
         # Solutions Button: This button is only displayed when one has answered a question
         self.solutions_button = ctk.CTkButton(self.footer_frame, text="View Solutions", command=viewSolutionsFunction)
 
-        # Displaying widgets
-        self.hint_frame.pack(fill="x")
-        self.hint_button.place(relx=0.75, rely=0.25)
-
-        question = self.data["Text Question"][self.question_number-1]
-        options = self.data["Options"][self.question_number-1]
-
-        if True:
-            self.question_textbox.insert("0.0",question) # Inseting the question 
-            self.question_textbox.pack(pady=10)
-        else:
-            self.image_label.pack(pady=10)
-
-        if True:
-            self.option_frame1.pack(fill="x", pady=3, padx=10)
-            self.option_frame2.pack(fill="x",pady=3,padx=10)
-            self.option_A_button.place(relx=0.15, rely=0.1)
-            self.option_A_entry.place(relx=0.19,rely=0.1)
-            self.option_B_button.place(relx=0.5,rely=0.1,)
-            self.option_B_entry.place(relx=0.54,rely=0.1)
-            self.option_C_button.place(relx=0.15,rely=0.1)
-            self.option_C_entry.place(relx=0.19,rely=0.1)
-            self.option_D_button.place(relx=0.5,rely=0.1)
-            self.option_D_entry.place(relx=0.54,rely=0.1)
-
-            # Inserting the options
-            self.option_A_entry.insert(0,options[0])
-            self.option_B_entry.insert(0,options[1])
-            self.option_C_entry.insert(0,options[2])
-            self.option_D_entry.insert(0,options[3])
-
-        self.footer_frame.pack(fill="both")
-        self.next_button.pack(side="left", padx=250)
-        self.solutions_button.pack(side="right", padx=250)
+        displayNextWidgets()
     
     def finished(self):
         # Getting rid of previous widgets
@@ -257,7 +292,9 @@ class QuestionPage:
         self.option_frame1.pack_forget()
         self.option_frame2.pack_forget()
         self.footer_frame.pack_forget()
-
+        self.display_solutions_label.pack_forget()
+        self.display_solutions_image_label.pack_forget()
+        
         self.congratulations = ctk.CTkLabel(self.frame, text="Congratulations", font=("Comic Sans MS",42))
 
         # Marks info
@@ -266,7 +303,7 @@ class QuestionPage:
 
         # Getting the overall score
         for i in range(len(self.answer_inserted)):
-            if str(self.answer_inserted[i]) == str(self.data["Answer"][i]):
+            if str(self.answer_inserted[i]).lower() == str(self.data["Answer"][i]).lower():
                 marks_gotten = marks_gotten + self.data["Marks"][i]
 
         percentage = (marks_gotten/total_marks)*100

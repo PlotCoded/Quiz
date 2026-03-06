@@ -15,7 +15,6 @@ class Delete:
 				filenames = os.listdir(r"C:\Users\hp\Documents\Quiz\Storage")
 
 				for file in filenames:
-					print(file)
 					if ".csv" in file and file[:-4] == self.delete_bar_var.get():
 						you_sure = tk.messagebox.askyesno(title="Delete?", message="Are you sure you want to deleted this subject?")
 						
@@ -26,20 +25,10 @@ class Delete:
 							# Deleting the topic/file
 							os.remove(f"C:\\Users\\hp\\Documents\\Quiz\\Storage\\{self.delete_bar_var.get()}.csv")
 
-							exec(f"self.app.menu.v{self.delete_bar_var.get()}.pack_forget()")
+							# Removing the topic button from the menu completely
+							self.app.menu.buttons[self.delete_bar_var.get()].pack_forget()
+							del self.app.menu.buttons[self.delete_bar_var.get()]
 
-							# # Redisplaying the menu page
-							# # First remving the previous 
-							# filenames = os.listdir(r"C:\Users\hp\Documents\Quiz\Storage")
-        					# self.topic_names = []
-
-        					# for file in filenames:
-					        #     if ".csv" in file:
-					        #         self.topic_names.append(file) # I might not been this list
-
-					        #         # Displaying the topic on the menu
-					        #         exec(f"self.{file[::-4]} = ctk.CTkButton(self.scroll_frame, text='{file[:-4]}', command=self.app.question_page.starting)")
-					        #         exec(f"self.{file[::-4]}.pack(pady=50)")
 							break
 						else:
 							break
