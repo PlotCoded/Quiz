@@ -106,7 +106,7 @@ class Edit:
 			self.edit_scroll_frame = ctk.CTkScrollableFrame(self.window, corner_radius=0, border_width=0, fg_color="#c3c3c3",orientation="vertical", width=750, height=500)
 
 			# Inserting the topics
-			filenames = os.listdir(r"C:\Users\hp\Documents\Quiz\Storage")
+			filenames = os.listdir(r"C:\Users\hp\Documents\Quiz\Storage") # CTkButton
 
 			self.buttons = {} # store buttons so you can access them later
 

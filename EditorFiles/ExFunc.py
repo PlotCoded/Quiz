@@ -335,6 +335,17 @@ def getAnswerChoosenIndex(self,opt):
     elif self.option_D_button.cget("value") == opt:
         return 3
 
+def setAnswerChoosenIndex(self,index):
+    match index:
+        case 0:
+            self.options_variable.set(value="A")
+        case 1:
+            self.options_variable.set(value="B")
+        case 2:
+            self.options_variable.set(value="C")
+        case 3:
+            self.options_variable.set(value="D")
+
 def save(self,data):
     dataframe = pandas.DataFrame(data, index=tuple(range(len(data["Time"]))))
     dataframe.to_csv(f"C:\\Users\\hp\\Documents\\Quiz\\Storage\\{self.topic_var.get()}.csv") # Creating the file for the topic. This file contains all the details for the topic created

@@ -10,7 +10,7 @@ def destroyCommand(self):
         self.window.destroy()
         self.app.window_up = False
 
-def forgetFirstPageWidgets(self):
+def forgetFirstPageWidgets(self): #secondPageQuestionFormat
     self.frameA.pack_forget()
     self.frameB.pack_forget()
     self.answer_format_menu.pack_forget()
@@ -161,8 +161,9 @@ def recordFunc(self):
         self.record["Solution Text"].append(self.solution_and_feedback)
         self.record["Solution Image"].append(self.solution_image_filename)
         self.record["Options"].append(options)
-        if not ExFunc.getAnswerChoosenIndex(self,self.options_variable.get()) == None:
-            self.record["Answer"].append(options[ExFunc.getAnswerChoosenIndex(self,self.options_variable.get())])
+
+        if self.record["Option Type"][-1] == "Options":
+            self.record["Answer"].append(options[ExFunc.getAnswerChoosenIndex(self,self.options_variable.get())]) 
         else:
             self.record["Answer"].append(self.without_options_textbox.get("0.0","end"))
     else:
@@ -178,7 +179,7 @@ def recordFunc(self):
         self.record["Solution Image"][self.question_number-1] = (self.solution_image_filename)
         self.record["Options"][self.question_number-1] = (options)
 
-        if not ExFunc.getAnswerChoosenIndex(self,self.options_variable.get()) == None:
+        if self.record["Option Type"][self.question_number-1] == "Options":
             self.record["Answer"][self.question_number-1] = (options[ExFunc.getAnswerChoosenIndex(self,self.options_variable.get())])
         else:
             self.record["Answer"][self.question_number-1] = (self.without_options_textbox.get("0.0","end"))

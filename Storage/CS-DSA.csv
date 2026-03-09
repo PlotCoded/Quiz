@@ -1,8 +1,0 @@
-,Time,Marks,Randomize,Option Type,Text Question,Image Question,Hint,Solution Text,Solution Image,Options,Answer
-0,00:00:11,1,FALSE,Options,"Which of these is a feature of a Queue?
-
-",Pictures/AddImage.jpg,,"FIFO- Last In First Out. As you pop the data structure, you are removing the first, second, third, ... elements in the list in that order
-",Pictures/AddImage.jpg,"('LIFO', 'FIFO', 'FILO', 'None')",FIFO
-1,00:00:11,1,FALSE,Options,"Which of these is a feature of a Stack?
-",Pictures/AddImage.jpg,,"LIFO- Last In First Out. This works by popping out the last elements first and continuing in its decending order.
-",Pictures/AddImage.jpg,"('LIFO', 'FIFO', 'FILO', 'None')",LIFO
