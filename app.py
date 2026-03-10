@@ -4,6 +4,7 @@ from EditorFiles import Search, Add, Edit, Delete, ExFunc
 from menu import Menu
 from header import Header
 from question_page import QuestionPage
+import QuestionPageFuncs
 
 #Applying the theme of the window
 ctk.set_default_color_theme("Storage\\Theme.json")
@@ -44,10 +45,10 @@ class App(ctk.CTk):
         self.header.header()
 
         self.question_page = QuestionPage(self)
-        self.question_page.firstPageYouSee()
+        QuestionPageFuncs.firstPageYouSee(self.question_page)
 
         self.menu = Menu(self)
-        self.menu.menu(self.question_page.topicClickedPage)
+        self.menu.menu(QuestionPageFuncs.topicClickedPage)
 
     def createMenuAnimation(self):
         # Creating the menu animation/movement/closing and opening

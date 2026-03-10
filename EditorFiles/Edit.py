@@ -117,11 +117,12 @@ class Edit:
 			
 			call_swap = lambda f=q: self.swap(f)
 			call_view = lambda c,f=q: EditFuncs.viewQuestion(self,f,c)
+			call_delete = lambda f=q: self.deleteFunc(f)
 			self.swap_variable[q] = ctk.CTkCheckBox(self.questions_frame[q], onvalue=True, offvalue=False,text="", command=lambda q=q: call_swap(q))
 			self.view_question[q] = ctk.CTkButton(self.questions_frame[q],text=f"View Question {q}",command=lambda q=q: call_view("VQ",q))
 			self.add_before[q] = ctk.CTkButton(self.questions_frame[q],text=f"Add Before",command=lambda q=q: call_view("AB", q))
 			self.add_after[q] = ctk.CTkButton(self.questions_frame[q],text=f"Add After",command=lambda q=q: call_view("AA",q))
-			self.delete[q] = ctk.CTkButton(self.questions_frame[q],text=f"Delete")
+			self.delete[q] = ctk.CTkButton(self.questions_frame[q],text=f"Delete",command=lambda q=q: call_delete(q))
 
 		self.forgetTopics()
 		self.displayQuestions(topic_name)
@@ -165,9 +166,13 @@ class Edit:
 				if self.question_number in self.swap_numbers:
 					self.swap_numbers.remove(question_number) 
 
-	def delete(self):
+	def deleteFunc(self,question_number):
 		you_sure = tk.messagebox.askyesno(title="Exit", message="Are you sure you want to delete this question?", default="no")
 
+		df = pandas.read_csv(f"{self.file}")
+		df = df.drop(question_number-1)
+		df.to_csv(f"{self.file}", index=False)
+
 		if you_sure:
-			self.window.destroy()
-			self.app.window_up = False
+			self.forgetQuestions()
+			self.displayQuestions(self.topic_name)

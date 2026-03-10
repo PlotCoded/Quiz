@@ -1,0 +1,31 @@
+Unnamed: 0,Time,Marks,Randomize,Option Type,Text Question,Image Question,Hint,Solution Text,Solution Image,Options,Answer
+0.0,00:00:11,1,True,Options,"State the Chandrasekchar's limit in terms of solar mass?
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('3.14', '10', '1.44', '3')",1.44
+1.0,00:00:11,1,True,Options,"If the Chandrasekhar limit is surpassed
+what can the gravitational force overcome?
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('Electrostatic Repulsion', 'Electron Degeneracy Pressure', 'Neutron Degeneracy Pressure', 'Radiation Pressure')",Electron Degeneracy Pressure
+,00:00:11,1,False,Without Options,"Can you recall an HR-Diagram? Draw it if so
+",Pictures/AddImage.jpg,,"
+",C:/Users/hp/OneDrive/Documents/Pictures/HR-Diagram.png,"('', '', '', '')"," 
+"
+,00:00:11,1,False,Options,"Are HR diagrams linear, logarithmic,polynomial or exponential?
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('Logarithmic', 'Linear', 'Exponential', 'Polynomial')",Logarithmic
+2.0,00:00:11,1,True,Options,"What force can massive stars, with a mass
+greater than 10 M☉, overcome so fusion
+can create heavier elements?
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('Electron Degeneracy Pressure', 'Electrostatis Repulsion(up to Iron)', 'Neutron Degeneracy Pressure', 'Outward Radiation Pressure')",Electrostatis Repulsion(up to Iron)
+3.0,00:00:11,1,True,Options,"Hertzsprung-Russell (HR) diagram compares A
+against B.
+
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('A- Luminosity B-Surface Temperature', 'A- Intensity B- Surface Temperature', 'A- Power Output B-Temperature', 'A- Luminosity B-Surface Area')",A- Luminosity B-Surface Temperature
+4.0,00:00:11,1,True,Options,"What is the scale of luminosity of an HR diagram?
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('L/L☉', 'L☉/L', 'log(L/L☉)', 'log(L☉/L)')",log(L/L☉)
+5.0,00:00:11,1,True,Options,"What terms is define as the total radiant power output by a star.
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('Intensity', 'Luminosity', 'Radiation', 'Power')",Luminosity
+6.0,00:00:11,1,True,Options,"As energy levels increases, electrons energy does what?
+",Pictures/AddImage.jpg,,"
+",C:/Users/hp/Documents/Physics Pics/EnergyLevelsElectrons.png,"('Increase', 'Decrease', 'Stays the same', 'Doubles')",Increase
+7.0,00:00:11,1,True,Options,"An electron will only absorb radiation if the energy of that radiation is what?
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('E = mc^2', 'Bigger than the change in energy levle', 'Bigger than its energy level', 'Exactly the difference in energy level only')",Exactly the difference in energy level only
+,00:00:11,1,False,Options,"Electrons can only exist in one of a set of discrete energy level in a particular state. What state is that?
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('Liquid', 'Solid', 'Gas', 'Metalic bonds')",Gas

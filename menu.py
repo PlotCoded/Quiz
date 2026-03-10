@@ -46,7 +46,7 @@ class Menu:
             if file.endswith(".csv"):
                 file_name = file[:-4]  # remove ".csv"
                 # capture the current file_name in the lambda default
-                call = lambda f=file_name: topic_clicked_page(f)
+                call = lambda f=file_name: topic_clicked_page(self.app.question_page, f)
                 button = ctk.CTkButton(self.scroll_frame, text=file_name, command=call)
                 button.pack(pady=50)
                 self.buttons[file_name] = button

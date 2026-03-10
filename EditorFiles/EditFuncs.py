@@ -214,7 +214,7 @@ def doneFunc(self,command,question_number):
 
 			temp_pf = pandas.DataFrame(self.record)
 
-			pf = pandas.concat([pf.iloc[:1], temp_pf, pf.iloc[1:]], ignore_index=True)
+			pf = pandas.concat([pf.iloc[:question_number-1], temp_pf, pf.iloc[question_number-1:]], ignore_index=True)
 			pf.to_csv(self.file,index=False)
 
 		case "AA":
@@ -252,7 +252,7 @@ def doneFunc(self,command,question_number):
 
 			temp_pf = pandas.DataFrame(self.record)
 
-			pf = pandas.concat([pf.iloc[:1+1], temp_pf, pf.iloc[1+1:]], ignore_index=True)
+			pf = pandas.concat([pf.iloc[:question_number+1], temp_pf, pf.iloc[question_number+1:]], ignore_index=True)
 			pf.to_csv(self.file,index=False)
 
 	ExFunc.forgetActualQuestionPageWidgets(self)
