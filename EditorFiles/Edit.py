@@ -92,7 +92,7 @@ class Edit:
 		self.questions_scroll_frame.pack_forget()
 
 		pf = pandas.read_csv(self.file)
-		no_of_questions = pf.shape[0] # Why do I need this? Nevermind, didn't see the bottom logic
+		no_of_questions = len(self.questions_frame) # Why do I need this? Nevermind, didn't see the bottom logic
 
 		for q in range(1,no_of_questions+1):
 			try:
@@ -175,4 +175,4 @@ class Edit:
 
 		if you_sure:
 			self.forgetQuestions()
-			self.displayQuestions(self.topic_name)
+			self.topicClickedFunc(self.topic_name)

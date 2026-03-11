@@ -4,6 +4,29 @@ import re
 import tkinter as tk
 import customtkinter as ctk, pandas
 from PIL import Image
+import os
+import QuestionPageFuncs
+
+def displayMenuTopics(self):
+    # Removing previous buttons
+    if "buttons" in self.__dict__:
+        for button in self.buttons:
+            self.buttons[button].pack_forget()
+
+    # Getting the names of each topic
+    filenames = os.listdir(fr"Storage")
+
+    self.buttons = {}  # store each topic button so you can access them later
+
+    # Displaying the topic buttons
+    for file in filenames:
+        if file.endswith(".csv"):
+            file_name = file[:-4]  # remove ".csv"
+            # capture the current file_name in the lambda default
+            call = lambda f=file_name: QuestionPageFuncs.topicClickedPage(self.app.question_page, f)
+            button = ctk.CTkButton(self.scroll_frame, text=file_name, command=call)
+            button.pack(pady=50)
+            self.buttons[file_name] = button
 
 def displayFirstPage(self):
     self.frameA.pack(pady=10)
@@ -31,12 +54,6 @@ def displayFirstPage(self):
         self.randomize.configure(state="normal")
 
 def firstPageValidator(self,):
-    #Validating the topic names input
-    if self.topic != None:
-        if self.topic.get() != None and self.topic.get().isidentifier() == False:
-            tk.messagebox.showinfo(title="Invalid Topic Name", message="Your topic name doesn't have valid character(A-Z or _)")
-            return False
-
     #Validating for time entry widget
     if len(self.time.get()) != 8:
         tk.messagebox.showinfo(title="Invalid Time Format", message='Your time format must be in the correct form. Example: "01:13:30" with 2 double colon each between 3 two digits numbers')
@@ -349,46 +366,3 @@ def setAnswerChoosenIndex(self,index):
 def save(self,data):
     dataframe = pandas.DataFrame(data, index=tuple(range(len(data["Time"]))))
     dataframe.to_csv(f"C:\\Users\\hp\\Documents\\Quiz\\Storage\\{self.topic_var.get()}.csv") # Creating the file for the topic. This file contains all the details for the topic created
-
-# # Storage part
-# if testing:
-    # data = {
-    #     "Randomize": True,
-    #     "Time": ["00:00:10","00:00:60","00:03:00","00:01:00","00:07:30",], format_var
-    #     "Marks": [1,1,1,1,1],
-    #     "Option Type": ["Without Options", "Options", "Without Options", "Options", "Without Options"],
-    #     "Text Question": ["What is the sum of 1 and 1?","What is the largest prime in between 100 and 200?","What is the value of the integral of f(x) in the interval [2,5], for which f(x) = x^2?","What is gradient of e^x when x = ln(1)?","Find the sum of all natural numbers bettween 1 to 100"],
-    #     "Image Question": ["Pictures/AddImage.jpg","Pictures/AddImage.jpg","Pictures/AddImage.jpg","Pictures/AddImage.jpg","Pictures/AddImage.jpg"],
-    #     "Question No": [1,2,3,4,5],
-    #     "Hint": [None, "Try starting from 200 downwards",None, "f(f^-1(x)) = x?","Try pairing up the starting number to the end number"],
-    #     "Solution Text": ["2","199","39","1","5050"],
-    #     "Solution Image": ["Pictures/AddImage.jpg","Pictures/AddImage.jpg","Pictures/AddImage.jpg","Pictures/AddImage.jpg","Pictures/AddImage.jpg"],
-    #     "Options": [["2","199","39","1"], ["2","199","39","1"],["2","199","39","1"],["2","199","39","1"],["2","199","39","5050"]],
-    #     "Answer": ["2","199","39","1","5050"]
-    # }
-
-    # data = {
-    #     "Randomize": True,
-    #     "Time": [None],
-    #     "Marks": [None],
-    #     "Option Type": [None],
-    #     "Text Question": [None],
-    #     "Image Question": [None],
-    #     "Question No": [None],
-    #     "Hint": [None],
-    #     "Solution Text": [None],
-    #     "Solution Image": [None],
-    #     "Options": [None],
-    #     "Option Choosen": [None],
-    #     "Answer": [None]
-    # }
-
-    # def save(data):
-    #     dataframe = pandas.DataFrame(data, index=list(range(len(data["Time"]))))
-    #     dataframe.to_csv("P.csv") # Creating the file for the topic. This file contains all the details for the topic created
-
-    # dataframe = pandas.DataFrame(data, index=list(range(len(data["Question No"]))))
-
-    # print(dataframe["Question No"], "\n\n\n\n\n", type(data["Question No"]))
-    # for i in dataframe["Question No"]:
-    #     print(i)

@@ -30,10 +30,13 @@ def topicClickedPage(self, topic_name): # Also essentially, the secnod page you 
         self.pf = pandas.read_csv(fr"..\Quiz\Storage\{topic_name}.csv")
 
         # Getting number of marks on the topic
+        self.total_marks = self.marks_gotten = 0
         for i in (self.pf["Marks"]).tolist():
                 self.total_marks += int(i)
 
         forgetResultsPage(self)
+        forgetQuestion(self)
+        forgetSolutionPage(self)
         displayTopicClickedPage(self)
 
 def firstPageYouSee(self):
@@ -62,7 +65,11 @@ def forgetQuestion(self):
         self.without_options_textbox.pack_forget()
         self.footer_frame.pack_forget()
 
-def displayQuestions(self): # Also the solution func 
+def displayQuestions(self): # Also the solution func
+    if "index" in self.__dict__: 
+            if not self.pf.at[self.index, "Option Type"] == "Options":
+                    self.marks_gotten = self.marks_gotten + self.assign_marks_slider.get()
+
     forgetSolutionPage(self)
 
     if self.all_question_indexes:
@@ -114,6 +121,7 @@ def forgetSolutionPage(self):
         if "display_solutions_image_label" in self.__dict__.keys(): self.display_solutions_image_label.pack_forget()
         if "next_button" in self.__dict__.keys(): self.next_button.pack_forget()
 
+        self.assign_marks_slider.pack_forget()
         self.footer_frame.pack_forget()
 
 def displayHintFunction(self):
@@ -136,28 +144,29 @@ def displaySolution(self):
 
         # Getting the answer picked and calculating its marks for that question
         options = literal_eval(self.pf.at[self.index, "Options"])
-        if ExFunc.getAnswerChoosenIndex(self,self.options_variable.get()):
-                answer_picked = options[ExFunc.getAnswerChoosenIndex(self,self.options_variable.get())]
-        else:
-                answer_picked = self.without_options_textbox.get("0.0","end").strip("\n")
 
-        if self.pf.at[self.index, "Option Type"] == "Options":
-                if answer_picked == self.pf.at[self.index, "Answer"]:
-                        self.marks_gotten = self.marks_gotten + self.pf.at[self.index, "Marks"]
-        else:
-                if answer_picked == self.pf.at[self.index, "Answer"]:
-                        self.marks_gotten = self.marks_gotten + self.pf.at[self.index, "Marks"]
-
-        # Displaying the solution
+        # Displaying the solution widgets
         self.display_solutions_file_name = self.pf.at[self.index, "Solution Image"]
         self.display_solutions_image = ctk.CTkImage(light_image=Image.open(self.display_solutions_file_name), size=(600,200))
+        self.display_solutions_image_label.configure(image=self.display_solutions_image)
         self.display_solutions_image_label.pack(pady=10)
 
         self.display_solutions_label = ctk.CTkLabel(self.frame, text=f"The solution to question {self.index+1} is {self.pf.at[self.index, "Answer"]}.\n{self.pf.at[self.index, "Solution Text"]}")
         self.display_solutions_label.pack(pady=10)
 
+        if not self.pf.at[self.index, "Option Type"] == "Options":
+                self.assign_marks_slider.configure(to=int(self.pf.at[self.index, "Marks"]))
+                self.assign_marks_slider.configure(number_of_steps=int(self.pf.at[self.index, "Marks"]))
+                self.assign_marks_slider.pack(pady=10)
+
         self.footer_frame.pack(fill="both")
         self.next_button.pack(expand=True, padx=250)
+
+        # Assinging marks
+        if self.pf.at[self.index, "Option Type"] == "Options":
+                answer_picked = options[ExFunc.getAnswerChoosenIndex(self,self.options_variable.get())]
+                if str(answer_picked) == str(self.pf.at[self.index, "Answer"]):
+                        self.marks_gotten = self.marks_gotten + self.pf.at[self.index, "Marks"]
 
 def finished(self):        
         self.congratulations = ctk.CTkLabel(self.frame, text="Congratulations", font=("Comic Sans MS",42))

@@ -78,7 +78,7 @@ class QuestionPage:
         self.option_D_entry.place(relx=0.54,rely=0.1)
 
         #Without Options Textbox
-        self.without_options_textbox = ctk.CTkTextbox(self.frame, width=900, height=70, text_color="#000", wrap="word", border_width=4,)
+        self.without_options_textbox = ctk.CTkTextbox(self.frame, width=900, height=70, text_color="#000", wrap="word", border_width=4)
 
         # Footer Frame
         self.footer_frame = ctk.CTkFrame(self.frame, border_width=0, fg_color="#e3e3e3")
@@ -90,6 +90,7 @@ class QuestionPage:
         self.solutions_button = ctk.CTkButton(self.footer_frame, text="View Solutions", command=None)
         self.solutions_button.configure(command=lambda: QuestionPageFuncs.displaySolution(self))
 
-        # ------------------------------------------------------------------------------------------------------------------------------
         self.display_solutions_image = ctk.CTkImage(light_image=Image.open(fr"..\Quiz\Pictures\AddImage.jpg"), size=(600,200))
         self.display_solutions_image_label = ctk.CTkLabel(self.frame, text="", image=self.display_solutions_image, width=600, height=200)
+
+        self.assign_marks_slider = ctk.CTkSlider(self.frame, from_=0,orientation="horizontal")

@@ -5,7 +5,7 @@ from PIL import Image
 from EditorFiles import AddFuncs,ExFunc
 from ast import literal_eval
 
-def initialiseFirstPage(self):
+def initialiseFirstPage(self): 
 	#Variable to keep track of the question
     self.question_number = 1
 
@@ -152,7 +152,6 @@ def cancelSecondPageFunc(self):
 	ExFunc.displayFirstPage(self)
 
 def doneFunc(self,command,question_number):
-	print(command)
 	match command:
 		case "VQ":
 			pf = pandas.read_csv(self.file)
@@ -259,7 +258,6 @@ def doneFunc(self,command,question_number):
 	self.displayQuestions(self.topic_name)
 
 def viewQuestion(self,question_number,command):
-	print(command)
 	self.forgetQuestions()
 	self.question_number = 2
 

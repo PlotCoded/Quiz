@@ -140,10 +140,9 @@ def doneFunction(self):
         if done:
             recordFunc(self)
             self.window.destroy()
-            print(self.question_number)
-            print(self.record)
 
             ExFunc.save(self,self.record)
+            ExFunc.displayMenuTopics(self.app.menu)
 
 def recordFunc(self):
     options = (self.option_A_entry.get(),self.option_B_entry.get(),self.option_C_entry.get(),self.option_D_entry.get())

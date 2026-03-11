@@ -48,7 +48,7 @@ class App(ctk.CTk):
         QuestionPageFuncs.firstPageYouSee(self.question_page)
 
         self.menu = Menu(self)
-        self.menu.menu(QuestionPageFuncs.topicClickedPage)
+        self.menu.menu()
 
     def createMenuAnimation(self):
         # Creating the menu animation/movement/closing and opening

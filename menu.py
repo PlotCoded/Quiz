@@ -1,12 +1,13 @@
 import customtkinter as ctk
 from PIL import Image
 import os
+from EditorFiles import ExFunc
 
 class Menu:
     def __init__(self, app):
         self.app = app
 
-    def menu(self,topic_clicked_page): # topic_clicked_page holds the page that is the be displayed when a topic button is clicked
+    def menu(self):
         #Scroll Frame: Contains the "Topic label", "search", "add","edit","delete" buttons and also topics (buttons) as well
         self.scroll_frame = ctk.CTkScrollableFrame(self.app, corner_radius=0, border_width=1, fg_color="#d3d3d3",orientation="vertical")
         
@@ -36,17 +37,4 @@ class Menu:
         self.edit_button.pack(expand=True,fill="x",side="left")
         self.delete_button.pack(expand=True,fill="x",side="left")
 
-        # Getting the names of each topic
-        filenames = os.listdir(r"C:\Users\hp\Documents\Quiz\Storage")
-
-        self.buttons = {}  # store each topic button so you can access them later
-
-        # Displaying the topic buttons
-        for file in filenames:
-            if file.endswith(".csv"):
-                file_name = file[:-4]  # remove ".csv"
-                # capture the current file_name in the lambda default
-                call = lambda f=file_name: topic_clicked_page(self.app.question_page, f)
-                button = ctk.CTkButton(self.scroll_frame, text=file_name, command=call)
-                button.pack(pady=50)
-                self.buttons[file_name] = button
+        ExFunc.displayMenuTopics(self)

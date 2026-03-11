@@ -1,0 +1,11 @@
+Unnamed: 0,Time,Marks,Randomize,Option Type,Text Question,Image Question,Hint,Solution Text,Solution Image,Options,Answer
+0,00:00:11,2,False,Options,"1+1
+
+",C:/Users/hp/Documents/Quiz/Pictures/Search.jpg,Random,"RANDOM AS WELL
+",C:/Users/hp/Documents/Quiz/Pictures/Hint.png,"('3', '22', '0', '2')",2
+1,00:00:11,1,False,Without Options,"3+2
+
+",C:/Users/hp/Documents/Quiz/Pictures/Arrow.jpg,Random,"RANDOM BOY
+",C:/Users/hp/Documents/Quiz/Pictures/Delete.png,"('', '', '', '')",5
+2,00:00:11,1,False,Options,"4+4
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('8', '9', '10', '11')",8
