@@ -31,3 +31,62 @@ against B.
 ",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('E = mc^2', 'Bigger than the change in energy levle', 'Bigger than its energy level', 'Exactly the difference in energy level only')",Exactly the difference in energy level only
 ,00:00:11,1,False,Options,"Electrons can only exist in one of a set of discrete energy level in a particular state. What state is that?
 ",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('Liquid', 'Solid', 'Gas', 'Metalic bonds')",Gas
+,00:00:11,1,False,Without Options,"Define the terms ground state?
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('', '', '', '')","Lowest energy level for an electron to be bound to an atom
+"
+,00:00:11,1,False,Without Options,"Why are energy level negative?
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('', '', '', '')","They require external energy to be removed from their atoms
+"
+,00:00:11,2,False,Without Options,"X-rays and gamma rays can overlap but differentiated by their origin. What are the origin of both x-rays and gamma rays
+
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('', '', '', '')","X-rays --> fast moving electrons
+Gamma-rays --> unstable atomic isotopes
+
+"
+,00:00:11,1,False,Without Options,"Define spectroscopy?
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('', '', '', '')","Study of absorption and emission of electromagnetic radiation by matter
+"
+,00:00:11,2,False,Without Options,"Give two uses of spectroscopy
+
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('', '', '', '')","1. Study of structure of atoms and matter
+2. Astronomy
+
+"
+,00:00:11,1,False,Without Options,"Define continuous spectra?
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('', '', '', '')","Spectra where all visible frequencies or wavelengths are present
+"
+,00:00:11,1,False,Without Options,"Define absorption spectra?
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('', '', '', '')","Series of dark spectral lines against the background of continuous spectra
+"
+,00:00:11,1,False,Without Options,"Define emission line spectra?
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('', '', '', '')","Unique emission line spectrum caused by the different set of energy levels for each element
+"
+,00:00:11,1,False,Without Options,"What is the formula for n(max) for the equation dsin(theta) = n (lambda) and why is it that?
+",Pictures/AddImage.jpg,," Because sin(theta) has to be 1 to be at n(max) so with the equation dsin(theta) = n(lambda), so with sin(theta) = 1, rearrange the equation and n(max) = lambda/d
+",Pictures/AddImage.jpg,"('', '', '', '')","n(max) = lambda/d
+"
+,00:00:11,1,False,Without Options,"Define a black body?
+",Pictures/AddImage.jpg,," Because sin(theta) has to be 1 to be at n(max) so with the equation dsin(theta) = n(lambda), so with sin(theta) = 1, rearrange the equation and n(max) = lambda/d
+",Pictures/AddImage.jpg,"('', '', '', '')","An idealised object that absorbs all electromagnetic radiation incident on it
+"
+,00:00:11,1,False,Without Options,"State Wein's displacement law?
+",Pictures/AddImage.jpg,," Because sin(theta) has to be 1 to be at n(max) so with the equation dsin(theta) = n(lambda), so with sin(theta) = 1, rearrange the equation and n(max) = lambda/d
+",Pictures/AddImage.jpg,"('', '', '', '')","Max wavelength is inversely proportional to the temperature of the object emitting that light
+"
+,00:00:11,1,False,Without Options,"State Stephan's law?
+",Pictures/AddImage.jpg,," Because sin(theta) has to be 1 to be at n(max) so with the equation dsin(theta) = n(lambda), so with sin(theta) = 1, rearrange the equation and n(max) = lambda/d
+",Pictures/AddImage.jpg,"('', '', '', '')","luminosity is directly proportional to:
+1. Square of radius of the star
+2. Surface area of star
+3 Fourth power of temperature of the star
+"
+,00:00:11,1,False,Options,"1 degree is equal to how many arcminutes?
+
+",Pictures/AddImage.jpg,," Because sin(theta) has to be 1 to be at n(max) so with the equation dsin(theta) = n(lambda), so with sin(theta) = 1, rearrange the equation and n(max) = lambda/d
+",Pictures/AddImage.jpg,"('3600', '1/3600', '60', '1/60')",60
+,00:00:11,1,False,Options,"how many arseconds is equal to one arcminutes?
+",Pictures/AddImage.jpg,," Because sin(theta) has to be 1 to be at n(max) so with the equation dsin(theta) = n(lambda), so with sin(theta) = 1, rearrange the equation and n(max) = lambda/d
+",Pictures/AddImage.jpg,"('1/60', '60', '1/3600', '3600')",1/3600
+,00:00:11,1,False,Without Options,"Define a parsec?
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('', '', '', '')","Distance at which a radius of 1AU formed an angle of 1 arsecond
+"

@@ -1,0 +1,22 @@
+Unnamed: 0,Time,Marks,Randomize,Option Type,Text Question,Image Question,Hint,Solution Text,Solution Image,Options,Answer
+0.0,00:00:10,1,True,Without Options,"Define an Array?
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('', '', '', '')","Finite, ordered set of elements that are of the same data type
+"
+1.0,00:00:10,1,True,Without Options,"Define a tuple?
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('', '', '', '')","A finite, ordered set of elements that are of any type
+"
+2.0,00:00:10,1,True,Without Options,"What does it mean for a data structure to be immutable?
+",Pictures/AddImage.jpg,,"When a data structure can't be modified, it means if can't change in size, dynamically add elements or delete them
+",Pictures/AddImage.jpg,"('', '', '', '')","can't be modified after it has been created
+"
+3.0,00:00:10,2,False,Without Options,"Define a record in data structures
+
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('', '', '', '')","Record is a collection of items called fields that can be of different type under one identifier
+"
+,00:00:10,1,False,Without Options,"What is an abstract data type?
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('', '', '', '')","One created by the programmer than defined within the programming language
+"
+,00:00:10,1,False,Without Options,"What is a queue?
+",Pictures/AddImage.jpg,,"FIFO- First In First Out
+",Pictures/AddImage.jpg,"('', '', '', '')","FIFO data structure
+"

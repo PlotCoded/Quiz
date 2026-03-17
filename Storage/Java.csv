@@ -1,0 +1,107 @@
+Unnamed: 0,Time,Marks,Randomize,Option Type,Text Question,Image Question,Hint,Solution Text,Solution Image,Options,Answer
+0.0,00:00:10,1,False,Options,"Should the class name me equal to the name of the file always?
+
+
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('No', 'Depends if you use a class', 'Maybe', 'Yes')",Yes
+1.0,00:00:10,1,True,Options,"Every line of code should be in a class, true or false?
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('True', 'Not always', 'False', 'Depends on the file name')",True
+2.0,00:00:10,1,True,Options,"Is the ""main"" method in a java class required?
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('Sometimes', 'Always', 'Never', 'Most times')",Always
+3.0,00:00:10,1,False,Without Options,"Write a line statement to output ""I am ugly""
+
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('', '', '', '')","System.out.println(""I am ugly"")
+"
+4.0,00:00:10,1,True,Without Options,"Will this statement return an error? and why?
+System.out.println(hello world);
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('', '', '', '')","There isn't double quotes wrapped around the String
+"
+5.0,00:00:10,1,True,Without Options,"Will this statenent return an error?
+System.out.println('Hello World');
+",Pictures/AddImage.jpg,,"An error is returned because every String (""abcd"") not characters aka, char ('a','b',""c"",""d"") need to be wrapped around a double quote
+",Pictures/AddImage.jpg,"('', '', '', '')","Yes
+"
+6.0,00:00:10,1,True,Without Options,"Will this return an error?
+System.out.println('H');
+",Pictures/AddImage.jpg,,"No error will occur because just 'H' is treated as a char not a String, and only Strings need double quotes always, char can work with single or double quotes
+",Pictures/AddImage.jpg,"('', '', '', '')","No
+"
+7.0,00:00:10,1,True,Options,"Which keyword is used for outputing without newlines added to them
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('print', 'println', 'System', 'out')",print
+8.0,00:00:10,1,True,Options,"Which keyword is used for outputing with newlines added to them
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('print', 'println', 'System', 'out')",println
+,00:00:10,1,False,Options,"Which of these is used at the start of a comment to indicate it is a single line comment?
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('/*', '//', '*/', '#')",//
+,00:00:10,1,False,Without Options,"Fill in the dashed spaces for this comment statement.
+-- This is a comment --
+
+",Pictures/AddImage.jpg,,"/* This is a comment */
+",Pictures/AddImage.jpg,"('', '', '', '')","/* and */
+"
+,00:00:10,1,False,Without Options,"How do you declear a variable ""num"" as an integer and assign it with a value of 10?
+",Pictures/AddImage.jpg,,"/* This is a comment */
+",Pictures/AddImage.jpg,"('', '', '', '')","int num = 10;
+"
+,00:00:10,1,False,Without Options,"How do you declear a variable ""pet"" as an string and assign it with a value of ""cat""?
+",Pictures/AddImage.jpg,,"/* This is a comment */
+",Pictures/AddImage.jpg,"('', '', '', '')","String pet = ""cat"";
+"
+,00:00:10,1,False,Without Options,"How do you declear a variable ""letter"" as a char(acter) and assign it with a value of 'S'?
+
+",Pictures/AddImage.jpg,,"/* This is a comment */
+",Pictures/AddImage.jpg,"('', '', '', '')","char letter = 'S';
+
+"
+,00:00:10,1,False,Without Options,"Concatenate this two words ""rain"" and ""storm"" and otuput the concatenated word
+",Pictures/AddImage.jpg,,"/* This is a comment */
+",Pictures/AddImage.jpg,"('', '', '', '')","System.out.println(""rain"" + ""storm"");
+"
+,00:00:10,1,False,Options,"Will this result in an error?
+char letter = ""A"";
+",Pictures/AddImage.jpg,,"/* This is a comment */
+",Pictures/AddImage.jpg,"('Depending on the letter', 'No', 'Yes', 'Sometimes')",Yes
+,00:00:10,1,False,Without Options,"01 int x = 5;
+02 int y = 6;
+03 System.out.println(""The sum is "" + x + y);
+04 System.out.println(""The sum is "" + (x + y));
+
+What does line 03 and 04 output individually?
+
+",Pictures/AddImage.jpg,,"/* This is a comment */
+",Pictures/AddImage.jpg,"('', '', '', '')","03 --> The sum is 56
+04 --> The sum is 11
+"
+,00:00:10,1,False,Options,"Characters can be wrapped in both single or double quotes? True or False?
+
+",Pictures/AddImage.jpg,,"/* This is a comment */
+",Pictures/AddImage.jpg,"('False, only single quotes', 'True', 'True, even without quotes', 'Sometimes true')","False, only single quotes"
+,00:00:10,1,False,Without Options,"Delare and assing the variables x,y,z as 1,2,3 respectively only using one statement or one line of code
+
+",Pictures/AddImage.jpg,,"/* This is a comment */
+",Pictures/AddImage.jpg,"('', '', '', '')","int x = 0, y = 0; or int x = 0; int y = 0;
+"
+,00:00:10,1,False,Without Options,"Declare and assing x,y and z to 0, one seperate lines of code respectively
+",Pictures/AddImage.jpg,,"/* This is a comment */
+",Pictures/AddImage.jpg,"('', '', '', '')","int x,y,z;
+x = y = z = 0;
+"
+,00:00:11,1,False,Options,"Is it true java variable cannot start with $ and _?
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('Yes', 'no', 'depends on the type', 'sometimes')",no
+,00:00:11,1,False,Options,"Java variables can only contain letters, numbers, dollar sign and underscore. True or False?
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('Sometimes', 'False', 'Depends on the type', 'True')",True
+,00:00:11,1,False,Options,"Which keyword is used to declare a variable as a constant (unchangeable and read-only)?
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('var', 'let', 'final', 'const')",final
+,00:00:11,1,False,Without Options,"int num = 1;
+String num = ""1"";
+Does this block of code result in an error or not? If so, why?
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('', '', '', '')","Yes it does, because you cannot redeclare a variable type once it has been set
+"
+,00:00:11,1,False,Options,"Given 65 is 'A' in ASCII, will this statement work?
+char letter = 65;
+System.out.println(letter);
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('No', 'Maybe', 'Yes', 'Depending on the ASCII value')",Yes
+,00:00:11,1,False,Options,"Can var to used to declare a variable without assigning it to a value?
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('Yes', 'No', 'Sometimes', 'Maybe')",No
+,00:00:11,1,False,Without Options,"How can I use type casting to have a copy of the variable ""num1"" retaining it original value but changing its type from double to int
+01 double num1 = 3.14;
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('', '', '', '')","int num2 = (int) num1;
+"

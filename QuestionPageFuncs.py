@@ -21,6 +21,8 @@ def forgetTopicClickedPage(self):
         self.start_button.pack_forget()
 
 def topicClickedPage(self, topic_name): # Also essentially, the secnod page you see when you click on the question page (when you click a topic button)
+        if "index" in self.__dict__: del self.__dict__["index"] # Getting rid of any previous index value and to all it to start afresh everytime in a new topic
+
         self.topic_name = topic_name
 
         # Changing the topic label in the header to the topic clicked/choosen
@@ -31,6 +33,7 @@ def topicClickedPage(self, topic_name): # Also essentially, the secnod page you 
 
         # Getting number of marks on the topic
         self.total_marks = self.marks_gotten = 0
+
         for i in (self.pf["Marks"]).tolist():
                 self.total_marks += int(i)
 
@@ -63,6 +66,7 @@ def forgetQuestion(self):
         self.option_frame1.pack_forget()
         self.option_frame2.pack_forget()
         self.without_options_textbox.pack_forget()
+        self.image_question_label.pack_forget()
         self.footer_frame.pack_forget()
 
 def displayQuestions(self): # Also the solution func
@@ -79,14 +83,22 @@ def displayQuestions(self): # Also the solution func
         self.hint_frame.pack(fill="x")
         self.hint_button.place(relx=0.75, rely=0.25)
 
-        if len(self.pf.at[self.index,"Text Question"]) > 0:
+        _ = str(self.pf.at[self.index,"Text Question"])
+        _ = _.replace(" ","").replace("\n","")
+
+        if len(_) > 0 and not _ == "NaN":
                 # Removing the last question to prevent it from reappearing together with the next question
                 self.question_textbox.delete("0.0", "end")
                 self.question_textbox.insert("0.0",self.pf.at[self.index,"Text Question"]) # Inserting the next question
                 self.question_textbox.pack(pady=10)
         else:
                 # Image Question
-                self.image_question = self.pf.at[self.index, 'Image Question']
+                image_width = 900
+                image_height = 400
+
+                self.image_question = str(self.pf.at[self.index, 'Image Question'])
+                image = ctk.CTkImage(light_image=Image.open(fr"{self.image_question}"), size=(image_width,image_height))
+                self.image_question_label.configure(image=image)
                 self.image_question_label.pack(pady=10)
 
         # Options
@@ -140,6 +152,8 @@ def displayHintFunction(self):
         self.display_hint_label.pack()
 
 def displaySolution(self):
+        self.assign_marks_slider.set(0)
+
         forgetQuestion(self)
 
         # Getting the answer picked and calculating its marks for that question
@@ -168,7 +182,7 @@ def displaySolution(self):
                 if str(answer_picked) == str(self.pf.at[self.index, "Answer"]):
                         self.marks_gotten = self.marks_gotten + self.pf.at[self.index, "Marks"]
 
-def finished(self):        
+def finished(self):                
         self.congratulations = ctk.CTkLabel(self.frame, text="Congratulations", font=("Comic Sans MS",42))
 
         percentage = (self.marks_gotten/self.total_marks)*100

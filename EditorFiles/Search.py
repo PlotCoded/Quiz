@@ -2,6 +2,7 @@ import customtkinter as ctk
 import tkinter as tk
 from PIL import Image
 import os
+import QuestionPageFuncs
 
 class Search:
 	def __init__(self, app):
@@ -19,7 +20,7 @@ class Search:
 					topic_name = self.search_bar_var.get()
 					if ".csv" in file and file[:-4] == topic_name:
 						self.window.destroy()
-						self.app.question_page.topicClickedPage(topic_name)
+						QuestionPageFuncs.topicClickedPage(self.app.question_page, topic_name)
 						self.app.window_up = False
 						break
 				else:

@@ -158,25 +158,28 @@ def doneFunc(self,command,question_number):
 
 			# If there are two values in self.swap_numbers, proceed with the swap
 			a = question_number
-			try:
-				pf.loc[a-1, "Time"] = self.time_var.get()
-				pf.loc[a-1, "Marks"] = self.marks_var.get()
-				pf.loc[a-1,"Randomize"] = self.randomize.get()
-				pf.loc[a-1, "Option Type"] = self.answer_format_menu_variable.get()
-				pf.loc[a-1, "Text Question"] = self.question.get("0.0","end")
-				pf.loc[a-1, "Image Question"] = self.image_filename
-				pf.loc[a-1, "Hint"] = self.hint
-				pf.loc[a-1, "Solution Text"] = self.solution_and_feedback
-				pf.loc[a-1, "Solution Image"] = self.solution_image_filename
-				options = (self.option_A_entry.get(),self.option_B_entry.get(),self.option_C_entry.get(),self.option_D_entry.get())
-				pf.loc[a-1, "Options"] = options
+			pf.loc[a-1, "Time"] = self.time_var.get()
+			pf.loc[a-1, "Marks"] = self.marks_var.get()
+			pf.loc[a-1,"Randomize"] = self.randomize.get()
+			pf.loc[a-1, "Option Type"] = self.answer_format_menu_variable.get()
+			pf.loc[a-1, "Text Question"] = self.question.get("0.0","end")
+			pf.loc[a-1, "Image Question"] = self.image_filename
+			pf.loc[a-1, "Hint"] = self.hint
+			pf.loc[a-1, "Solution Text"] = self.solution_and_feedback
+			pf.loc[a-1, "Solution Image"] = self.solution_image_filename
+			options = (self.option_A_entry.get(),self.option_B_entry.get(),self.option_C_entry.get(),self.option_D_entry.get())
+			print(options)
+			pf.loc[a-1, "Options"] = str(options)
+			print(options)
 
-				if pf.loc[a-1, "Option Type"] == "Options":
-					pf.loc[a-1, "Answer"] = (options[ExFunc.getAnswerChoosenIndex(self,self.options_variable.get())])
-				else:
-					pf.loc[a-1, "Answer"] = (self.without_options_textbox.get("0.0","end"))
-			except:
-				pf.to_csv(self.file,index=False)
+			if pf.loc[a-1, "Option Type"] == "Options":
+				print("hey")
+				pf.loc[a-1, "Answer"] = (options[ExFunc.getAnswerChoosenIndex(self,self.options_variable.get())])
+			else:
+				print("no hey")
+				pf.loc[a-1, "Answer"] = self.without_options_textbox.get("0.0","end")
+
+			pf.to_csv(self.file,index=False)
 
 		case "AB":
 			self.record = {}
@@ -255,7 +258,7 @@ def doneFunc(self,command,question_number):
 			pf.to_csv(self.file,index=False)
 
 	ExFunc.forgetActualQuestionPageWidgets(self)
-	self.displayQuestions(self.topic_name)
+	self.topicClickedFunc(self.topic_name)
 
 def viewQuestion(self,question_number,command):
 	self.forgetQuestions()
@@ -287,8 +290,6 @@ def viewQuestion(self,question_number,command):
 		options = literal_eval(pf.loc[a-1, "Options"])
 		self.option_A_entry.delete(0,"end"); self.option_B_entry.delete(0,"end"); self.option_C_entry.delete(0,"end"); self.option_D_entry.delete(0,"end")
 		self.option_A_entry.insert(0,str(options[0])); self.option_B_entry.insert(0,f"{options[1]}"); self.option_C_entry.insert(0,f"{options[2]}"); self.option_D_entry.insert(0,f"{options[3]}")
-
-		pf.loc[a-1, "Options"] = str(options)
 
 		if pf.loc[a-1, "Option Type"] == "Options":
 		    index = options.index(str(pf.loc[a-1, "Answer"]))
