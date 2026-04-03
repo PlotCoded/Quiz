@@ -1,15 +1,17 @@
 Unnamed: 0,Time,Marks,Randomize,Option Type,Text Question,Image Question,Hint,Solution Text,Solution Image,Options,Answer
-0,00:00:11,1,False,Without Options,"What is an operating system?
+0.0,00:00:11,1,False,Without Options,"What is an operating system?
 
 
 ",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('', '', '', '')","Program or set of program that manages the operations of the computer for the user
 
 
 "
-1,00:00:11,1,False,Options,"The operating is held in permament storage? True or False
+1.0,00:00:11,1,False,Options,"The operating system is held in permament storage? True or False
 
-",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('True', 'False', 'Depends', 'Sometimes')",False
-2,00:00:11,1,False,Options,"The OS doesn't act as a bridge between the user and the computer hardware?
+
+
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('True', 'False', 'Depends', 'Sometimes')",True
+2.0,00:00:11,1,False,Options,"The OS doesn't act as a bridge between the user and the computer hardware?
 
 
 
@@ -17,7 +19,7 @@ Unnamed: 0,Time,Marks,Randomize,Option Type,Text Question,Image Question,Hint,So
 
 
 ",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('True', 'False', 'Depends on the BIOS', 'Sometimes')",False
-3,00:00:11,1,False,Without Options,"When the computer switches on, what does the loader in the ROM do at this stage?
+3.0,00:00:11,1,False,Without Options,"When the computer switches on, what does the loader in the ROM do at this stage?
 
 
 
@@ -26,14 +28,26 @@ Unnamed: 0,Time,Marks,Randomize,Option Type,Text Question,Image Question,Hint,So
 
 
 "
-4,00:00:11,5,False,Without Options,"State the 5 functions of the OS?
+4.0,00:00:11,5,False,Without Options,"State the 5 functions of the OS?
 
 
-",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('', '', '', '')","1. Memory Management
-2. Interrupt service routines
-3. Processor scheduling
+
+
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('', '', '', '')","1. Memory Management 2. Interrupt service routines 3. Processor scheduling
 4. Backing store management
 5. Management of all input and output
 
+"
+,00:00:11,1,False,Without Options,"In paging system, how is memory divided?
+
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('', '', '', '')","Fixed sized pages of 4Kb
+
+"
+,00:00:11,1,False,Without Options,"Can processes currently in memory be held in several non-contiguous pages using paging system?
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('', '', '', '')","Yes
+"
+,00:00:11,1,False,Without Options,"Define segmentation in cs?
+
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('', '', '', '')","Logical division of memory space into varying lengths segments which depend on the program structure
 
 "

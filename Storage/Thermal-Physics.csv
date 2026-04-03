@@ -1,0 +1,33 @@
+Unnamed: 0,Time,Marks,Randomize,Option Type,Text Question,Image Question,Hint,Solution Text,Solution Image,Options,Answer
+,00:00:11,3,False,Without Options,"Describe the behaviour of particles in a solid?
+
+",Pictures/AddImage.jpg,,"They are close together and held in position by strong forces of attraction
+",Pictures/AddImage.jpg,"('', '', '', '')","They vibrate about fixed positions in a regular lattice
+
+"
+,00:00:11,3,False,Without Options,"Describe the behaviour of particles in liquids?
+
+
+",Pictures/AddImage.jpg,,"Fairly close together but have an irregular arrangement. Weaker forces of attraction compared to solid
+",Pictures/AddImage.jpg,"('', '', '', '')","Particles are constantly moving around and past each other
+
+
+"
+,00:00:11,3,False,Without Options,"Describe the behaviour of particles in a gas
+
+
+
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('', '', '', '')","Particles move around in random motion
+There is no force of attraction between particles in an ideal gas.
+Particles are far apart
+"
+,00:00:11,1,False,Options,"The state where two objects in contact are of the same temperature and have no overall change in heat energy is called what?
+
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('Constant temperature', 'Equillibrum', 'Energy Equillibrum', 'Thermal equillibrum')",Thermal equillibrum
+0.0,00:00:10,1,False,Without Options,"Define specific heat capacity of a substance?
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('', '', '', '')","This is the energy required to change the temperature of 1kg of a substance by 1K 
+"
+,00:00:11,1,False,Without Options,"Describe Brownian motion?
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('', '', '', '')","Tiny particles/molecules of a fluid moving around in 
+random motion at random velocities
+"

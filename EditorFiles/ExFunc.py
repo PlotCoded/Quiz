@@ -40,8 +40,7 @@ def displayFirstPage(self):
     self.continue_details_page_button.pack(side="left", padx=20, pady=20, expand=True)
 
     #Only displaying the cancel button when there is a question behind it, eg, > question 1
-    if self.question_number > 1:
-        self.cancel_details_page_button.pack(side="left", padx=20, pady=20, expand=True)
+    if self.question_number > 1: self.cancel_details_page_button.pack(side="left", padx=20, pady=20, expand=True)
 
     self.exit_button.pack(side="left", padx=20, pady=20, expand=True)
 
@@ -172,8 +171,7 @@ def displayActualQuestionPageWidgets(self, continue_present):
         self.question.pack_forget()
 
     #Else if the questin format is to be in video form
-    elif self.format_var.get() == "Video":
-        pass
+    elif self.format_var.get() == "Video": pass
 
     #Telling what answer format type to display: "Options" or "Without Options"
     if self.answer_format_menu_variable.get() == "Options":
@@ -236,7 +234,6 @@ def hintOkFunction(self):
     else:
         #Deleting any previous hints and storing the current hint
         self.hint = self.hint_entry_variable.get()
-        print(self.hint, "Else statement")
 
         self.hint_button.configure(text="Hint Added")
         self.hint_window.destroy()
@@ -268,17 +265,13 @@ def solutionQuestionImageFunction(self):
         self.solution_image_filename = "Pictures/AddImage.jpg"
 
 def questionImageFunction(self):
-    print("Opening file window")
     self.image_filename = ctk.filedialog.askopenfilename()
 
-    print(self.image_filename)
     #Handling potential errors. Eg, when the user chooses a non-image file, i.e exe, mp4, py
     try:
         #Displaying the image on the question image label format
         self.question_image.configure(light_image=Image.open(self.image_filename))
-        print("No error occured")
     except Exception as message:
-        print(message)
         if self.image_filename != "":
             #Error message when the user chooses a non-image file
             tk.messagebox.showerror(title="Invalid File", message="Please insert a valid image")
@@ -301,8 +294,7 @@ def displaySolutionWidgets(self):
         self.solution_question_image_label.pack(pady=10)
 
     #Else if the solution format is to be in video form
-    elif self.solution_format_var.get() == "Video":
-        pass
+    elif self.solution_format_var.get() == "Video": pass
 
     self.solution_ok_button.pack(side="left", padx=30)
     self.solution_restart_button.pack(side="left", padx=30)
@@ -365,4 +357,4 @@ def setAnswerChoosenIndex(self,index):
 
 def save(self,data):
     dataframe = pandas.DataFrame(data, index=tuple(range(len(data["Time"]))))
-    dataframe.to_csv(f"C:\\Users\\hp\\Documents\\Quiz\\Storage\\{self.topic_var.get()}.csv") # Creating the file for the topic. This file contains all the details for the topic created
+    dataframe.to_csv(f"..\\Quiz\\Storage\\{self.topic_var.get()}.csv") # Creating the file for the topic. This file contains all the details for the topic created

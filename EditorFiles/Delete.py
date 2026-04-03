@@ -12,7 +12,7 @@ class Delete:
 			self.app.window_up = True
 
 			def delete():
-				filenames = os.listdir(r"C:\Users\hp\Documents\Quiz\Storage")
+				filenames = os.listdir(r"..\Quiz\Storage")
 
 				for file in filenames:
 					if ".csv" in file and file[:-4] == self.delete_bar_var.get():
@@ -23,7 +23,7 @@ class Delete:
 							self.window.destroy()
 
 							# Deleting the topic/file
-							os.remove(f"C:\\Users\\hp\\Documents\\Quiz\\Storage\\{self.delete_bar_var.get()}.csv")
+							os.remove(f"..\\Quiz\\Storage\\{self.delete_bar_var.get()}.csv")
 
 							# Removing the topic button from the menu completely
 							self.app.menu.buttons[self.delete_bar_var.get()].pack_forget()

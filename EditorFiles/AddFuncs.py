@@ -41,8 +41,7 @@ def cancelFirstPageFunction(self):
 
 def exitFirstPageFunction(self):
     exit = tk.messagebox.askyesno(title="Exit", message="Are you sure you want to your exit?", default="no")
-    if exit:
-        self.window.destroy()
+    if exit: self.window.destroy()
 
 def forgetSecondPageWidgets(self):
     #Forgetting the widgets
@@ -70,9 +69,7 @@ def questionImageFunction(event,self):
         #Displaying the image on the question image label
         self.question_image.configure(light_image=Image.open(self.image_filename))
     except:
-        if self.image_filename != "":
-            #Error message when the user chooses a non-image file
-            tk.messagebox.showerror(title="Invalid File", message="Please insert a valid image")
+        if self.image_filename != "":tk.messagebox.showerror(title="Invalid File", message="Please insert a valid image") #Error message when the user chooses a non-image file
         
         #Making the image file to be its default "Pictures/AddImage.jpg"
         self.image_filename = "Pictures/AddImage.jpg"
@@ -116,11 +113,6 @@ def secondPageContinueFunction(self):
     if ExFunc.secondPageValidator(self.option_A_entry, self.option_B_entry, self.option_C_entry, self.option_D_entry, self.option_A_button, self.option_B_button, self.option_C_button, self.option_D_button, self.options_variable, self.answer_format_menu_variable, self.without_options_textbox, self.question, self.image_filename):    
         forgetSecondPageWidgets(self)
 
-        # Recording the data
-        recordFunc(self)
-        print(self.question_number)
-        print(self.record)
-
         # Updating the question number and its label as you are moving the next question
         self.question_number+=1
         self.question_number_label.configure(text=f"Question {self.question_number}'s time setting and marks:") #Validator
@@ -155,7 +147,6 @@ def recordFunc(self):
         self.record["Option Type"].append(self.answer_format_menu_variable.get())
         self.record["Text Question"].append(self.question.get("0.0","end"))
         self.record["Image Question"].append(self.image_filename)
-        # self.record["Question No"].append(self.question_number)
         self.record["Hint"].append(self.hint)
         self.record["Solution Text"].append(self.solution_and_feedback)
         self.record["Solution Image"].append(self.solution_image_filename)
@@ -172,7 +163,6 @@ def recordFunc(self):
         self.record["Option Type"][self.question_number-1] = (self.answer_format_menu_variable.get())
         self.record["Text Question"][self.question_number-1] = (self.question.get("0.0","end"))
         self.record["Image Question"][self.question_number-1] = (self.image_filename)
-        # self.record["Question No"][self.question_number-1] = (self.question_number)
         self.record["Hint"][self.question_number-1] = (self.hint)
         self.record["Solution Text"][self.question_number-1] = self.solution_and_feedback
         self.record["Solution Image"][self.question_number-1] = (self.solution_image_filename)
@@ -190,12 +180,10 @@ def displayPreviousQuestion(self):
 
         (self.time_var.set(self.record["Time"][self.question_number-1]))
         (self.marks_var.set(self.record["Marks"][self.question_number-1]))
-        # (self.randomize.configure(self.record["Randomize"][self.question_number-1]))
         (self.answer_format_menu_variable.set(self.record["Option Type"][self.question_number-1]))
         self.question.delete("0.0","end")
         (self.question.insert("0.0",f"{self.record["Text Question"][self.question_number-1]}"))
         (self.image_filename) = self.record["Image Question"][self.question_number-1]
-        # self.record["Question No"][self.question_number-1] = (self.question_number)
         (self.hint) = self.record["Hint"][self.question_number-1]
         self.solution_and_feedback = self.record["Solution Text"][self.question_number-1]
         (self.solution_image_filename) = self.record["Solution Image"][self.question_number-1]

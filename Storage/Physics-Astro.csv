@@ -88,5 +88,66 @@ Gamma-rays --> unstable atomic isotopes
 ",Pictures/AddImage.jpg,," Because sin(theta) has to be 1 to be at n(max) so with the equation dsin(theta) = n(lambda), so with sin(theta) = 1, rearrange the equation and n(max) = lambda/d
 ",Pictures/AddImage.jpg,"('1/60', '60', '1/3600', '3600')",1/3600
 ,00:00:11,1,False,Without Options,"Define a parsec?
-",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('', '', '', '')","Distance at which a radius of 1AU formed an angle of 1 arsecond
+
+
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('', '', '', '')","Distance at which a radius of 1AU forms an angle of 1 arsecond
+
+"
+,00:00:11,1,False,Options,"The magnitide of red shift is directly proportional to what?
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('Frequency/Wavelength', 'Relative speed between object and observer', 'Speed of object', 'Size of object')",Relative speed between object and observer
+,00:00:11,1,False,Options,"For the equation : (change in wavelength)/wavelength approximately equal to  (velocity/speed of light). When does this equation hold?
+
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('Relative speed is equal to 0', 'Source is travelling close to speed of light', 'Source is travelling far less than speed of light', 'None of the options')",Source is travelling far less than speed of light
+,00:00:11,2,False,Without Options,"State the 3 assumptions of the universe.
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('', '', '', '')","1. The laws of physics is universal.
+2. The universe if homogenous.
+3. The universe is isotropic.
+"
+,00:00:11,2,False,Without Options,"What does it mean for the laws of physics to be universal?
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('', '', '', '')","Does not change from place to place or through time
+"
+,00:00:11,2,False,Without Options,"The Universe is homogeneous. What does that mean?
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('', '', '', '')","Matter is distributed uniformly over the Universe. 
+"
+,00:00:11,2,False,Without Options,"What does it mean for the universe to be isotropic?
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('', '', '', '')","It looks the same in all directions so no centre or edge
+"
+,00:00:11,3,False,Without Options,"What does George Lemaitre's Theory suggest?
+
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('', '', '', '')","1. The universe's origin started at a single point (a singularity)
+2. That single point is extremely hot and dense
+3. As the universe expanded, it cooled
+
+"
+,00:00:11,2,False,Without Options,"What are the 2 evidence for the Big-Bang Theory?
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('', '', '', '')","1. Hubble's law
+2. Cosmic Microwave Background
+"
+,00:00:11,1,False,Options,"In the young universe, space was saturated with what?
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('High energy Light photons', 'High energy gamma photons', 'High energy microwave photons', 'High energy x-rays photons')",High energy gamma photons
+,00:00:11,1,False,Options,"What did the expansion of the universe do to the high energy photons of the early universe?
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('Increase its frequency', 'Compressed it', 'Increased its energy', 'Stretch its wavelength')",Stretch its wavelength
+,00:00:11,1,False,Without Options,"Describe the first evolutionary stage of the universe?
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('', '', '', '')","Infinitely dense and hot
+"
+,00:00:11,1,False,Without Options,"Describe the second evolutionary stage of the universe?
+
+",Pictures/AddImage.jpg,,"No matter, just high energy gamma photons. Temperature = 10^28 K
+",Pictures/AddImage.jpg,"('', '', '', '')","10^-35 seconds. Inflation- The expansion of the universe
+
+"
+,00:00:11,1,False,Without Options,"Describe the third evolutionary stage of the universe?
+
+",Pictures/AddImage.jpg,,,Pictures/AddImage.jpg,"('', '', '', '')","At 10^-6 seconds. The first fundamental particles(quarks, leptons, etc) form
+
+"
+,00:00:11,1,False,Without Options,"Describe the forth evolutionary stage of the universe?
+
+",Pictures/AddImage.jpg,,"Matter is produced through pair production
+",Pictures/AddImage.jpg,"('', '', '', '')","At 10^-3 seconds. Quarks form hadrons.
+
+"
+,00:00:11,1,False,Without Options,"Describe the fifth evolutionary stage of the universe?
+",Pictures/AddImage.jpg,,"Matter is produced through pair production
+",Pictures/AddImage.jpg,"('', '', '', '')","At 1 second. Mass creation stops. Temperature = 10^9 K
 "

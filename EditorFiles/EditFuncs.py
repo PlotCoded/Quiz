@@ -72,7 +72,7 @@ def initialiseSecondPage(self):
 
 	self.question.focus_set()
 
-	#Question Image: This label stores the question(in image form) inserted by the user
+	#Question Image: This label stores the question(n image form) inserted by the user
 	self.image_filename = "Pictures/AddImage.jpg"
 	self.question_image = ctk.CTkImage(light_image=Image.open(self.image_filename), size=(400,200))
 	self.question_image_label = ctk.CTkLabel(self.window, image=self.question_image, text="", width=400, height=200)

@@ -14,7 +14,7 @@ class Search:
 			self.app.window_up = True
 
 			def search():
-				filenames = os.listdir(r"C:\Users\hp\Documents\Quiz\Storage")
+				filenames = os.listdir(r"..\Quiz\Storage")
 
 				for file in filenames:
 					topic_name = self.search_bar_var.get()
