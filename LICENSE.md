@@ -1,21 +1,19 @@
-MIT License
+Custom Source Code License
+Copyright (c) 2024-2026 Sam (PlotCoded)
 
-Copyright (c) 2024 Sam
+ALL RIGHTS RESERVED.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files Quiz, to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+1. Proprietary Rights
+This software and all associated files (the "Software"), including the logic, design, and original concepts contained herein, are the exclusive property of the Copyright Holder.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+2. Restrictions
+Permission is NOT granted to any person obtaining a copy of this Software to:
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+Copy, modify, or create derivative works (including web-based versions) of the Software.
+
+Distribute, sublicense, or sell copies of the Software.
+
+Display or perform the Software publicly without express written permission from the Copyright Holder.
+
+3. No Warranty
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
